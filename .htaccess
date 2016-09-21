@@ -13,5 +13,5 @@
 				RewriteCond %{REQUEST_FILENAME}\.php -f
 		        RewriteRule ^(.*)$ $1.php?codshow=$1
 
-				RewriteRule ^														pages/index.php
+				RewriteRule ^index.php												pages/index.php
 </IfModule>
