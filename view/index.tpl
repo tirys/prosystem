@@ -75,18 +75,18 @@
                         </div>
                     </div>
                 </form>
-                <!-- BEGIN FORGOT PASSWORD FORM -->
+                <!-- START Formulario de esqueci minha senha-->
                 <form class="forget-form" action="javascript:;" method="post">
-                    <h3 class="font-green">Forgot Password ?</h3>
-                    <p> Enter your e-mail address below to reset your password. </p>
+                    <h3 class="font-green">Esqueceu sua senha ?</h3>
+                    <p> Insira seu endereço de email para redefinir sua senha. </p>
                     <div class="form-group">
                         <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
                     <div class="form-actions">
-                        <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-                        <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+                        <button type="button" id="back-btn" class="btn green btn-outline">Voltar</button>
+                        <button type="submit" class="btn btn-success uppercase pull-right">Enviar</button>
                     </div>
                 </form>
-                <!-- END FORGOT PASSWORD FORM -->
+                <!-- END Formulario de esqueci minha senha-->
             </div>
             <div class="login-footer">
                 <div class="row bs-reset">
@@ -119,32 +119,20 @@
         </div>
     </div>
 </div>
-<!-- END : LOGIN PAGE 5-1 -->
 <!--[if lt IE 9]>
 <script src="view/assets/global/plugins/respond.min.js"></script>
 <script src="view/assets/global/plugins/excanvas.min.js"></script>
 <script src="view/assets/global/plugins/ie8.fix.min.js"></script>
 <![endif]-->
-<!-- BEGIN CORE PLUGINS -->
 <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="view/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
-<!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="view/assets/global/scripts/app.min.js" type="text/javascript"></script>
-<!-- END THEME GLOBAL SCRIPTS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="view/assets/pages/scripts/login-5.min.js" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-<!-- BEGIN THEME LAYOUT SCRIPTS -->
-<!-- END THEME LAYOUT SCRIPTS -->
-<!-- Google Code for Universal Analytics -->
