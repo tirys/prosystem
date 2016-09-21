@@ -47,7 +47,7 @@
             <div class="login-content">
                 <h1>LOGIN</h1>
                 <p> Informe suas credenciais para realizar o acesso ao sistema. </p>
-                <form action="javascript:;" class="login-form" method="post">
+                <form action="pages/login.php" class="login-form" method="post">
                     <div class="alert alert-danger display-hide">
                         <button class="close" data-close="alert"></button>
                         <span>Por favor, insira seu usuário e senha. </span>
