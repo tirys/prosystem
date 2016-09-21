@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2016-09-21 22:12:31
+/* Smarty version 3.1.30, created on 2016-09-21 22:30:05
   from "C:\wamp\www\prosystem\prosystem\view\index.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_57e2e9af9a9727_06456468',
+  'unifunc' => 'content_57e2edcd673f91_26547055',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '48dc54fb59559dbf7559ea31173da0265d05a627' => 
     array (
       0 => 'C:\\wamp\\www\\prosystem\\prosystem\\view\\index.tpl',
-      1 => 1474488741,
+      1 => 1474489804,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,8 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_57e2e9af9a9727_06456468 (Smarty_Internal_Template $_smarty_tpl) {
-$_smarty_tpl->compiled->nocache_hash = '1405557e2e9af967096_42574484';
+function content_57e2edcd673f91_26547055 (Smarty_Internal_Template $_smarty_tpl) {
+$_smarty_tpl->compiled->nocache_hash = '999157e2edcd604406_98606020';
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -70,33 +70,33 @@ $_smarty_tpl->compiled->nocache_hash = '1405557e2e9af967096_42574484';
         </div>
         <div class="col-md-6 login-container bs-reset mt-login-5-bsfix">
             <div class="login-content">
-                <h1>Metronic Admin Login</h1>
-                <p> Lorem ipsum dolor sit amet, coectetuer adipiscing elit sed diam nonummy et nibh euismod aliquam erat volutpat. Lorem ipsum dolor sit amet, coectetuer adipiscing. </p>
+                <h1>LOGIN</h1>
+                <p> Informe suas credenciais para realizar o acesso ao sistema. </p>
                 <form action="javascript:;" class="login-form" method="post">
                     <div class="alert alert-danger display-hide">
                         <button class="close" data-close="alert"></button>
-                        <span>Enter any username and password. </span>
+                        <span>Por favor, insira seu usuário e senha. </span>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
-                            <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Username" name="username" required/> </div>
+                            <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Usuário" name="usuario" required/> </div>
                         <div class="col-xs-6">
-                            <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Password" name="password" required/> </div>
+                            <input class="form-control form-control-solid placeholder-no-fix form-group" type="password" autocomplete="off" placeholder="Senha" name="senha" required/> </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="rem-password">
                                 <label class="rememberme mt-checkbox mt-checkbox-outline">
-                                    <input type="checkbox" name="remember" value="1" /> Remember me
+                                    <input type="checkbox" name="remember" value="1" /> Lembre-me
                                     <span></span>
                                 </label>
                             </div>
                         </div>
                         <div class="col-sm-8 text-right">
                             <div class="forgot-password">
-                                <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+                                <a href="javascript:;" id="forget-password" class="forget-password">Esqueceu sua senha?</a>
                             </div>
-                            <button class="btn green" type="submit">Sign In</button>
+                            <button class="btn green" type="submit">Entrar</button>
                         </div>
                     </div>
                 </form>
@@ -136,7 +136,7 @@ $_smarty_tpl->compiled->nocache_hash = '1405557e2e9af967096_42574484';
                     </div>
                     <div class="col-xs-7 bs-reset">
                         <div class="login-copyright text-right">
-                            <p>Copyright &copy; Keenthemes 2015</p>
+                            <p>Agência Prospecta 2016</p>
                         </div>
                     </div>
                 </div>
