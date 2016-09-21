@@ -12,7 +12,12 @@ $verificalogin = new VerificaLogin($usuario,$senha);
 
 $resultado = $verificalogin->verificaLogin($usuario,$senha);
 
-if($resultado==true) {
-    echo 'Login efetuado';
-    //chamar dashboard
+if($resultado==1) {
+    //Smarty configs
+    $smarty = new Smarty;
+    $smarty->caching = true;
+    $smarty->cache_lifetime = 120;
+
+    $smarty->assign("url",URL_INSTALACAO);
+    $smarty->display('../view/dashboard.tpl');
 }

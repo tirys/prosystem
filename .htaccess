@@ -14,4 +14,5 @@
 		        RewriteRule ^(.*)$ $1.php?codshow=$1
 
 				RewriteRule ^index.php												pages/index.php
+				RewriteRule ^login                                                  pages/login.php
 </IfModule>

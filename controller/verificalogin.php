@@ -10,8 +10,8 @@ class VerificaLogin
         //fazer o select aqui (pela model)
 
         //valores exemplos
-        $usuario = "jessica";
-        $senha = "jessica";
+//        $usuario = "jessica";
+//        $senha = "jessica";
 
         //trocar por -> se encontrou no banco
         if($usuario=="jessica" && $senha=="jessica") {
