@@ -13,7 +13,5 @@
 				RewriteCond %{REQUEST_FILENAME}\.php -f
 		        RewriteRule ^(.*)$ $1.php?codshow=$1
 
-				RewriteRule ^														controller/index.php
-				RewriteRule ^masculino/([_0-9a-z-]+)?$									modelos-listagem.php?link_automatico=$1
-				RewriteRule ^modelos/([_0-9a-z-]+)?$									modelos-detalhe.php?link_automatico=$1
+				RewriteRule ^														pages/index.php
 </IfModule>
