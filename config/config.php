@@ -1,6 +1,6 @@
 <?php
 //Configuração de pastas
-define('URL_INSTALACAO', 'localhost/prosystem/prosystem/');
+define('URL_INSTALACAO', 'https://tirys.github.io/prosystem/');
 
 //Configuração de banco de dados
 define('HOST_DB','localhost');
