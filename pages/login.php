@@ -6,7 +6,7 @@ require ('../controller/verificalogin.php');
 $usuario = $_POST['usuario'];
 $senha = $_POST['senha'];
 
-$verificalogin = new VerificaLogin($usuario,$senha);
+$verificalogin = new VerificaLogin();
 $resultado = $verificalogin->verificaLogin($usuario,$senha);
 
 if($resultado==1) {

@@ -3,13 +3,11 @@ include('config.php');
 
 class classeConexao
 {
-
     protected $user = USER_DB; // Usuário do banco de dados
     protected $senha = PASS_DB; // Senha do banco de dados
     protected $bd = NAME_DB; // Nome do Banco de dados MySQL
     protected $server = HOST_DB; // Host – servidor
     protected $con;
-
 
     //Construtor
     public function __construct()
