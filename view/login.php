@@ -1,6 +1,19 @@
 <?php
+    require ('../controller/verificalogin.php');
     //capturandoerros
     $erro = $_GET['erro'];
+    $cookie = $_COOKIE['auth'];
+    $cookie = json_decode($cookie,true);
+
+    if(count($cookie)>0) {
+
+        $verificalogin = new VerificaLogin();
+        $resultado = $verificalogin->verificaToken($cookie['t']);
+
+        if($resultado==1) {
+            header('location:dashboard');
+        }
+    }
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->

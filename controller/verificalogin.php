@@ -29,13 +29,34 @@ class VerificaLogin
                 'i' => $idSessao,
                 't' => $token
             );
-            setcookie( 'auth', json_encode( $cookieToken ), $expire, '/', URL_INSTALACAO, isset( $_SERVER["HTTPS"] ), true );
+            setcookie( 'auth', json_encode( $cookieToken ), $expire, '/', 'localhost', isset( $_SERVER["HTTPS"] ), false );
 
             $conexao::exec("INSERT INTO tb_sessao values (null,{$resultado['id']},'{$token}',null,null,null)");
 
             return true;
         }
         else {
+            return false;
+        }
+    }
+
+    public  function verificaToken($token) {
+        //Ver se da pra fazer pela model
+        $conexao = new classeConexao();
+        $resultado = $conexao::fetchuniq("SELECT * FROM tb_sessao WHERE tb_sessao_token = '{$token}'");
+
+        if(count($resultado)>0) {
+
+            $idSessao = md5( uniqid( mt_rand(), true ) );
+            $expire = ( time() + ( 30 * 24 * 3600 ) ); // O cookie não deve ser eterno.
+            $cookieToken = array(
+                'i' => $idSessao,
+                't' => $token
+            );
+            return true;
+        }
+        else {
+            unset($_COOKIE['auth']);
             return false;
         }
     }
