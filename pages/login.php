@@ -10,5 +10,8 @@ $verificalogin = new VerificaLogin($usuario,$senha);
 $resultado = $verificalogin->verificaLogin($usuario,$senha);
 
 if($resultado==1) {
-  header("location:../dashboard");
+  header('location:../dashboard');
+}
+else {
+    header('location:../errologin');
 }

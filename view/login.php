@@ -1,3 +1,7 @@
+<?php
+    //capturandoerros
+    $erro = $_GET['erro'];
+?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -52,6 +56,16 @@
                         <button class="close" data-close="alert"></button>
                         <span>Por favor, insira seu usuário e senha. </span>
                     </div>
+
+                    <?php
+                        //Se o usuário errou a senha
+                        if($erro=="true") {
+                            echo '  <div class="alert alert-danger">
+                                    <button class="close" data-close="alert"></button>
+                                    <span>Usuário ou senha inválidos! </span>
+                                    </div>';
+                        }
+                    ?>
                     <div class="row">
                         <div class="col-xs-6">
                             <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Usuário" name="usuario" required/> </div>

@@ -15,4 +15,5 @@
 
 				RewriteRule ^index												    view/login.php
 				RewriteRule ^dashboard                                              view/dashboard.php
+				RewriteRule ^errologin                                              view/login.php?erro=true
 </IfModule>
