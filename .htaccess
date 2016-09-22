@@ -13,6 +13,6 @@
 				RewriteCond %{REQUEST_FILENAME}\.php -f
 		        RewriteRule ^(.*)$ $1.php?codshow=$1
 
-				RewriteRule ^index.php												pages/index.php
-				RewriteRule ^login                                                  pages/login.php
+				RewriteRule ^index												    view/login.php
+				RewriteRule ^dashboard                                              view/dashboard.php
 </IfModule>

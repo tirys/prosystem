@@ -9,10 +9,6 @@ class VerificaLogin
     {
         //fazer o select aqui (pela model)
 
-        //valores exemplos
-//        $usuario = "jessica";
-//        $senha = "jessica";
-
         //trocar por -> se encontrou no banco
         if($usuario=="jessica" && $senha=="jessica") {
             //Gravar em cookie e em sessão as informações do usuario para mantê-lo logado
