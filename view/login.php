@@ -2,6 +2,9 @@
     require ('../controller/verificalogin.php');
     //capturandoerros
     $erro = $_GET['erro'];
+    $sessao = $_GET['sessao'];
+    $logout = $_GET['logout'];
+
     $cookie = $_COOKIE['auth'];
     $cookie = json_decode($cookie,true);
 
@@ -76,6 +79,18 @@
                             echo '  <div class="alert alert-danger">
                                     <button class="close" data-close="alert"></button>
                                     <span>Usuário ou senha inválidos! </span>
+                                    </div>';
+                        }
+                        else if($sessao=="false") {
+                            echo '  <div class="alert alert-danger">
+                                    <button class="close" data-close="alert"></button>
+                                    <span>Sessão expirada, por favor, realize o login novamente! </span>
+                                    </div>';
+                        }
+                        else if($logout=="true") {
+                            echo '  <div class="alert alert-success">
+                                    <button class="close" data-close="alert"></button>
+                                    <span>Logout efetuado com sucesso! </span>
                                     </div>';
                         }
                     ?>

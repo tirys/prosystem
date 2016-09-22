@@ -13,7 +13,10 @@
 				RewriteCond %{REQUEST_FILENAME}\.php -f
 		        RewriteRule ^(.*)$ $1.php?codshow=$1
 
+                #Regras login.php
 				RewriteRule ^index												    view/login.php
 				RewriteRule ^dashboard                                              view/dashboard.php
 				RewriteRule ^errologin                                              view/login.php?erro=true
+				RewriteRule ^sessaoexpirada                                         view/login.php?sessao=false
+				RewriteRule ^logout                                                 view/login.php?logout=true
 </IfModule>

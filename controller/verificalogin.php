@@ -61,6 +61,15 @@ class VerificaLogin
         }
     }
 
+    public function mataSessao($token) {
+        //Ver se da pra fazer pela model
+        $conexao = new classeConexao();
+        $resultado = $conexao::exec("DELETE FROM tb_sessao WHERE tb_sessao_token = '{$token}'");
+
+        unset($_COOKIE['auth']);
+        return true;
+    }
+
     public function setUsuario($usuario,$senha)
     {
         $this->usuario = $usuario;

@@ -1,3 +1,18 @@
+<?php
+require ('../controller/verificalogin.php');
+$cookie = $_COOKIE['auth'];
+$cookie = json_decode($cookie,true);
+
+if(count($cookie)>0) {
+
+    $verificalogin = new VerificaLogin();
+    $resultado = $verificalogin->verificaToken($cookie['t']);
+
+    if($resultado==0) {
+        header('location:sessaoexpirada');
+    }
+}
+?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -271,7 +286,7 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-quick-sidebar-toggler">
-                        <a href="javascript:;" class="dropdown-toggle" alt="Sair" title="Sair">
+                        <a href="pages/logout.php" class="dropdown-toggle" alt="Sair" title="Sair">
                             <i class="icon-logout"></i>
                         </a>
                     </li>
