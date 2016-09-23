@@ -113,7 +113,7 @@
                         </a>
                     </li>
                     <?php echo ($_GET['idMenu'] == 6 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
-                        <a href="layout_ajax_page.html" class="nav-link ">
+                        <a href="listar/usuarios" class="nav-link ">
                             <span class="title">Ver usuários</span>
                         </a>
                     </li>
@@ -136,7 +136,7 @@
                         </a>
                     </li>
                     <?php echo ($_GET['idMenu'] == 8 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
-                        <a href="layout_ajax_page.html" class="nav-link ">
+                        <a href="listar/empresas" class="nav-link ">
                             <span class="title">Ver empresas</span>
                         </a>
                     </li>

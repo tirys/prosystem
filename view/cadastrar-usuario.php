@@ -2,6 +2,8 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 
+echo $_GET['id'];
+
 include("topo.php");
 ?>
     <div class="clearfix"></div>
@@ -38,7 +40,7 @@ include("topo.php");
                             </div>
                             <div class="portlet-body">
                                 <!-- BEGIN FORM-->
-                                <form action="#" id="form_sample_1" class="form-horizontal">
+                                <form action="model/cadastraUsuario.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
                                     <div class="form-body">
                                         <div class="alert alert-danger display-hide">
                                             <button class="close" data-close="alert"></button>
@@ -57,7 +59,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-user"></i>
                                                             </span>
-                                                <input type="text" name="name" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>
+                                                <input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -69,7 +71,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
-                                                    <input type="text" class="form-control" name="input_group" placeholder="Email do usuário" required>
+                                                    <input type="text" class="form-control" name="emailUsuario" placeholder="Email do usuário" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -95,7 +97,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-user"></i>
                                                             </span>
-                                                <input name="number" type="text" placeholder="Login do usuário" class="form-control" required/>
+                                                <input name="loginUsuario" type="text" placeholder="Login do usuário" class="form-control" required/>
                                                 </div>
                                                 </div>
                                         </div>
@@ -108,7 +110,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-lock"></i>
                                                             </span>
-                                                <input name="senha" type="password" placeholder="******" class="form-control" required/>
+                                                <input name="senhaUsuario" type="password" placeholder="******" class="form-control" required/>
                                                     </div>
                                             </div>
                                         </div>
@@ -119,22 +121,28 @@ include("topo.php");
                                             </label>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="tipoUsuario" id="tipoUsuario">
-                                                    <option value="clientes">Cliente</option>
-                                                    <option value="funcionarios">Funcionário</option>
-                                                    <option value="administradores">Administrador</option>
+                                                    <option value="cli">Cliente</option>
+                                                    <option value="fun">Funcionário</option>
+                                                    <option value="adm">Administrador</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="form-group" id="empresaU">
                                             <label class="control-label col-md-3">Empresa
-                                                <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="empresaUsuario" id="empresaUsuario">
-                                                    <option value="1">Empresa1</option>
-                                                    <option value="2">Empresa2</option>
-                                                    <option value="3">Empresa3</option>
+                                                    <?php
+                                                    $conexao = new classeConexao();
+                                                    $empresas = $conexao::fetch("SELECT id, tb_empresas_nome as nome FROM tb_empresas");
+
+                                                    foreach ($empresas as $emp){
+                                                        $html .= '<option value="'.$emp[id].'">'.$emp[nome].'</option>';
+                                                    }
+                                                    echo $html;
+
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -142,10 +150,9 @@ include("topo.php");
                                         <!-- Apenas funcionarios-->
                                         <div class="form-group"  id="cargahorariaU" style="display: none;">
                                             <label class="control-label col-md-3">Carga Horária
-                                                <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <input name="cargahoraria" type="text" placeholder="Carga horária" class="form-control" required/></div>
+                                                <input name="cargaHoraria" type="text" placeholder="Carga horária" class="form-control"/></div>
                                         </div>
 
                                     </div>
@@ -215,11 +222,11 @@ include("topo.php");
 
     //Jquery para ativar campos extras
     jq('#tipoUsuario').on('change', function () {
-        if( jq(this).val() == 'clientes') {
+        if( jq(this).val() == 'cli') {
             jq('#empresaU').attr('style','');
             jq('#cargahorariaU').attr('style','display:none;');
         }
-        else if (jq(this).val() == 'funcionarios') {
+        else if (jq(this).val() == 'fun') {
             jq('#cargahorariaU').attr('style','');
             jq('#empresaU').attr('style','display:none;');
         }
