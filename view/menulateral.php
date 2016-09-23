@@ -31,7 +31,7 @@
 
 
             <li class="nav-item start active open">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="dashboard" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
                     <span class="title">Início</span>
                     <span class="selected"></span>

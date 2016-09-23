@@ -12,7 +12,7 @@ include("topo.php");
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
                         <li>
-                            <span>Caminho para a página</span>
+                            <span>Usuários > Cadastrar</span>
                         </li>
                     </ul>
                     <div class="page-toolbar">
@@ -23,8 +23,8 @@ include("topo.php");
                         </div>
                     </div>
                 </div>
-                <h1 class="page-title"> Nome Página
-                    <small>Descrição</small>
+                <h1 class="page-title"> Novo usuário
+                    <small>cadastro de usuários para acesso ao sistema</small>
                 </h1>
             </div>
         </div>
