@@ -2,7 +2,7 @@
 <div class="page-footer">
     <div class="page-footer-inner">  Agência Prospecta &copy;
         &nbsp;|&nbsp;
-        2016
+       2016
     </div>
     <div class="scroll-to-top">
         <i class="icon-arrow-up"></i>
@@ -24,7 +24,6 @@
 <script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
-
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="view/assets/global/plugins/moment.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>

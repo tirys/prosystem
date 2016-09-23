@@ -2,10 +2,10 @@
     require ('../controller/verificalogin.php');
     //capturandoerros
     $erro = isset($_GET['erro']) ? $_GET['erro'] : '';
-    $sessao =isset($_GET['sessao ']) ? $_GET['sessao '] : '';;
-    $logout =isset($_GET['logout  ']) ? $_GET['logout '] : '';;
+    $sessao =isset($_GET['sessao ']) ? $_GET['sessao '] : '';
+    $logout =isset($_GET['logout  ']) ? $_GET['logout '] : '';
 
-    $cookie = isset($_COOKIE['auth']) ? $_COOKIE['auth '] : '';;
+    $cookie = $_COOKIE['auth'];
     $cookie = json_decode($cookie,true);
 
     if(count($cookie)>0) {
