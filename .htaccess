@@ -23,4 +23,7 @@
 				#Regras Cadastros
 				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php
 				RewriteRule ^cadastrar/empresa$										view/cadastrar-empresa.php
+
+
+				RewriteRule ^listar/empresas$										view/listar-empresa.php
 </IfModule>

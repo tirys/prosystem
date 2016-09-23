@@ -11,7 +11,7 @@ if ($acao == 1) {
 
 
     if ($insert) {
-        header('location:../dashboard');
+        header('location:../listar/empresas');
     }
 }
 
