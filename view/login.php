@@ -5,7 +5,7 @@
     $sessao =isset($_GET['sessao ']) ? $_GET['sessao '] : '';
     $logout =isset($_GET['logout  ']) ? $_GET['logout '] : '';
 
-    $cookie = $_COOKIE['auth'];
+$cookie = $_COOKIE['auth'];
     $cookie = json_decode($cookie,true);
 
     if(count($cookie)>0) {
