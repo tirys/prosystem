@@ -23,6 +23,7 @@ if(count($cookie)>0) {
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
+    <base href="<?=BASE_URL?>"/>
     <meta charset="utf-8" />
     <title>Prospecta - Dashboard</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

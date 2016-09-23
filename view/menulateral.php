@@ -77,7 +77,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="<?=URL_INSTALACAO?>cadastrar/usuario" class="nav-link ">
+                        <a href="cadastrar/usuario" class="nav-link ">
                             <span class="title">Novo usuário</span>
                         </a>
                     </li>

@@ -21,5 +21,5 @@
 				RewriteRule ^logout                                                 view/login.php?logout=true
 
 				#Regras Cadastros
-				RewriteRule ^cadastrar/usuario$																	   view/cadastrar-usuario.php
+				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php
 </IfModule>

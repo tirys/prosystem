@@ -1,6 +1,7 @@
 <?php
 include("topo.php");
 ?>
+
 <div class="clearfix"></div>
 <div class="page-container">
     <?php include("menulateral.php"); ?>
