@@ -8,6 +8,7 @@
     $cookie = $_COOKIE['auth'];
     $cookie = json_decode($cookie,true);
 
+
     if(count($cookie)>0) {
 
         $verificalogin = new VerificaLogin();
