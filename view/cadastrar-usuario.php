@@ -205,6 +205,10 @@ include("topo.php");
     <script src="view/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
     <script src="view/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<link href="view/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS -->
+
 
 <script>
     var jq = jQuery.noConflict();
