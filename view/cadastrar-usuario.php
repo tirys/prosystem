@@ -74,12 +74,16 @@ include("topo.php");
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Foto
-                                                <span class="required">  </span>
-                                            </label>
-                                            <div class="col-md-4">
-                                                <input name="url" type="text" class="form-control"/>
-                                                <span class="help-block"> formatos aceitos: JPG ou PNG </span>
+                                            <label class="control-label col-md-3">Foto:</label>
+                                            <div class="col-md-9">
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                            <span class="btn green btn-file">
+                                                                <span class="fileinput-new"> Select file </span>
+                                                                <span class="fileinput-exists"> Change </span>
+                                                                <input type="hidden" value="" name="..."><input type="file" name="fotoUser"> </span>
+                                                    <span class="fileinput-filename"></span> &nbsp;
+                                                    <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
