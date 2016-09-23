@@ -1,2 +1,2 @@
 <?php
-	echo 'Não há nada aqui :)'; 
+	echo 'Não há nada aqui :)';
