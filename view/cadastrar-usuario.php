@@ -87,14 +87,25 @@ include("topo.php");
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <input name="number" type="text" placeholder="Login do usuário" class="form-control" required/></div>
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-user"></i>
+                                                            </span>
+                                                <input name="number" type="text" placeholder="Login do usuário" class="form-control" required/>
+                                                </div>
+                                                </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Senha
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-lock"></i>
+                                                            </span>
                                                 <input name="senha" type="password" placeholder="******" class="form-control" required/>
+                                                    </div>
                                             </div>
                                         </div>
 
@@ -111,7 +122,7 @@ include("topo.php");
                                             </div>
                                         </div>
 
-                                        <div class="form-group" id="empresaU" style="display: none;">
+                                        <div class="form-group" id="empresaU">
                                             <label class="control-label col-md-3">Empresa
                                                 <span class="required"> * </span>
                                             </label>
