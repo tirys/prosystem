@@ -15,15 +15,19 @@
 
                 #Regras login.php
 				RewriteRule ^index												    view/login.php
-				RewriteRule ^dashboard                                              view/dashboard.php
+				RewriteRule ^dashboard                                              view/dashboard.php?idMenu=1
 				RewriteRule ^errologin                                              view/login.php?erro=true
 				RewriteRule ^sessaoexpirada                                         view/login.php?sessao=false
 				RewriteRule ^logout                                                 view/login.php?logout=true
 
+				#Regras Menu (Itens não existentes)
+				RewriteRule ^clientes                                               view/clientes.php?idMenu=2
+				RewriteRule ^projetos                                               view/projetos.php?idMenu=3
+				RewriteRule ^tarefas                                                view/tarefas.php?idMenu=4
+
 				#Regras Cadastros
-				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php
-				RewriteRule ^cadastrar/empresa$										view/cadastrar-empresa.php
-
-
-				RewriteRule ^listar/empresas$										view/listar-empresa.php
+				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php?idMenu=5
+				RewriteRule ^listar/usuario$										view/listar-usuario.php?idMenu=6
+				RewriteRule ^cadastrar/empresa$										view/cadastrar-empresa.php?idMenu=7
+				RewriteRule ^listar/empresas$										view/listar-empresa.php?idMenu=8
 </IfModule>
