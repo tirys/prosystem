@@ -1,11 +1,11 @@
 <?php
     require ('../controller/verificalogin.php');
     //capturandoerros
-    $erro = $_GET['erro'];
-    $sessao = $_GET['sessao'];
-    $logout = $_GET['logout'];
+    $erro = isset($_GET['erro']) ? $_GET['erro'] : '';
+    $sessao =isset($_GET['sessao ']) ? $_GET['sessao '] : '';;
+    $logout =isset($_GET['logout  ']) ? $_GET['logout '] : '';;
 
-    $cookie = $_COOKIE['auth'];
+    $cookie = isset($_COOKIE['auth']) ? $_COOKIE['auth '] : '';;
     $cookie = json_decode($cookie,true);
 
     if(count($cookie)>0) {
