@@ -79,7 +79,7 @@ include("topo.php");
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <input name="digits" type="password" class="form-control" /> </div>
+                                                <input name="senha" type="password" class="form-control" /> </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Credit Card
