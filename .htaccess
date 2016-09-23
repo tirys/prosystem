@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-			ErrorDocument 404 http://localhost/sisteTeste/erros/404.php
+			ErrorDocument 404 http://localhost/prosystem/prosystem/erros/404.php
 			  RewriteEngine On
 
 				#força www
@@ -19,4 +19,7 @@
 				RewriteRule ^errologin                                              view/login.php?erro=true
 				RewriteRule ^sessaoexpirada                                         view/login.php?sessao=false
 				RewriteRule ^logout                                                 view/login.php?logout=true
+
+				#Regras Cadastros
+				RewriteRule ^cadastrar/usuario$																	   view/cadastrar-usuario.php
 </IfModule>
