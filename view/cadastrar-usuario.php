@@ -31,8 +31,8 @@ include("topo.php");
                         <div class="portlet light portlet-fit portlet-form bordered">
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <i class="icon-user font-blue"></i>
-                                    <span class="caption-subject font-blue sbold uppercase">Novo usuário</span>
+                                    <i class="icon-user font-green"></i>
+                                    <span class="caption-subject font-green sbold uppercase">Novo usuário</span>
                                 </div>
 
                             </div>
