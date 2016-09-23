@@ -90,8 +90,8 @@ include("topo.php");
                 </div>
                 <div class="clearfix"></div>
                 <!-- END DASHBOARD STATS 1-->
-                <div class="row">
-                    <div class="col-lg-6 col-xs-12 col-sm-12">
+                <div class="row ui-sortable" id="sortable_portlets">
+                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable">
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
                                 <div class="caption">
@@ -212,7 +212,7 @@ include("topo.php");
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable">
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
                                 <div class="caption">
