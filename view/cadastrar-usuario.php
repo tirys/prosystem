@@ -2,9 +2,32 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 
-echo $_GET['id'];
+//echo $_GET['id'];
+$idUser = "";
+$edicao = 0;
+$idUser = $_GET["idUser"];
 
 include("topo.php");
+
+if($idUser != ""){
+    $conexao = new classeConexao();
+    $user = "";
+    $idEmpresa = "";
+    $tipoUser="adm";
+    $user = $conexao::fetchuniq("SELECT tb_usuarios_email as email, tb_usuarios_nome as nome, tb_usuario_login as login FROM tb_usuarios WHERE id = '".$idUser."'");
+
+    $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria as carga FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
+    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo[carga];}
+
+    $buscaTipo = $conexao::fetchuniq("SELECT tb_clientes_empresas_id as empresaID FROM tb_clientes WHERE tb_clientes_usuario_id = '".$idUser."'");
+    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo[empresaID];}
+
+
+    if($user!= ""){
+        $edicao = 1;
+    }
+}
+
 ?>
     <div class="clearfix"></div>
     <div class="page-container">
@@ -40,7 +63,7 @@ include("topo.php");
                             </div>
                             <div class="portlet-body">
                                 <!-- BEGIN FORM-->
-                                <form action="model/cadastraUsuario.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
+                                <form method="post" id="form_sample_1" class="form-horizontal">
                                     <div class="form-body">
                                         <div class="alert alert-danger display-hide">
                                             <button class="close" data-close="alert"></button>
@@ -59,7 +82,12 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-user"></i>
                                                             </span>
-                                                <input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>
+                                                <?php if($edicao == 1){
+                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user[nome].'" required/></div>';
+                                                }else{
+                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>';
+                                                } ?>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -71,8 +99,12 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
-                                                    <input type="text" class="form-control" name="emailUsuario" placeholder="Email do usuário" required>
-                                                </div>
+                                                    <?php if($edicao == 1){
+                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user[email].'" placeholder="Email do usuário" required></div>';
+                                                    }else{
+                                                        echo '<input type="text" class="form-control" name="emailUsuario" placeholder="Email do usuário" required></div>';
+                                                    } ?>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -97,8 +129,12 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-user"></i>
                                                             </span>
-                                                <input name="loginUsuario" type="text" placeholder="Login do usuário" class="form-control" required/>
-                                                </div>
+                                                    <?php if($edicao == 1){
+                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user[login].'" class="form-control" required disabled/></div>';
+                                                    }else{
+                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" class="form-control" required/></div>';
+                                                    } ?>
+
                                                 </div>
                                         </div>
                                         <div class="form-group">
@@ -120,10 +156,10 @@ include("topo.php");
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <select class="form-control" name="tipoUsuario" id="tipoUsuario">
-                                                    <option value="cli">Cliente</option>
-                                                    <option value="fun">Funcionário</option>
-                                                    <option value="adm">Administrador</option>
+                                                <select class="form-control" name="tipoUsuario" id="tipoUsuario" disabled>
+                                                    <?php echo($tipoUser == "cli" ? '<option value="cli" selected>Cliente</option>' : '<option value="cli">Cliente</option>');?>
+                                                    <?php echo($tipoUser == "fun" ? '<option value="fun" selected>Funcionário</option>' : '<option value="fun">Funcionário</option>');?>
+                                                    <?php echo($tipoUser == "adm" ? '<option value="adm" selected>Administrador</option>' : '<option value="adm">Administrador</option>');?>
                                                 </select>
                                             </div>
                                         </div>
@@ -134,11 +170,15 @@ include("topo.php");
                                             <div class="col-md-4">
                                                 <select class="form-control" name="empresaUsuario" id="empresaUsuario">
                                                     <?php
-                                                    $conexao = new classeConexao();
+                                                    //$conexao = new classeConexao();
                                                     $empresas = $conexao::fetch("SELECT id, tb_empresas_nome as nome FROM tb_empresas");
 
                                                     foreach ($empresas as $emp){
-                                                        $html .= '<option value="'.$emp[id].'">'.$emp[nome].'</option>';
+                                                        if($idEmpresa == $emp[id]){
+                                                            $html .= '<option value="'.$emp[id].'" selected>'.$emp[nome].'</option>';
+                                                        }else{
+                                                            $html .= '<option value="'.$emp[id].'">'.$emp[nome].'</option>';
+                                                        }
                                                     }
                                                     echo $html;
 
@@ -152,14 +192,25 @@ include("topo.php");
                                             <label class="control-label col-md-3">Carga Horária
                                             </label>
                                             <div class="col-md-4">
-                                                <input name="cargaHoraria" type="text" placeholder="Carga horária" class="form-control"/></div>
+                                                <?php if($tipoUser == "fun"){
+                                                    echo '<input name="cargaHoraria" type="text" placeholder="Carga horária" value="'.$cargaHoraria.'" class="form-control"/></div>';
+                                                }else{
+                                                    echo '<input name="cargaHoraria" type="text" placeholder="Carga horária" class="form-control"/></div>';
+                                                } ?>
                                         </div>
 
                                     </div>
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <button type="submit" class="btn green">Enviar</button>
+                                                <?php
+                                                    if($idUser != ""){
+                                                        echo '<button type="submit" formaction="model/cadastraUsuario.php?acao=2&idUser='.$idUser.'" class="btn green">Enviar</button>';
+                                                    }else{
+                                                        echo '<button type="submit" formaction="model/cadastraUsuario.php?acao=1" class="btn green">Enviar</button>';
+                                                    }
+                                                ?>
+
                                                 <button type="button" class="btn grey-salsa btn-outline">Cancelar</button>
                                             </div>
                                         </div>
@@ -176,6 +227,7 @@ include("topo.php");
 
         </div>
     </div>
+
     <!-- BEGIN CORE PLUGINS -->
     <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

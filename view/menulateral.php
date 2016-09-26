@@ -113,9 +113,14 @@
                         </a>
                     </li>
                     <?php echo ($_GET['idMenu'] == 6 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
-                        <a href="listar/usuarios" class="nav-link ">
+                        <a href="listar/usuario" class="nav-link ">
                             <span class="title">Ver usuários</span>
                         </a>
+                    </li>
+                    <?php echo ($_GET['idMenu'] == 99 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="editar/usuario" class="nav-link ">
+                        <span class="title">Editar usuários</span>
+                    </a>
                     </li>
                 </ul>
             </li>
