@@ -57,6 +57,28 @@ include("topo.php");
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="control-label col-md-3">Website
+                                            </label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-globe"></i>
+                                                            </span>
+                                                    <input type="text" name="sitedaEmpresa" placeholder="Site da Empresa" data-required="1" class="form-control"/></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Email
+                                            </label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                    <input type="text" name="emaildaEmpresa" placeholder="Email para contato" data-required="1" class="form-control"/></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label col-md-3">Endereço
                                             </label>
                                             <div class="col-md-4">
@@ -66,6 +88,19 @@ include("topo.php");
                                                             </span>
                                                     <input type="text" class="form-control" name="enderecoEmpresa" placeholder="Endereço da empresa" required>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Anotações
+                                            </label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                    <textarea name="anotacaoEmpresa" placeholder="Obervações sobre a empresa" data-required="1" class="form-control autosizeme">
+
+                                                    </textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -112,6 +147,8 @@ include("topo.php");
     <script src="view/assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>
     <script src="view/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js"
             type="text/javascript"></script>
+
+<script src="view/assets/global/plugins/autosize/autosize.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="view/assets/global/scripts/app.min.js" type="text/javascript"></script>
