@@ -31,4 +31,7 @@
 				RewriteRule ^editar/usuario/([_0-9a-z-]+)?$							view/cadastrar-usuario.php?idMenu=99&idUser=$1
 				RewriteRule ^cadastrar/empresa$										view/cadastrar-empresa.php?idMenu=7
 				RewriteRule ^listar/empresas$										view/listar-empresa.php?idMenu=8
+
+				#Regras páginas de visualização
+				RewriteRule ^empresa/([_0-9a-z-]+)?$							    view/ver-empresa.php?idMenu=99&idEmpresa=$1
 </IfModule>

@@ -103,7 +103,7 @@ $empresas = $conexao::fetch("SELECT * FROM tb_empresas");
 <!--                                            </td>-->
                                             <td> <?=$empresa['id']?> </td>
 
-                                            <td><?=$empresa['tb_empresas_nome']?></td>
+                                            <td><a href="empresa/<?=$empresa['id']?>"><?=$empresa['tb_empresas_nome']?></a></td>
 
 
                                             <td><a href="http://<?=$empresa['tb_empresas_site']?>"><?=$empresa['tb_empresas_site']?></a></td>

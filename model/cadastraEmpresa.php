@@ -11,6 +11,12 @@ include('../config/conexao.php');
 
 if ($acao == 1) {
     $conexao = new classeConexao();
+
+    $nomeEmpresa = mysqli_real_escape_string($conexao->obj(),$nomeEmpresa);
+    $enderecoEmpresa = mysqli_real_escape_string($conexao->obj(),$enderecoEmpresa);
+    $site = mysqli_real_escape_string($conexao->obj(),$site);
+    $anotacao = mysqli_real_escape_string($conexao->obj(),$anotacao);
+
     $insert = $conexao::exec("INSERT INTO tb_empresas (id,tb_empresas_nome,tb_empresas_endereco,tb_empresas_email,tb_empresas_site,tb_empresas_status,tb_empresas_anotacao) values (null,'{$nomeEmpresa}','{$enderecoEmpresa}','{$email}','{$site}',1,'{$anotacao}')");
 
 
