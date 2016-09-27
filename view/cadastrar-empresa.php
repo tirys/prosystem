@@ -2,7 +2,13 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 
+$idEmpresa = isset($_GET['idEmpresa']) ? $_GET['idEmpresa'] : '';
+
 include("topo.php");
+
+$conexao = new classeConexao();
+$dadosEmpresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '".$idEmpresa."'");
+
 ?>
     <div class="clearfix"></div>
     <div class="page-container">
@@ -38,7 +44,13 @@ include("topo.php");
                             </div>
                             <div class="portlet-body">
                                 <!-- BEGIN FORM-->
-                                <form action="model/cadastraEmpresa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
+                                <?php
+                                    if($dadosEmpresa['id'] > 0){
+                                        echo'<form action="model/cadastraEmpresa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal"><input type="hidden" name="idEmpresa" value="'.$idEmpresa.'"/>';
+                                    }else{
+                                        echo'<form action="model/cadastraEmpresa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">';
+                                    }
+                                ?>
                                     <div class="form-body">
                                         <div class="alert alert-danger display-hide">
                                             <button class="close" data-close="alert"></button>
@@ -53,7 +65,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-user"></i>
                                                             </span>
-                                                <input type="text" name="nomedaEmpresa" placeholder="Nome da empresa" data-required="1" class="form-control" required/></div>
+                                                <input type="text" name="nomedaEmpresa" placeholder="Nome da empresa" data-required="1" class="form-control" value="<?=$dadosEmpresa['tb_empresas_nome']?>" required/></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -64,7 +76,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-globe"></i>
                                                             </span>
-                                                    <input type="text" name="sitedaEmpresa" placeholder="Site da Empresa" data-required="1" class="form-control"/></div>
+                                                    <input type="text" name="sitedaEmpresa" placeholder="Site da Empresa" data-required="1" value="<?=$dadosEmpresa['tb_empresas_site']?>" class="form-control"/></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -75,7 +87,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
-                                                    <input type="text" name="emaildaEmpresa" placeholder="Email para contato" data-required="1" class="form-control"/></div>
+                                                    <input type="text" name="emaildaEmpresa" placeholder="Email para contato" data-required="1" value="<?=$dadosEmpresa['tb_empresas_email']?>" class="form-control"/></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -86,7 +98,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-map-marker"></i>
                                                             </span>
-                                                    <input type="text" class="form-control" name="enderecoEmpresa" placeholder="Endereço da empresa" required>
+                                                    <input type="text" class="form-control" name="enderecoEmpresa" placeholder="Endereço da empresa" value="<?=$dadosEmpresa['tb_empresas_endereco']?>" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,9 +110,7 @@ include("topo.php");
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
-                                                    <textarea name="anotacaoEmpresa" placeholder="Obervações sobre a empresa" data-required="1" class="form-control autosizeme">
-
-                                                    </textarea>
+                                                    <textarea name="anotacaoEmpresa" placeholder="Obervações sobre a empresa" data-required="1" class="form-control autosizeme"><?=$dadosEmpresa['tb_empresas_anotacao']?></textarea>
                                             </div>
                                         </div>
                                     </div>
