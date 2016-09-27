@@ -96,10 +96,27 @@
                 echo('<li class="nav-item"><a href="tarefas" class="nav-link nav-toggle"></span><span class="arrow"></span>');
             }
             ?>
-                    <i class="fa fa-tasks"></i>
-                    <span class="title">Tarefas</span>
-                    <span class="arrow"></span>
-                </a>
+            <i class="fa fa-tasks"></i>
+            <span class="title">Tarefas</span>
+            </a>
+                <ul class="sub-menu " > <!-- style="display: block;" para manter aberto-->
+                    <?php echo ($_GET['idMenu'] == 41 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="cadastrar/tarefas" class="nav-link nav-toggle">
+                        <span class="title">Nova Tarefa</span>
+                    </a>
+                    </li>
+
+                    <?php echo ($_GET['idMenu'] == 42 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="listar/tarefas" class="nav-link nav-toggle">
+                        <span class="title">Ver Tarefas</span>
+                    </a>
+
+                    <?php echo ($_GET['idMenu'] == 43 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="listar/minhas-tarefas" class="nav-link nav-toggle">
+                        <span class="title">Minhas Tarefas</span>
+                    </a>
+                    </li>
+                </ul>
             </li>
 
 
