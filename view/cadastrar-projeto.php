@@ -43,10 +43,11 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                         </div>
                         <div class="portlet-body">
                             <!-- BEGIN FORM-->
-                            <?php if ($dadosProjetos['id']>0) {?>
-                            <form action="model/cadastraProjeto.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
-                            <?php } else { ?>
+                            <?php if (isset($dadosProjetos['id'])) {?>
                                 <form action="model/cadastraProjeto.php?acao=2" method="post" id="form_sample_1" class="form-horizontal">
+                                <input type="hidden" name="idProjeto" value="<?=$dadosProjetos['id']?>"/>
+                            <?php } else { ?>
+                                <form action="model/cadastraProjeto.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
                                 <?php } ?>
 
                                 <div class="form-body">

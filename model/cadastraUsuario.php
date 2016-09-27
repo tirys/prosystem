@@ -23,16 +23,16 @@ if ($acao == 1) {
         if($tipoUsuario == "cli" || $tipoUsuario == "fun"){
             $idUsuario = $conexao::fetchuniq("SELECT MAX(id) as id FROM tb_usuarios");
             if($tipoUsuario == "fun"){
-                $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_tipo = 1");
-                $insert = $conexao::exec("INSERT INTO tb_funcionarios (tb_funcioanios_usuario_id,tb_funcionarios_carga_horaria) values ('{$idUsuario[id]}','{$cargaHoraria}')");
+                $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_tipo = 1 WHERE id={$idUsuario['id']}");
+                $insert = $conexao::exec("INSERT INTO tb_funcionarios (tb_funcioanios_usuario_id,tb_funcionarios_carga_horaria) values ('{$idUsuario['id']}','{$cargaHoraria}')");
                 //echo("INSERT INTO tb_funcionarios (tb_funcionarios_usuario_id,tb_funcionarios_carga_horaria) values ('{$idUsuario[id]}','{$cargaHoraria}')");
             }elseif($tipoUsuario == "cli"){
-                $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_tipo = 2");
-                $insert = $conexao::exec("INSERT INTO tb_clientes (tb_clientes_usuario_id,tb_clientes_empresas_id) values ('{$idUsuario[id]}','{$empresaUsuario}')");
+                $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_tipo = 2 WHERE id={$idUsuario['id']}");
+                $insert = $conexao::exec("INSERT INTO tb_clientes (tb_clientes_usuario_id,tb_clientes_empresas_id) values ('{$idUsuario['id']}','{$empresaUsuario}')");
                 //echo("INSERT INTO tb_clientes (tb_clientes_usuario_id,tb_clientes_empresas_id) values ('{$idUsuario[id]}','{$empresaUsuario}')");
             }elseif($tipoUsuario == "adm"){
-                $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_tipo = 0");
-                $insert = $conexao::exec("INSERT INTO tb_administradores (tb_administradores_usuario_id) values ('{$idUsuario[id]}')");
+                $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_tipo = 0 WHERE id={$idUsuario['id']}");
+                $insert = $conexao::exec("INSERT INTO tb_administradores (tb_administradores_usuario_id) values ('{$idUsuario['id']}')");
             }
 
         }

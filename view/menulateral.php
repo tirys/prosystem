@@ -64,7 +64,7 @@
 
 
             <?php
-            if($_GET['idMenu'] == 31){
+            if($_GET['idMenu'] == 31 || $_GET['idMenu'] == 32){
                 echo('<li class="nav-item start active open"><a href="javascript:;" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
                 echo('<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle"></span><span class="arrow"></span>');
@@ -77,6 +77,12 @@
                     <?php echo ($_GET['idMenu'] == 31 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                     <a href="cadastrar/projetos" class="nav-link nav-toggle">
                         <span class="title">Novo Projeto</span>
+                    </a>
+                    </li>
+
+                    <?php echo ($_GET['idMenu'] == 32 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="listar/projetos" class="nav-link nav-toggle">
+                        <span class="title">Ver Projetos</span>
                     </a>
                     </li>
                 </ul>
@@ -123,12 +129,7 @@
                             <span class="title">Ver usuários</span>
                         </a>
                     </li>
-                    <?php echo ($_GET['idMenu'] == 53 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
-                    <a href="editar/usuario" class="nav-link ">
-                        <span class="title">Editar usuários</span>
-                    </a>
-                    </li>
-                </ul>
+                  </ul>
             </li>
 
             <?php
@@ -138,7 +139,7 @@
                 echo('<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle"></span><span class="arrow"></span>');
             }
             ?>
-                    <i class="icon-user"></i>
+                    <i class="icon-briefcase"></i>
                     <span class="title">Empresas</span>
                 </a>
                 <ul class="sub-menu " > <!-- style="display: block;" para manter aberto-->

@@ -1,5 +1,6 @@
 <?php
 require ('../controller/verificalogin.php');
+require ('../config/funcoes.php');
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie,true);
 
