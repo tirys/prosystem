@@ -17,7 +17,7 @@ if ($acao == 1) {
     $nomeUsuario = mysqli_real_escape_string($conexao->obj(),$nomeUsuario);
     $emailUsuario = mysqli_real_escape_string($conexao->obj(),$emailUsuario);
 
-    $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}',null)");
+    $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','default/user.jpg')");
 
     if ($insert) {
         if($tipoUsuario == "cli" || $tipoUsuario == "fun"){

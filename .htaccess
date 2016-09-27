@@ -40,6 +40,6 @@
 
 				#Regras páginas de visualização
 				RewriteRule ^empresa/([_0-9a-z-]+)?$							    view/ver-empresa.php?idMenu=63&idEmpresa=$1
-				RewriteRule ^projeto/([_0-9a-z-]+)?$							    view/ver-projeto.php?idMenu=32&idProjeto=$1
+				RewriteRule ^projeto/([_0-9a-z-]+)?$						    view/ver-projeto.php?idMenu=32&idProjeto=$1
 
 </IfModule>

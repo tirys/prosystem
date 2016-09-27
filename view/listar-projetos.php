@@ -44,7 +44,7 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="btn-group">
-                                            <a id="sample_editable_1_new" href="cadastrar/projeto" class="btn sbold green"> Novo Projeto
+                                            <a id="sample_editable_1_new" href="cadastrar/projetos" class="btn sbold green"> Novo Projeto
                                                 <i class="fa fa-plus"></i>
                                             </a>
                                         </div>
