@@ -124,10 +124,10 @@ $empresas = $conexao::fetch("SELECT * FROM tb_empresas");
 
 
                                                 <?php if ($empresa['tb_empresas_status']==0) {?>
-                                                    <a id="reativar" data-role="<?=$empresa['id']?>" class="btn btn-xs btn-success" alt="Reativar" title="Reativar"> <i class="fa fa-arrow-up"></i>
+                                                    <a id="<?=$empresa['id']?>" data-role="<?=$empresa['id']?>" class="btn btn-xs btn-success reativar" alt="Reativar" title="Reativar"> <i class="fa fa-arrow-up"></i>
                                                     </a>
                                                 <?php } else {?>
-                                                    <a id="desativar" data-role="<?=$empresa['id']?>" class="btn btn-xs btn-danger" title="Desativar"> <i class="fa fa-times"></i>
+                                                    <a id="<?=$empresa['id']?>" data-role="<?=$empresa['id']?>" class="btn btn-xs btn-danger desativar" title="Desativar"> <i class="fa fa-times"></i>
                                                     </a>
                                                 <?php } ?>
 
@@ -161,51 +161,52 @@ $empresas = $conexao::fetch("SELECT * FROM tb_empresas");
 
 
 <script>
+//var j = jQuery.noConflict();
+ //$(document).ready(function () {
+     $('.desativar').on('click', function () {
+         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
+         $.ajax({
+             url: 'model/ws/ativacaoEmpresa.php',
+             type: 'GET',
+             data: {
+                 format: 'json',
+                 acao: 'desativar',
+                 id: idempresa
+             },
+             error: function () {
+                 $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+             },
+             dataType: 'json',
+             success: function (result) {
+                 if (result.status) {
+                     location.reload();
+                 }
+             }
+         });
+     });
 
-    $('#desativar').on('click',function(){
-        var idempresa = $(this).attr('data-role'); //pegando o id da empresa
+     $('.reativar').on('click', function () {
+         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
-        $.ajax({
-            url: 'model/ws/ativacaoEmpresa.php',
-            type: 'GET',
-            data: {
-                format: 'json',
-                acao: 'desativar',
-                id: idempresa
-            },
-            error: function() {
-                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
-            },
-            dataType: 'json',
-            success: function(result) {
-                if(result.status) {
-                    location.reload();
-                }
-            }
-        });
-    });
-
-    $('#reativar').on('click',function(){
-        var idempresa = $(this).attr('data-role'); //pegando o id da empresa
-
-        $.ajax({
-            url: 'model/ws/ativacaoEmpresa.php',
-            type: 'GET',
-            data: {
-                format: 'json',
-                acao: 'reativar',
-                id: idempresa
-            },
-            error: function() {
-                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
-            },
-            dataType: 'json',
-            success: function(result) {
-                if(result.status) {
-                    location.reload();
-                }
-            }
-        });
-    });
+         $.ajax({
+             url: 'model/ws/ativacaoEmpresa.php',
+             type: 'GET',
+             data: {
+                 format: 'json',
+                 acao: 'reativar',
+                 id: idempresa
+             },
+             error: function () {
+                 $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+             },
+             dataType: 'json',
+             success: function (result) {
+                 if (result.status) {
+                     location.reload();
+                 }
+             }
+         });
+     });
+ //});
 </script>
