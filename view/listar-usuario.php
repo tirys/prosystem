@@ -114,10 +114,10 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
 
 
                                             <?php if ($usuario['tb_usuarios_status']==0) {?>
-                                                <a id="reativar" data-role="<?=$usuario['id']?>" class="btn btn-xs btn-success" alt="Reativar" title="Reativar"> <i class="fa fa-arrow-up"></i>
+                                                <a id="<?=$usuario['id']?>" data-role="<?=$usuario['id']?>" class="btn btn-xs btn-success reativar" alt="Reativar" title="Reativar"> <i class="fa fa-arrow-up"></i>
                                                 </a>
                                             <?php } else {?>
-                                                <a id="desativar" data-role="<?=$usuario['id']?>" class="btn btn-xs btn-danger" title="Desativar"> <i class="fa fa-times"></i>
+                                                <a id="<?=$usuario['id']?>" data-role="<?=$usuario['id']?>" class="btn btn-xs btn-danger desativar" title="Desativar"> <i class="fa fa-times"></i>
                                                 </a>
                                             <?php } ?>
 
@@ -153,7 +153,7 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
 <script>
 
 
-    $('#desativar').on('click',function(){
+    $('.desativar').on('click',function(){
         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
         $.ajax({
@@ -176,7 +176,7 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
         });
     });
 
-    $('#reativar').on('click',function(){
+    $('.reativar').on('click',function(){
         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
         $.ajax({
