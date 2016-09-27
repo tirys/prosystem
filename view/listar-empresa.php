@@ -161,8 +161,7 @@ $empresas = $conexao::fetch("SELECT * FROM tb_empresas");
 
 
 <script>
-//var j = jQuery.noConflict();
- //$(document).ready(function () {
+
      $('.desativar').on('click', function () {
          var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
@@ -208,5 +207,5 @@ $empresas = $conexao::fetch("SELECT * FROM tb_empresas");
              }
          });
      });
- //});
+
 </script>
