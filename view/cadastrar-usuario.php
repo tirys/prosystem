@@ -8,19 +8,20 @@ $edicao = 0;
 $idUser = $_GET["idUser"];
 
 include("topo.php");
+$conexao = new classeConexao();
 
 if($idUser != ""){
-    $conexao = new classeConexao();
     $user = "";
     $idEmpresa = "";
+    $cargaHoraria="";
     $tipoUser="adm";
     $user = $conexao::fetchuniq("SELECT tb_usuarios_email as email, tb_usuarios_nome as nome, tb_usuario_login as login FROM tb_usuarios WHERE id = '".$idUser."'");
 
     $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria as carga FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
-    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo[carga];}
+    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo["carga"];}
 
     $buscaTipo = $conexao::fetchuniq("SELECT tb_clientes_empresas_id as empresaID FROM tb_clientes WHERE tb_clientes_usuario_id = '".$idUser."'");
-    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo[empresaID];}
+    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo["empresaID"];}
 
 
     if($user!= ""){
@@ -83,7 +84,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-user"></i>
                                                             </span>
                                                 <?php if($edicao == 1){
-                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user[nome].'" required/></div>';
+                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user["nome"].'" required/></div>';
                                                 }else{
                                                     echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>';
                                                 } ?>
@@ -100,7 +101,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user[email].'" placeholder="Email do usuário" required></div>';
+                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user["email"].'" placeholder="Email do usuário" required></div>';
                                                     }else{
                                                         echo '<input type="text" class="form-control" name="emailUsuario" placeholder="Email do usuário" required></div>';
                                                     } ?>
@@ -130,7 +131,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-user"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user[login].'" class="form-control" required disabled/></div>';
+                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user["login"].'" class="form-control" required disabled/></div>';
                                                     }else{
                                                         echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" class="form-control" required/></div>';
                                                     } ?>
@@ -156,7 +157,11 @@ if($idUser != ""){
                                                 <span class="required"> * </span>
                                             </label>
                                             <div class="col-md-4">
-                                                <select class="form-control" name="tipoUsuario" id="tipoUsuario" disabled>
+                                                <?php if($edicao == 1){
+                                                    echo ' <select class="form-control" name="tipoUsuario" id="tipoUsuario" disabled>';
+                                                }else{
+                                                    echo '<select class="form-control" name="tipoUsuario" id="tipoUsuario">';
+                                                }?>
                                                     <?php echo($tipoUser == "cli" ? '<option value="cli" selected>Cliente</option>' : '<option value="cli">Cliente</option>');?>
                                                     <?php echo($tipoUser == "fun" ? '<option value="fun" selected>Funcionário</option>' : '<option value="fun">Funcionário</option>');?>
                                                     <?php echo($tipoUser == "adm" ? '<option value="adm" selected>Administrador</option>' : '<option value="adm">Administrador</option>');?>
@@ -174,10 +179,10 @@ if($idUser != ""){
                                                     $empresas = $conexao::fetch("SELECT id, tb_empresas_nome as nome FROM tb_empresas");
 
                                                     foreach ($empresas as $emp){
-                                                        if($idEmpresa == $emp[id]){
-                                                            $html .= '<option value="'.$emp[id].'" selected>'.$emp[nome].'</option>';
+                                                        if($idEmpresa == $emp["id"]){
+                                                            $html .= '<option value="'.$emp["id"].'" selected>'.$emp["nome"].'</option>';
                                                         }else{
-                                                            $html .= '<option value="'.$emp[id].'">'.$emp[nome].'</option>';
+                                                            $html .= '<option value="'.$emp["id"].'">'.$emp["nome"].'</option>';
                                                         }
                                                     }
                                                     echo $html;

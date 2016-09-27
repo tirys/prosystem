@@ -22,16 +22,17 @@
 
 				#Regras Menu (Itens não existentes)
 				RewriteRule ^clientes                                               view/clientes.php?idMenu=2
-				RewriteRule ^projetos                                               view/projetos.php?idMenu=3
+				#RewriteRule ^projetos                                               view/projetos.php?idMenu=3
 				RewriteRule ^tarefas                                                view/tarefas.php?idMenu=4
 
 				#Regras Cadastros
-				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php?idMenu=5
-				RewriteRule ^listar/usuario$										view/listar-usuario.php?idMenu=6
-				RewriteRule ^editar/usuario/([_0-9a-z-]+)?$							view/cadastrar-usuario.php?idMenu=99&idUser=$1
-				RewriteRule ^cadastrar/empresa$										view/cadastrar-empresa.php?idMenu=7
-				RewriteRule ^listar/empresas$										view/listar-empresa.php?idMenu=8
+				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php?idMenu=51
+				RewriteRule ^listar/usuario$										view/listar-usuario.php?idMenu=52
+				RewriteRule ^editar/usuario/([_0-9a-z-]+)?$							view/cadastrar-usuario.php?idMenu=53&idUser=$1
+				RewriteRule ^cadastrar/empresa$										view/cadastrar-empresa.php?idMenu=61
+				RewriteRule ^listar/empresas$										view/listar-empresa.php?idMenu=62
+				RewriteRule ^cadastrar/projetos$									view/cadastrar-projeto.php?idMenu=31
 
 				#Regras páginas de visualização
-				RewriteRule ^empresa/([_0-9a-z-]+)?$							    view/ver-empresa.php?idMenu=99&idEmpresa=$1
+				RewriteRule ^empresa/([_0-9a-z-]+)?$							    view/ver-empresa.php?idMenu=63&idEmpresa=$1
 </IfModule>

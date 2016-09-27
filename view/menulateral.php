@@ -49,7 +49,6 @@
                 <h3 class="uppercase">Projetos</h3>
             </li>
 
-
             <?php
             if($_GET['idMenu'] == 2){
                 echo('<li class="nav-item start active open"><a href="clientes" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
@@ -65,16 +64,22 @@
 
 
             <?php
-            if($_GET['idMenu'] == 3){
-                echo('<li class="nav-item start active open"><a href="projetos" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
+            if($_GET['idMenu'] == 31){
+                echo('<li class="nav-item start active open"><a href="javascript:;" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
-                echo('<li class="nav-item"><a href="projetos" class="nav-link nav-toggle"></span><span class="arrow"></span>');
+                echo('<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle"></span><span class="arrow"></span>');
             }
             ?>
                     <i class="icon-folder"></i>
                     <span class="title">Projetos</span>
-                    <span class="arrow"></span>
                 </a>
+                <ul class="sub-menu " > <!-- style="display: block;" para manter aberto-->
+                    <?php echo ($_GET['idMenu'] == 31 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="cadastrar/projetos" class="nav-link nav-toggle">
+                        <span class="title">Novo Projeto</span>
+                    </a>
+                    </li>
+                </ul>
             </li>
 
 
@@ -96,8 +101,9 @@
             <li class="heading">
                 <h3 class="uppercase">Configurações</h3>
             </li>
+
             <?php
-            if($_GET['idMenu'] == 5 || $_GET['idMenu'] == 6){
+            if($_GET['idMenu'] == 51 || $_GET['idMenu'] == 52 || $_GET['idMenu'] == 53){
                 echo('<li class="nav-item start active open"><a href="javascript:;" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
                 echo('<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle"></span><span class="arrow"></span>');
@@ -107,25 +113,26 @@
                     <span class="title">Usuários</span>
                 </a>
                 <ul class="sub-menu " > <!-- style="display: block;" para manter aberto-->
-                    <?php echo ($_GET['idMenu'] == 5 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <?php echo ($_GET['idMenu'] == 51 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                         <a href="cadastrar/usuario" class="nav-link nav-toggle">
                             <span class="title">Novo usuário</span>
                         </a>
                     </li>
-                    <?php echo ($_GET['idMenu'] == 6 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <?php echo ($_GET['idMenu'] == 52 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                         <a href="listar/usuario" class="nav-link ">
                             <span class="title">Ver usuários</span>
                         </a>
                     </li>
-                    <?php echo ($_GET['idMenu'] == 99 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <?php echo ($_GET['idMenu'] == 53 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                     <a href="editar/usuario" class="nav-link ">
                         <span class="title">Editar usuários</span>
                     </a>
                     </li>
                 </ul>
             </li>
+
             <?php
-            if($_GET['idMenu'] == 7 || $_GET['idMenu'] == 8){
+            if($_GET['idMenu'] == 61 || $_GET['idMenu'] == 62){
                 echo('<li class="nav-item start active open"><a href="javascript:;" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
                 echo('<li class="nav-item"><a href="javascript:;" class="nav-link nav-toggle"></span><span class="arrow"></span>');
@@ -135,12 +142,12 @@
                     <span class="title">Empresas</span>
                 </a>
                 <ul class="sub-menu " > <!-- style="display: block;" para manter aberto-->
-                    <?php echo ($_GET['idMenu'] == 7 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <?php echo ($_GET['idMenu'] == 61 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                         <a href="cadastrar/empresa" class="nav-link ">
                             <span class="title">Nova empresa</span>
                         </a>
                     </li>
-                    <?php echo ($_GET['idMenu'] == 8 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <?php echo ($_GET['idMenu'] == 62 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                         <a href="listar/empresas" class="nav-link ">
                             <span class="title">Ver empresas</span>
                         </a>
