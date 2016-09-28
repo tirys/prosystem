@@ -289,7 +289,7 @@ if(count($cookie)>0) {
                             </li>
                             <li class="divider"> </li>
                             <li>
-                                <a href="page_user_login_1.html">
+                                <a href="pages/logout.php">
                                     <i class="icon-key"></i> Sair </a>
                             </li>
                         </ul>

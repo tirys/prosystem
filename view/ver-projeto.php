@@ -11,7 +11,9 @@ include("topo.php");
 $conexao = new classeConexao();
 $projeto = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '{$id}'");
 
-$empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$projeto['id_projetos_empresas_id']}'")
+$empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$projeto['id_projetos_empresas_id']}'");
+
+$tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_projeto = {$id}");
 
 //Realizar os cálculos de status
 
@@ -46,7 +48,7 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$projeto[
                     <div class="col-md-12">
                         <h1 style="margin-top:70px;"><?=$projeto['tb_projetos_nome']?></h1>
                         <h2>Life is either a great adventure or nothing</h2>
-                        <button type="button" class="btn btn-success">NOVA TAREFA <i class="fa fa-plus"></i></button>
+                        <a href="cadastrar/tarefa-projeto/<?=$projeto['id']?>" class="btn btn-success">NOVA TAREFA <i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <!-- END CABEÇALHO -->
@@ -102,68 +104,93 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$projeto[
 
                         <!-- START TAREFAS -->
                         <div class="col-md-9">
-                            <div class="portlet light">
-<!--                            <div class="row margin-bottom-40 stories-header" data-auto-height="true">-->
-<!--                                    <h1>Tarefas</h1>-->
-<!--                            </div>-->
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-dark">
+                                        <i class="fa fa-tasks font-dark"></i>
+                                        <span class="caption-subject bold uppercase">Tarefas</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
 
-                                <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
-                                    <thead>
-                                    <tr>
-                                        <th> ID </th>
-                                        <th> Nome </th>
-                                        <th> Atribuído </th>
-                                        <th> Data Término </th>
-                                        <th> Status </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <!-- START CONTEUDO TABELA -->
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
+                                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                        <thead>
+                                        <tr>
+                                            <th> ID </th>
+                                            <th> Nome </th>
+                                            <th> Cliente </th>
+                                            <th> Data Término </th>
+                                            <th> Horas Est. </th>
+                                            <th> Prioridade </th>
+                                            <th> Status </th>
+                                            <th> Ações </th>
                                         </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                        </tr>
+                                        <!-- START CONTEUDO TABELA -->
+                                        <?php foreach ($tarefas as $tarefa) { ?>
+                                            <tr class="odd gradeX">
+                                                <td> <?=$tarefa['id']?> </td>
 
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                        </tr>
+                                                <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
 
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                        </tr>
+                                                <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>
 
-                                        <tr class="odd gradeX">
-                                            <td>1</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                            <td>Teste</td>
-                                        </tr>
-                                    <!-- END CONTEUDO TABELA -->
+                                                <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 
-                                    </tbody>
-                                </table>
+                                                <td><?=$tarefa['tb_tarefas_horas']?> horas</td>
+
+                                                <!--                                        -2 => Muito Baixa -> verde-->
+                                                <!--                                        -1 => Baixa -> azul-->
+                                                <!--                                        0 => Normal -> cinza-->
+                                                <!--                                        1 => Alta -> amarelo-->
+                                                <!--                                        2 => Urgente -> vermelho-->
+
+                                                <?php if ($tarefa['tb_tarefas_prioridade']==0) {?>
+                                                    <td><span class="label label-sm label-default"> Normal </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_prioridade']==1) {?>
+                                                    <td><span class="label label-sm label-warning"> Alta </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_prioridade']==2) {?>
+                                                    <td><span class="label label-sm label-danger"> Urgente </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_prioridade']==-1) {?>
+                                                    <td><span class="label label-sm label-info"> Baixa </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_prioridade']==-2) {?>
+                                                    <td><span class="label label-sm label-success"> Muito Baixa </span></td>
+                                                <?php } ?>
+
+                                                <!--                                        STATUS-->
+                                                <?php if ($tarefa['tb_tarefas_status']==0) {?>
+                                                    <td><span class="label label-sm label-warning"> Aberto </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_status']==1) {?>
+                                                    <td><span class="label label-sm label-success"> Concluída </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_status']==2) {?>
+                                                    <td><span class="label label-sm label-default"> Fechada </span></td>
+                                                <?php } ?>
+
+                                                <td>
+                                                    <a href="editar/tarefa/<?=$tarefa['id']?>" class="btn btn-xs btn-warning" title="Editar"> <i class="fa fa-edit"></i>
+                                                    </a>
+
+
+                                                    <?php if ($tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0) {?>
+                                                        <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-success reativar" title="Concluir"> <i class="fa fa-check"></i>
+                                                        </a>
+                                                    <?php } else {?>
+                                                        <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-times"></i>
+                                                        </a>
+                                                    <?php } ?>
+
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                        <!-- END CONTEUDO TABELA -->
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                            <!-- END EXAMPLE TABLE PORTLET-->
 
                         </div>
                         <!-- END TAREFAS -->

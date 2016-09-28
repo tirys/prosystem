@@ -16,6 +16,7 @@
 <script src="view/assets/global/plugins/excanvas.min.js"></script>
 <script src="view/assets/global/plugins/ie8.fix.min.js"></script>
 <![endif]-->
+
 <!-- BEGIN CORE PLUGINS -->
 <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

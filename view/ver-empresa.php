@@ -11,6 +11,8 @@ include("topo.php");
 $conexao = new classeConexao();
 $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
 
+
+
 ?>
 <link href="view/assets/pages/css/contact.min.css" rel="stylesheet" type="text/css" />
     <div class="clearfix"> </div>
@@ -35,9 +37,6 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
                 <h1 class="page-title"> <?=$empresa['tb_empresas_nome']?>
                     <small>visualização dos dados da empresa</small>
                 </h1>
-
-
-
 
 
                 <div class="c-content-contact-1 c-opt-1">
@@ -86,12 +85,14 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
         </div>
     </div>
 <!-- BEGIN CORE PLUGINS -->
+
 <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
