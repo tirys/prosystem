@@ -14,14 +14,15 @@ if($idUser != ""){
     $user = "";
     $idEmpresa = "";
     $cargaHoraria="";
+    $funcao="";
     $tipoUser="adm";
-    $user = $conexao::fetchuniq("SELECT tb_usuarios_email as email, tb_usuarios_nome as nome, tb_usuario_login as login FROM tb_usuarios WHERE id = '".$idUser."'");
+    $user = $conexao::fetchuniq("SELECT tb_usuarios_email as email, tb_usuarios_nome as nome, tb_usuario_login as login, tb_usuario_senha as senha FROM tb_usuarios WHERE id = '".$idUser."'");
 
-    $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria as carga FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
-    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo["carga"];}
+    $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria as carga, tb_funcionarios_funcao as funcao FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
+    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo['carga'];$funcao = $buscaTipo['funcao'];}
 
     $buscaTipo = $conexao::fetchuniq("SELECT tb_clientes_empresas_id as empresaID FROM tb_clientes WHERE tb_clientes_usuario_id = '".$idUser."'");
-    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo["empresaID"];}
+    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo['empresaID'];}
 
 
     if($user!= ""){
@@ -84,7 +85,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-user"></i>
                                                             </span>
                                                 <?php if($edicao == 1){
-                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user["nome"].'" required/></div>';
+                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user['nome'].'" required/></div>';
                                                 }else{
                                                     echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>';
                                                 } ?>
@@ -101,7 +102,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user["email"].'" placeholder="Email do usuário" required></div>';
+                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user['email'].'" placeholder="Email do usuário" required></div>';
                                                     }else{
                                                         echo '<input type="text" class="form-control" name="emailUsuario" placeholder="Email do usuário" required></div>';
                                                     } ?>
@@ -131,7 +132,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-user"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user["login"].'" class="form-control" required disabled/></div>';
+                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user['login'].'" class="form-control" required disabled/></div>';
                                                     }else{
                                                         echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" class="form-control" required/></div>';
                                                     } ?>
@@ -147,8 +148,11 @@ if($idUser != ""){
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-lock"></i>
                                                             </span>
-                                                <input name="senhaUsuario" type="password" placeholder="******" class="form-control" required/>
-                                                    </div>
+                                                    <?php if($edicao == 1){
+                                                        echo '<input name="senhaUsuario" type="password" value="'.$user['senha'].'" placeholder="******" class="form-control" required/></div>';
+                                                    }else{
+                                                        echo '<input name="senhaUsuario" type="password" placeholder="******" class="form-control" required/></div>';
+                                                    } ?>
                                             </div>
                                         </div>
 
@@ -158,7 +162,7 @@ if($idUser != ""){
                                             </label>
                                             <div class="col-md-4">
                                                 <?php if($edicao == 1){
-                                                    echo ' <select class="form-control" name="tipoUsuario" id="tipoUsuario" disabled>';
+                                                    echo ' <select class="form-control" name="tipoUsuario" id="tipoUsuario" >';
                                                 }else{
                                                     echo '<select class="form-control" name="tipoUsuario" id="tipoUsuario">';
                                                 }?>
@@ -179,10 +183,10 @@ if($idUser != ""){
                                                     $empresas = $conexao::fetch("SELECT id, tb_empresas_nome as nome FROM tb_empresas");
 
                                                     foreach ($empresas as $emp){
-                                                        if($idEmpresa == $emp["id"]){
-                                                            $html .= '<option value="'.$emp["id"].'" selected>'.$emp["nome"].'</option>';
+                                                        if($idEmpresa == $emp['id']){
+                                                            $html .= '<option value="'.$emp['id'].'" selected>'.$emp['nome'].'</option>';
                                                         }else{
-                                                            $html .= '<option value="'.$emp["id"].'">'.$emp["nome"].'</option>';
+                                                            $html .= '<option value="'.$emp['id'].'">'.$emp['nome'].'</option>';
                                                         }
                                                     }
                                                     echo $html;
@@ -203,6 +207,17 @@ if($idUser != ""){
                                                     echo '<input name="cargaHoraria" type="text" placeholder="Carga horária" class="form-control"/></div>';
                                                 } ?>
                                         </div>
+
+                                        <div class="form-group"  id="funcaoU" style="display: none;">
+                                            <label class="control-label col-md-3">Função
+                                            </label>
+                                            <div class="col-md-4">
+                                                <?php if($tipoUser == "fun"){
+                                                    echo '<input name="funcao" type="text" placeholder="Função" value="'.$funcao.'" class="form-control"/></div>';
+                                                }else{
+                                                    echo '<input name="funcao" type="text" placeholder="Função" class="form-control"/></div>';
+                                                } ?>
+                                            </div>
 
                                     </div>
                                     <div class="form-actions">
@@ -282,14 +297,17 @@ if($idUser != ""){
         if( jq(this).val() == 'cli') {
             jq('#empresaU').attr('style','');
             jq('#cargahorariaU').attr('style','display:none;');
+            jq('#funcaoU').attr('style','display:none;');
         }
         else if (jq(this).val() == 'fun') {
             jq('#cargahorariaU').attr('style','');
+            jq('#funcaoU').attr('style','');
             jq('#empresaU').attr('style','display:none;');
         }
         else {
             jq('#empresaU').attr('style','display:none;');
             jq('#cargahorariaU').attr('style','display:none;');
+            jq('#funcaoU').attr('style','display:none;');
         }
     });
 </script>
