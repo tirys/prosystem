@@ -2,22 +2,23 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 
-$idProjeto = isset($_GET['idProjeto']) ? $_GET['idProjeto'] : '';
+$idTarefa = isset($_GET['idTarefa']) ? $_GET['idTarefa'] : '';
 
 include("topo.php");
 
 $conexao = new classeConexao();
-$dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idProjeto."'");
+$dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idTarefa."'");
 ?>
 <div class="clearfix"></div>
 <div class="page-container">
     <?php include("menulateral.php"); ?>
+    <link href="view/assets/prospecta.css" rel="stylesheet" type="text/css" />
     <div class="page-content-wrapper">
         <div class="page-content">
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
-                        <span>Projetos > Cadastrar</span>
+                        <span>Tarefas > Cadastrar</span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -36,18 +37,18 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                     <div class="portlet light portlet-fit portlet-form bordered">
                         <div class="portlet-title">
                             <div class="caption">
-                                <i class="fa fa-folder font-green"></i>
-                                <span class="caption-subject font-green sbold uppercase">Novo Projeto</span>
+                                <i class="fa fa-tasks font-green"></i>
+                                <span class="caption-subject font-green sbold uppercase">Nova Tarefa</span>
                             </div>
 
                         </div>
                         <div class="portlet-body">
                             <!-- BEGIN FORM-->
-                            <?php if (isset($dadosProjetos['id'])) {?>
-                            <form action="model/cadastraProjeto.php?acao=2" method="post" id="form_sample_1" class="form-horizontal">
-                                <input type="hidden" name="idProjeto" value="<?=$dadosProjetos['id']?>"/>
+                            <?php if (isset($dadosTarefa['id'])) {?>
+                            <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal">
+                                <input type="hidden" name="idTarefa" value="<?=$dadosTarefa['id']?>"/>
                                 <?php } else { ?>
-                                <form action="model/cadastraProjeto.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
+                                <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
                                     <?php } ?>
 
                                     <div class="form-body">
@@ -59,18 +60,18 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                                             <label class="control-label col-md-3">Nome
                                                 <span class="required"> * </span>
                                             </label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-7">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <i class="fa fa-user"></i>
+                                                                <i class="fa fa-tasks"></i>
                                                             </span>
-                                                    <input type="text" name="nomedoProjeto" placeholder="Nome do projeto" data-required="1" class="form-control" value="<?=$dadosProjetos['tb_projetos_nome']?>" required/></div>
+                                                    <input type="text" name="nomedaTarefa" placeholder="Nome da Tarefa" data-required="1" class="form-control" value="<?=$dadosTarefa['tb_tarefas_nome']?>" required/></div>
                                             </div>
                                         </div>
                                         <div class="form-group" id="empresaU">
-                                            <label class="control-label col-md-3">Empresa
+                                            <label class="control-label col-md-3">Cliente
                                             </label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-7">
                                                 <select class="form-control" name="empresaId" id="empresaId">
                                                     <?php
                                                     $conexao = new classeConexao();
@@ -78,7 +79,28 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
 
                                                     foreach ($empresas as $key => $empresa){
 
-                                                        if($dadosProjetos['id_projetos_empresas_id'] == $empresa['id']){
+                                                        if($dadosTarefa['id_projetos_empresas_id'] == $empresa['id']){
+                                                            echo '<option value="'.$empresa['id'].'" selected>'.$empresa['tb_empresas_nome'].'</option>';
+                                                        }else{
+                                                            echo '<option value="'.$empresa['id'].'">'.$empresa['tb_empresas_nome'].'</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="empresaU">
+                                            <label class="control-label col-md-3">Projeto
+                                            </label>
+                                            <div class="col-md-7">
+                                                <select class="form-control" name="projetoID" id="projetoID">
+                                                    <?php
+                                                    $conexao = new classeConexao();
+                                                    $empresas = $conexao::fetch("SELECT id, tb_empresas_nome FROM tb_empresas");
+
+                                                    foreach ($empresas as $key => $empresa){
+
+                                                        if($dadosTarefa['id_projetos_empresas_id'] == $empresa['id']){
                                                             echo '<option value="'.$empresa['id'].'" selected>'.$empresa['tb_empresas_nome'].'</option>';
                                                         }else{
                                                             echo '<option value="'.$empresa['id'].'">'.$empresa['tb_empresas_nome'].'</option>';
@@ -89,26 +111,62 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Data Término
+                                            <label class="control-label col-md-3">Atribuir a
                                             </label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-7">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-user"></i>
+                                                            </span>
+                                                <select class="form-control" name="empresaId" id="empresaId">
+                                                    <?php
+                                                    $conexao = new classeConexao();
+                                                    $empresas = $conexao::fetch("SELECT id, tb_empresas_nome FROM tb_empresas");
+
+                                                    foreach ($empresas as $key => $empresa){
+
+                                                        if($dadosTarefa['id_projetos_empresas_id'] == $empresa['id']){
+                                                            echo '<option value="'.$empresa['id'].'" selected>'.$empresa['tb_empresas_nome'].'</option>';
+                                                        }else{
+                                                            echo '<option value="'.$empresa['id'].'">'.$empresa['tb_empresas_nome'].'</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Data de Término
+                                            </label>
+                                            <div class="col-md-3">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
                                                             </span>
-                                                    <input type="date" class="form-control" name="dataProjeto" placeholder="dd/mm/yyyy" value="<?=$dadosProjetos['tb_projetos_data_termino']?>" required>
+                                                    <input type="date" class="form-control" name="dataTarefa" placeholder="dd/mm/yyyy" value="<?=$dadosTarefa['tb_projetos_data_termino']?>" required>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-md-1">Tempo Est.
+                                            </label>
+                                            <div class="col-md-3">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-clock-o"></i>
+                                                            </span>
+                                                    <input type="number" class="form-control" min="0" name="dataTarefa" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_projetos_data_termino']?>" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Descrição
                                             </label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-7">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-pencil"></i>
                                                             </span>
-                                                    <textarea name="descricaoProjeto" placeholder="Descrição sobre o projeto" data-required="1" class="form-control autosizeme"><?=$dadosProjetos['tb_projetos_descricao']?></textarea>
+                                                    <textarea name="descricaoTarefa" placeholder="Descrição sobre a Tarefa" data-required="1" class="form-control autosizeme textarea-pro" style="height: 200px !important;"><?=$dadosTarefa['tb_projetos_descricao']?></textarea>
                                                 </div>
                                             </div>
                                         </div>
