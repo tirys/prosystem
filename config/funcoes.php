@@ -19,3 +19,19 @@ function RetiraAcentos($texto)
     , "A", "A", "A", "A", "A", "E", "E", "E", "E", "I", "I", "I", "I", "O", "O", "O", "O", "O", "U", "U", "U", "U", "C" );
     return str_replace( $array1, $array2, $texto );
 }
+
+
+function PrimeiraPalavra($param)
+{
+    $output = '';
+    $sigh = explode(' ', $param);
+    foreach ($sigh as $i => $single_word) {
+        if ($i == 0) {
+            $output .= $single_word;
+        } else {
+            break;
+        }
+    }
+    echo $output;
+
+}

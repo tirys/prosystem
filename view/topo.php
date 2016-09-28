@@ -12,7 +12,7 @@ if(count($cookie)>0) {
     $verificalogin = new VerificaLogin();
     $resultado = $verificalogin->verificaToken($cookie['t']);
 
-    $usuario = $conexao::fetchuniq("SELECT tu.id, tu.tb_usuarios_nome as nome, tu.tb_usuarios_foto as foto FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token = '".$cookie['t']."'");
+    $usuario = $conexao::fetchuniq("SELECT tu.id, tu.tb_usuarios_nome, tu.tb_usuarios_foto FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token = '".$cookie['t']."'");
 
     if($resultado==0) {
         header('location:sessaoexpirada');
@@ -262,8 +262,8 @@ if(count($cookie)>0) {
                     <!-- BEGIN USUARIO -->
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="view/images/<?php echo $usuario['foto'];?>" />
-                            <span class="username username-hide-on-mobile"> <?php echo current(str_word_count($usuario['nome'], 2 ));?> </span>
+                            <img alt="" class="img-circle" src="view/images/<?php echo $usuario['tb_usuarios_foto'];?>" />
+                            <span class="username username-hide-on-mobile"> <?php echo PrimeiraPalavra($usuario['tb_usuarios_nome']);?> </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
