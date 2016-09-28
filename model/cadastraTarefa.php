@@ -29,8 +29,7 @@ $descricaoTarefa = mysqli_real_escape_string($conexao->obj(),$descricaoTarefa);
 
 if ($acao == 1) {
     $conexao = new classeConexao();
-    echo "INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},null,1,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})";
-    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},null,1,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})");
+    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},null,0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})");
 
     if ($insert) {
         header('location:../listar/tarefas');
@@ -42,7 +41,7 @@ else if ($acao == 2) {
 
     if ($update) {
         //Trocar aqui por página do projeto depois
-        header('location:../listar/projetos');
+        header('location:../listar/tarefas');
     }
 }
 

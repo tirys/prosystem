@@ -1,12 +1,21 @@
 <?php
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
+$usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
 
 include("topo.php");
 
 //Consultando as tarefas
 $conexao = new classeConexao();
-$tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto");
+
+//Se é minhas tarefas
+if($usuario=='true') {
+    $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
+}
+else {
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto");
+}
 ?>
 <div class="clearfix"> </div>
 <div class="page-container">

@@ -90,7 +90,7 @@
 
 
             <?php
-            if($_GET['idMenu'] == 4){
+            if($_GET['idMenu'] == 41 || $_GET['idMenu'] == 42 || $_GET['idMenu'] == 43){
                 echo('<li class="nav-item start active open"><a href="tarefas" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
                 echo('<li class="nav-item"><a href="tarefas" class="nav-link nav-toggle"></span><span class="arrow"></span>');

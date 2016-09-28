@@ -113,7 +113,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
                                                     foreach ($projetos as $key => $projeto){
 
-                                                        if($idProjeto == $projeto['id']){
+                                                        if($idProjeto == $projeto['id'] || $dadosTarefa['tb_tarefas_projeto'] == $projeto['id']){
                                                             echo '<option value="'.$projeto['id'].'" selected>'.$projeto['tb_projetos_nome'].'</option>';
                                                         }else{
                                                             echo '<option value="'.$projeto['id'].'">'.$projeto['tb_projetos_nome'].'</option>';
@@ -140,9 +140,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
                                                     foreach ($usuarios as $key => $usuario){
 
-                                                      ;
-
-                                                        if($dadosTarefa['id_projetos_empresas_id'] == $usuario['id']){
+                                                        if($dadosTarefa['tb_tarefas_funcionario'] == $usuario['id']){
                                                             echo '<option value="'.$usuario['id'].'" selected>'.$usuario['tb_usuarios_nome'].'</option>';
                                                         }else{
                                                             echo '<option value="'.$usuario['id'].'">'.$usuario['tb_usuarios_nome'].'</option>';
@@ -161,7 +159,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
                                                             </span>
-                                                    <input type="date" class="form-control" name="dataTarefa" placeholder="dd/mm/yyyy" value="<?=$dadosTarefa['tb_projetos_data_termino']?>" required>
+                                                    <input type="date" class="form-control" name="dataTarefa" placeholder="dd/mm/yyyy" value="<?=$dadosTarefa['tb_tarefas_data_termino']?>" required>
                                                 </div>
                                             </div>
                                             <label class="control-label col-md-1">Tempo Est.
@@ -171,7 +169,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-clock-o"></i>
                                                             </span>
-                                                    <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_projetos_data_termino']?>" required>
+                                                    <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_tarefas_horas']?>" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -181,26 +179,61 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             </label>
                                             <div class="col-md-7">
                                                 <div class="mt-radio-inline">
+                                                    <?php  if($dadosTarefa['tb_tarefas_prioridade'] == -2) { ?>
                                                     <label class="mt-radio">
-                                                        <input type="radio" name="prioridade" id="optionsRadios25" value="-2" checked=""> Muito Baixa
+                                                        <input type="radio" name="prioridade" id="optionsRadios25" value="-2" checked="checked"> Muito Baixa
                                                         <span></span>
                                                     </label>
+                                                    <?php } else { ?>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="prioridade" id="optionsRadios25" value="-2" checked=""> Muito Baixa
+                                                            <span></span>
+                                                        </label>
+                                                    <?php } ?>
+                                                    <?php  if($dadosTarefa['tb_tarefas_prioridade'] == -1) { ?>
                                                     <label class="mt-radio">
-                                                        <input type="radio" name="prioridade" id="optionsRadios26" value="-1" checked=""> Baixa
+                                                        <input type="radio" name="prioridade" id="optionsRadios26" value="-1" checked="checked"> Baixa
                                                         <span></span>
                                                     </label>
+                                                    <?php } else { ?>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="prioridade" id="optionsRadios26" value="-1" checked=""> Baixa
+                                                            <span></span>
+                                                        </label>
+                                                    <?php } ?>
+                                                    <?php  if($dadosTarefa['tb_tarefas_prioridade'] == 0 || !$dadosTarefa['tb_tarefas_prioridade']) { ?>
                                                     <label class="mt-radio">
                                                         <input type="radio" name="prioridade" id="optionsRadios27" value="0" checked="checked"> Normal
                                                         <span></span>
                                                     </label>
+                                                    <?php } else { ?>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="prioridade" id="optionsRadios27" value="0"> Normal
+                                                            <span></span>
+                                                        </label>
+                                                    <?php } ?>
+                                                    <?php  if($dadosTarefa['tb_tarefas_prioridade'] == 1) { ?>
                                                     <label class="mt-radio">
-                                                        <input type="radio" name="prioridade" id="optionsRadios28" value="1"> Alta
+                                                        <input type="radio" name="prioridade" id="optionsRadios28" value="1" checked="checked"> Alta
                                                         <span></span>
                                                     </label>
+                                                    <?php } else { ?>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="prioridade" id="optionsRadios28" value="1"> Alta
+                                                            <span></span>
+                                                        </label>
+                                                    <?php } ?>
+                                                    <?php  if($dadosTarefa['tb_tarefas_prioridade'] == 2) { ?>
                                                     <label class="mt-radio">
-                                                        <input type="radio" name="prioridade" id="optionsRadios29" value="2"> Muito Alta
+                                                        <input type="radio" name="prioridade" id="optionsRadios29" value="2" checked="checked"> Muito Alta
                                                         <span></span>
                                                     </label>
+                                                    <?php } else { ?>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="prioridade" id="optionsRadios29" value="2"> Muito Alta
+                                                            <span></span>
+                                                        </label>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,7 +244,11 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             <div class="col-md-7">
                                                 <div class="mt-checkbox-inline">
                                                     <label class="mt-checkbox">
-                                                        <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
+                                                        <?php  if($dadosTarefa['tb_tarefas_oculto'] == 1) { ?>
+                                                         <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1" checked="checked"> Sim
+                                                        <?php } else { ?>
+                                                            <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
+                                                        <?php } ?>
                                                         <span></span>
                                                     </label>
                                                 </div>
@@ -226,7 +263,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-pencil"></i>
                                                             </span>
-                                                    <textarea name="descricaoTarefa" placeholder="Descrição sobre a Tarefa" data-required="1" class="form-control autosizeme textarea-pro" style="height: 200px !important;"><?=$dadosTarefa['tb_projetos_descricao']?></textarea>
+                                                    <textarea name="descricaoTarefa" placeholder="Descrição sobre a Tarefa" data-required="1" class="form-control autosizeme textarea-pro" style="height: 200px !important;"><?=$dadosTarefa['tb_tarefas_descricao']?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -234,7 +271,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
                                                     <button type="submit" class="btn green">Cadastrar</button>
-                                                    <button type="button" class="btn grey-salsa btn-outline">Cancelar</button>
+                                                    <a href="listar/tarefas" class="btn grey-salsa btn-outline">Cancelar</a>
                                                 </div>
                                             </div>
                                         </div>
