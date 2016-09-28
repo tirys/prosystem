@@ -114,7 +114,7 @@ if($idUser != ""){
                                             <div class="col-md-9">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                             <span class="btn green btn-file">
-                                                                <span class="fileinput-new"> Select file </span>
+                                                                <span class="fileinput-new"> Escolha um arquivo </span>
                                                                 <span class="fileinput-exists"> Change </span>
                                                                 <input type="hidden" value="" name="..."><input type="file" name="fotoUser"> </span>
                                                     <span class="fileinput-filename"></span> &nbsp;

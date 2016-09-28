@@ -4,16 +4,22 @@ require ('../config/funcoes.php');
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie,true);
 
+$conexao = new classeConexao();
+
+$usuario = "";
 
 if(count($cookie)>0) {
-
     $verificalogin = new VerificaLogin();
     $resultado = $verificalogin->verificaToken($cookie['t']);
+
+    $usuario = $conexao::fetchuniq("SELECT tu.id, tu.tb_usuarios_nome as nome, tu.tb_usuarios_foto as foto FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token = '".$cookie['t']."'");
 
     if($resultado==0) {
         header('location:sessaoexpirada');
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -161,7 +167,7 @@ if(count($cookie)>0) {
                                                         <span class="from"> Richard Doe </span>
                                                         <span class="time">16 mins </span>
                                                     </span>
-                                            <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                            <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh... </span>
                                         </a>
                                     </li>
                                 </ul>
@@ -256,14 +262,14 @@ if(count($cookie)>0) {
                     <!-- BEGIN USUARIO -->
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="view/assets/layouts/layout/img/avatar3_small.jpg" />
-                            <span class="username username-hide-on-mobile"> Usuário </span>
+                            <img alt="" class="img-circle" src="view/images/<?php echo $usuario['foto'];?>" />
+                            <span class="username username-hide-on-mobile"> <?php echo current(str_word_count($usuario['nome'], 2 ));?> </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
                                 <a href="page_user_profile_1.html">
-                                    <i class="icon-user"></i> Meu Perfil </a>
+                                    <i class="icon-user"></i> Meu Perfil</a>
                             </li>
                             <li>
                                 <a href="app_calendar.html">
