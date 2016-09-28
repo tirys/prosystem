@@ -4,9 +4,9 @@ $cookie = json_decode($cookie);
 
 include("topo.php");
 
-//Consultando os projetos
+//Consultando as tarefas
 $conexao = new classeConexao();
-$projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos tp, tb_empresas te WHERE tp.id_projetos_empresas_id = te.id");
+$tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto");
 ?>
 <div class="clearfix"> </div>
 <div class="page-container">
@@ -16,7 +16,7 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
-                        <span>Projetos > Ver projetos</span>
+                        <span>Tarefas > Ver tarefas</span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -35,8 +35,8 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
                     <div class="portlet light bordered">
                         <div class="portlet-title">
                             <div class="caption font-dark">
-                                <i class="icon-folder font-dark"></i>
-                                <span class="caption-subject bold uppercase">Projetos</span>
+                                <i class="fa fa-tasks font-dark"></i>
+                                <span class="caption-subject bold uppercase">Tarefas</span>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -44,7 +44,7 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="btn-group">
-                                            <a id="sample_editable_1_new" href="cadastrar/projetos" class="btn sbold green"> Novo Projeto
+                                            <a id="sample_editable_1_new" href="cadastrar/tarefas" class="btn sbold green"> Nova Tarefa
                                                 <i class="fa fa-plus"></i>
                                             </a>
                                         </div>
@@ -79,6 +79,8 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
                                     <th> Nome </th>
                                     <th> Cliente </th>
                                     <th> Data Término </th>
+                                    <th> Horas Est. </th>
+                                    <th> Prioridade </th>
                                     <th> Status </th>
                                     <th> Ações </th>
                                 </tr>
@@ -86,32 +88,55 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
                                 <tbody>
 
                                 <!-- START CONTEUDO TABELA -->
-                                <?php foreach ($projetos as $projeto) { ?>
+                                <?php foreach ($tarefas as $tarefa) { ?>
                                     <tr class="odd gradeX">
-                                        <td> <?=$projeto['id']?> </td>
+                                        <td> <?=$tarefa['id']?> </td>
 
-                                        <td><a href="projeto/<?=$projeto['id']?>"><?=$projeto['tb_projetos_nome']?></a></td>
+                                        <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
 
-                                        <td><a href="empresa/<?=$projeto['id_projetos_empresas_id']?>"><?=$projeto['tb_empresas_nome']?></a></td>
+                                        <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>
 
-                                        <td><?=DataBrasil($projeto['tb_projetos_data_termino'])?></td>
+                                        <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 
-                                        <?php if ($projeto['tb_projetos_status']==0) {?>
-                                            <td><span class="label label-sm label-danger"> Desativado </span></td>
-                                        <?php } else {?>
-                                            <td><span class="label label-sm label-success"> Ativo </span></td>
+                                        <td><?=$tarefa['tb_tarefas_horas']?> horas</td>
+
+<!--                                        -2 => Muito Baixa -> verde-->
+<!--                                        -1 => Baixa -> azul-->
+<!--                                        0 => Normal -> cinza-->
+<!--                                        1 => Alta -> amarelo-->
+<!--                                        2 => Urgente -> vermelho-->
+
+                                        <?php if ($tarefa['tb_tarefas_prioridade']==0) {?>
+                                            <td><span class="label label-sm label-default"> Normal </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_prioridade']==1) {?>
+                                            <td><span class="label label-sm label-warning"> Alta </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_prioridade']==2) {?>
+                                            <td><span class="label label-sm label-danger"> Urgente </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_prioridade']==-1) {?>
+                                            <td><span class="label label-sm label-info"> Baixa </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_prioridade']==-2) {?>
+                                            <td><span class="label label-sm label-success"> Muito Baixa </span></td>
+                                        <?php } ?>
+
+<!--                                        STATUS-->
+                                        <?php if ($tarefa['tb_tarefas_status']==0) {?>
+                                            <td><span class="label label-sm label-warning"> Aberto </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_status']==1) {?>
+                                            <td><span class="label label-sm label-success"> Concluída </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_status']==2) {?>
+                                            <td><span class="label label-sm label-default"> Fechada </span></td>
                                         <?php } ?>
 
                                         <td>
-                                            <a href="editar/projeto/<?=$projeto['id']?>" class="btn btn-xs btn-warning" title="Editar"> <i class="fa fa-edit"></i>
+                                            <a href="editar/tarefa/<?=$tarefa['id']?>" class="btn btn-xs btn-warning" title="Editar"> <i class="fa fa-edit"></i>
                                             </a>
 
 
-                                            <?php if ($projeto['tb_projetos_status']==0) {?>
-                                                <a id="<?=$projeto['id']?>" data-role="<?=$projeto['id']?>" class="btn btn-xs btn-success reativar" title="Reativar"> <i class="fa fa-arrow-up"></i>
+                                            <?php if ($tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0) {?>
+                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-success reativar" title="Concluir"> <i class="fa fa-check"></i>
                                                 </a>
                                             <?php } else {?>
-                                                <a id="<?=$projeto['id']?>" data-role="<?=$projeto['id']?>" class="btn btn-xs btn-danger desativar" title="Desativar"> <i class="fa fa-times"></i>
+                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-times"></i>
                                                 </a>
                                             <?php } ?>
 
@@ -150,7 +175,7 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
         $.ajax({
-            url: 'model/ws/ativacaoProjeto.php',
+            url: 'model/ws/ativacaoTarefa.php',
             type: 'GET',
             data: {
                 format: 'json',
@@ -173,7 +198,7 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
 
         $.ajax({
-            url: 'model/ws/ativacaoProjeto.php',
+            url: 'model/ws/ativacaoTarefa.php',
             type: 'GET',
             data: {
                 format: 'json',

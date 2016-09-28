@@ -1,13 +1,17 @@
 <?php
 $cookie = $_COOKIE['auth'];
-$cookie = json_decode($cookie);
+$cookie = json_decode($cookie,true);
+
 
 $idTarefa = isset($_GET['idTarefa']) ? $_GET['idTarefa'] : '';
+$idProjeto = isset($_GET['idProjeto']) ? $_GET['idProjeto'] : '';
 
 include("topo.php");
 
 $conexao = new classeConexao();
-$dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idTarefa."'");
+$dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = '".$idTarefa."'");
+$usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
+
 ?>
 <div class="clearfix"></div>
 <div class="page-container">
@@ -50,7 +54,7 @@ $dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idT
                                 <?php } else { ?>
                                 <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
                                     <?php } ?>
-
+                                    <input type="hidden" name="criador" value="<?=$usuario['id']?>"/>
                                     <div class="form-body">
                                         <div class="alert alert-danger display-hide">
                                             <button class="close" data-close="alert"></button>
@@ -72,51 +76,9 @@ $dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idT
                                             <label class="control-label col-md-3">Cliente
                                             </label>
                                             <div class="col-md-7">
-                                                <select class="form-control" name="empresaId" id="empresaId">
-                                                    <?php
-                                                    $conexao = new classeConexao();
-                                                    $empresas = $conexao::fetch("SELECT id, tb_empresas_nome FROM tb_empresas");
-
-                                                    foreach ($empresas as $key => $empresa){
-
-                                                        if($dadosTarefa['id_projetos_empresas_id'] == $empresa['id']){
-                                                            echo '<option value="'.$empresa['id'].'" selected>'.$empresa['tb_empresas_nome'].'</option>';
-                                                        }else{
-                                                            echo '<option value="'.$empresa['id'].'">'.$empresa['tb_empresas_nome'].'</option>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" id="empresaU">
-                                            <label class="control-label col-md-3">Projeto
-                                            </label>
-                                            <div class="col-md-7">
-                                                <select class="form-control" name="projetoID" id="projetoID">
-                                                    <?php
-                                                    $conexao = new classeConexao();
-                                                    $empresas = $conexao::fetch("SELECT id, tb_empresas_nome FROM tb_empresas");
-
-                                                    foreach ($empresas as $key => $empresa){
-
-                                                        if($dadosTarefa['id_projetos_empresas_id'] == $empresa['id']){
-                                                            echo '<option value="'.$empresa['id'].'" selected>'.$empresa['tb_empresas_nome'].'</option>';
-                                                        }else{
-                                                            echo '<option value="'.$empresa['id'].'">'.$empresa['tb_empresas_nome'].'</option>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Atribuir a
-                                            </label>
-                                            <div class="col-md-7">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <i class="fa fa-user"></i>
+                                                                <i class="fa fa-briefcase"></i>
                                                             </span>
                                                 <select class="form-control" name="empresaId" id="empresaId">
                                                     <?php
@@ -129,6 +91,61 @@ $dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idT
                                                             echo '<option value="'.$empresa['id'].'" selected>'.$empresa['tb_empresas_nome'].'</option>';
                                                         }else{
                                                             echo '<option value="'.$empresa['id'].'">'.$empresa['tb_empresas_nome'].'</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="empresaU">
+                                            <label class="control-label col-md-3">Projeto
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-folder"></i>
+                                                            </span>
+                                                <select class="form-control" name="projetoID" id="projetoID">
+                                                    <?php
+                                                    $conexao = new classeConexao();
+                                                    $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos");
+
+                                                    foreach ($projetos as $key => $projeto){
+
+                                                        if($idProjeto == $projeto['id']){
+                                                            echo '<option value="'.$projeto['id'].'" selected>'.$projeto['tb_projetos_nome'].'</option>';
+                                                        }else{
+                                                            echo '<option value="'.$projeto['id'].'">'.$projeto['tb_projetos_nome'].'</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Atribuir a
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-user"></i>
+                                                            </span>
+                                                <select class="form-control" name="funcionarioID" id="funcionarioID">
+                                                    <?php
+                                                    echo '<option value="0" selected>Ninguém</option>';
+                                                    $conexao = new classeConexao();
+                                                    $usuarios = $conexao::fetch("SELECT id, tb_usuarios_nome FROM tb_usuarios");
+
+                                                    foreach ($usuarios as $key => $usuario){
+
+                                                      ;
+
+                                                        if($dadosTarefa['id_projetos_empresas_id'] == $usuario['id']){
+                                                            echo '<option value="'.$usuario['id'].'" selected>'.$usuario['tb_usuarios_nome'].'</option>';
+                                                        }else{
+                                                            echo '<option value="'.$usuario['id'].'">'.$usuario['tb_usuarios_nome'].'</option>';
                                                         }
                                                     }
                                                     ?>
@@ -154,10 +171,53 @@ $dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$idT
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-clock-o"></i>
                                                             </span>
-                                                    <input type="number" class="form-control" min="0" name="dataTarefa" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_projetos_data_termino']?>" required>
+                                                    <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_projetos_data_termino']?>" required>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Prioridade
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="mt-radio-inline">
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="prioridade" id="optionsRadios25" value="-2" checked=""> Muito Baixa
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="prioridade" id="optionsRadios26" value="-1" checked=""> Baixa
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="prioridade" id="optionsRadios27" value="0" checked="checked"> Normal
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="prioridade" id="optionsRadios28" value="1"> Alta
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="prioridade" id="optionsRadios29" value="2"> Muito Alta
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Oculto ao Cliente?
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="mt-checkbox-inline">
+                                                    <label class="mt-checkbox">
+                                                        <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Descrição
                                             </label>
