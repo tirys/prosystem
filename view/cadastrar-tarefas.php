@@ -9,7 +9,7 @@ $idProjeto = isset($_GET['idProjeto']) ? $_GET['idProjeto'] : '';
 include("topo.php");
 
 $conexao = new classeConexao();
-$dadosTarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = '".$idTarefa."'");
+$dadosTarefa = $conexao::fetchuniq("SELECT tt.*,tp.id_projetos_empresas_id FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_projeto = tp.id  AND tt.id = '".$idTarefa."'");
 $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
 
 ?>
@@ -84,6 +84,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                     <?php
                                                     $conexao = new classeConexao();
                                                     $empresas = $conexao::fetch("SELECT id, tb_empresas_nome FROM tb_empresas");
+                                                    $primeiraEmpresa = $empresas[0]['id'];
 
                                                     foreach ($empresas as $key => $empresa){
 
@@ -109,7 +110,13 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                 <select class="form-control" name="projetoID" id="projetoID">
                                                     <?php
                                                     $conexao = new classeConexao();
-                                                    $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos");
+                                                    if($dadosTarefa['id_projetos_empresas_id']) {
+                                                        $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos WHERE id_projetos_empresas_id = {$dadosTarefa['id_projetos_empresas_id']}");
+
+                                                    }
+                                                    else {
+                                                        $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos WHERE id_projetos_empresas_id = {$primeiraEmpresa[0]['id']}");
+                                                    }
 
                                                     foreach ($projetos as $key => $projeto){
 
@@ -333,21 +340,33 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 <script>
     var jq = jQuery.noConflict();
 
-    //Jquery para ativar campos extras
-    jq('#tipoUsuario').on('change', function () {
-        if( jq(this).val() == 'clientes') {
-            jq('#empresaU').attr('style','');
-            jq('#cargahorariaU').attr('style','display:none;');
-        }
-        else if (jq(this).val() == 'funcionarios') {
-            jq('#cargahorariaU').attr('style','');
-            jq('#empresaU').attr('style','display:none;');
-        }
-        else {
-            jq('#empresaU').attr('style','display:none;');
-            jq('#cargahorariaU').attr('style','display:none;');
-        }
+    //Jquery para mudar projetos
+    jq('#empresaId').on('change', function() {
+        var idempresa = jq('#empresaId').val();
+
+        $.ajax({
+            url: 'model/ws/processaProjetos.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'empresa-projetos',
+                id: idempresa
+            },
+            error: function () {
+                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+            },
+            dataType: 'json',
+            success: function (result) {
+                if (result.status) {
+                   jq('#projetoID').html(result.status);
+                }
+                else {
+                    jq('#projetoID').html('<option>Não há projetos nesta empresa</option>');
+                }
+            }
+        });
     });
+
 </script>
 <?= include("rodape.php") ?>
 

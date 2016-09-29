@@ -251,12 +251,29 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
 
                     <?php
                         foreach ($usuarios as $usuario) {
+
+
                             echo '<div class="col-lg-3 col-md-6"><div class="portlet light"><div class="photo">';
                             echo "<img src='view/images/{$usuario['tb_usuarios_foto']}' alt='' class='img-responsive'/></div>";
                             echo '<div class="title">';
                             echo "<span>{$usuario['tb_usuarios_nome']}</span>";
                             echo '<div class="desc">';
-                            echo '<span>Colocar a funcao aqui</span>';
+
+                            if($usuario['tb_usuarios_tipo'] == 1) {
+                                //Obter dados se for funcionario
+                                $funcionarios = $conexao::fetch("SELECT * FROM tb_funcionarios WHERE tb_funcionarios_usuario_id = {$usuario['id']}");
+                                echo "<span>{$usuario['tb_funcionarios_funcao']}</span>";
+                            }
+                            else if ($usuario['tb_usuarios_tipo'] == 2) {
+                                echo "<span>Cliente</span>";
+                            }
+                            else {
+                                echo "<span>Administrador do Sistema</span>";
+                            }
+
+                            echo "<span>{$usuario['tb_usuario_funcao']}</span>";
+
+
                             echo '</div>';
                             echo '</div></div></div>';
                         }

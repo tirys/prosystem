@@ -11,10 +11,10 @@ $conexao = new classeConexao();
 //Se é minhas tarefas
 if($usuario=='true') {
     $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
-    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
 }
 else {
-    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto");
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto");
 }
 ?>
 <div class="clearfix"> </div>
@@ -87,6 +87,7 @@ else {
                                     <th> ID </th>
                                     <th> Nome </th>
                                     <th> Cliente </th>
+                                    <th> Projeto </th>
                                     <th> Data Término </th>
                                     <th> Horas Est. </th>
                                     <th> Prioridade </th>
@@ -104,6 +105,8 @@ else {
                                         <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
 
                                         <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>
+
+                                        <td><a href="projeto/<?=$tarefa['projetos_id']?>"><?=$tarefa['tb_projetos_nome']?></a></td>
 
                                         <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 
