@@ -16,13 +16,13 @@ if($idUser != ""){
     $cargaHoraria="";
     $funcao="";
     $tipoUser="adm";
-    $user = $conexao::fetchuniq("SELECT tb_usuarios_email as email, tb_usuarios_nome as nome, tb_usuario_login as login, tb_usuario_senha as senha FROM tb_usuarios WHERE id = '".$idUser."'");
+    $user = $conexao::fetchuniq("SELECT tb_usuarios_email, tb_usuarios_nome, tb_usuario_login, tb_usuario_senha, tb_usuarios_foto FROM tb_usuarios WHERE id = '".$idUser."'");
 
-    $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria as carga, tb_funcionarios_funcao as funcao FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
-    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo['carga'];$funcao = $buscaTipo['funcao'];}
+    $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria, tb_funcionarios_funcao FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
+    if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo['tb_funcionarios_carga_horaria'];$funcao = $buscaTipo['tb_funcionarios_funcao'];}
 
-    $buscaTipo = $conexao::fetchuniq("SELECT tb_clientes_empresas_id as empresaID FROM tb_clientes WHERE tb_clientes_usuario_id = '".$idUser."'");
-    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo['empresaID'];}
+    $buscaTipo = $conexao::fetchuniq("SELECT tb_clientes_empresas_id FROM tb_clientes WHERE tb_clientes_usuario_id = '".$idUser."'");
+    if($buscaTipo != ""){ $tipoUser = "cli"; $idEmpresa = $buscaTipo['tb_clientes_empresas_id'];}
 
 
     if($user!= ""){
@@ -39,7 +39,7 @@ if($idUser != ""){
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
                         <li>
-                            <span>Usuários > Cadastrar</span>
+                            <span>Usuários > <?php if ($idUser != "") {echo "Editar";}else{echo "Cadastrar";}?></span>
                         </li>
                     </ul>
                     <div class="page-toolbar">
@@ -59,12 +59,22 @@ if($idUser != ""){
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="icon-user font-green"></i>
-                                    <span class="caption-subject font-green sbold uppercase">Novo usuário</span>
+                                    <span class="caption-subject font-green sbold uppercase"><?php if ($idUser != "") {echo "Editar usuário";}else{echo "Novo usuário";}?></span></span>
                                 </div>
 
                             </div>
                             <div class="portlet-body">
                                 <!-- BEGIN FORM-->
+
+                                <?php if ($idUser != "") {?>
+                                <form action="model/cadastraUsuario.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
+                                    <input type="hidden" name="idUser" value="<?=$idUser?>"/>
+                                    <input type="hidden" name="fotoExistente" value="<?=$user['tb_usuarios_foto']?>"/>
+                                    <?php } else { ?>
+                                    <form action="model/cadastraUsuario.php?acao=1" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
+                                        <?php } ?>
+
+
                                 <form method="post" id="form_sample_1" class="form-horizontal">
                                     <div class="form-body">
                                         <div class="alert alert-danger display-hide">
@@ -85,7 +95,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-user"></i>
                                                             </span>
                                                 <?php if($edicao == 1){
-                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user['nome'].'" required/></div>';
+                                                    echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" value="'.$user['tb_usuarios_nome'].'" required/></div>';
                                                 }else{
                                                     echo '<input type="text" name="nomeUsuario" placeholder="Nome do usuário" data-required="1" class="form-control" required/></div>';
                                                 } ?>
@@ -102,7 +112,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-envelope"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user['email'].'" placeholder="Email do usuário" required></div>';
+                                                        echo '<input type="text" class="form-control" name="emailUsuario" value="'.$user['tb_usuarios_email'].'" placeholder="Email do usuário" required></div>';
                                                     }else{
                                                         echo '<input type="text" class="form-control" name="emailUsuario" placeholder="Email do usuário" required></div>';
                                                     } ?>
@@ -115,7 +125,7 @@ if($idUser != ""){
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                             <span class="btn green btn-file">
                                                                 <span class="fileinput-new"> Escolha um arquivo </span>
-                                                                <span class="fileinput-exists"> Change </span>
+                                                                <span class="fileinput-exists"> Mudar arquivo </span>
                                                                 <input type="hidden" value="" name="..."><input type="file" name="fotoUser"> </span>
                                                     <span class="fileinput-filename"></span> &nbsp;
                                                     <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
@@ -132,7 +142,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-user"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user['login'].'" class="form-control" required disabled/></div>';
+                                                        echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" value="'.$user['tb_usuario_login'].'" class="form-control" required disabled/></div>';
                                                     }else{
                                                         echo '<input name="loginUsuario" type="text" placeholder="Login do usuário" class="form-control" required/></div>';
                                                     } ?>
@@ -149,7 +159,7 @@ if($idUser != ""){
                                                                 <i class="fa fa-lock"></i>
                                                             </span>
                                                     <?php if($edicao == 1){
-                                                        echo '<input name="senhaUsuario" type="password" value="'.$user['senha'].'" placeholder="******" class="form-control" required/></div>';
+                                                        echo '<input name="senhaUsuario" type="password" value="'.$user['tb_usuario_senha'].'" placeholder="******" class="form-control" required/></div>';
                                                     }else{
                                                         echo '<input name="senhaUsuario" type="password" placeholder="******" class="form-control" required/></div>';
                                                     } ?>
@@ -223,14 +233,7 @@ if($idUser != ""){
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <?php
-                                                    if($idUser != ""){
-                                                        echo '<button type="submit" formaction="model/cadastraUsuario.php?acao=2&idUser='.$idUser.'" class="btn green">Enviar</button>';
-                                                    }else{
-                                                        echo '<button type="submit" formaction="model/cadastraUsuario.php?acao=1" class="btn green">Enviar</button>';
-                                                    }
-                                                ?>
-
+                                                <button type="submit" class="btn green">Enviar</button>
                                                 <button type="button" class="btn grey-salsa btn-outline">Cancelar</button>
                                             </div>
                                         </div>

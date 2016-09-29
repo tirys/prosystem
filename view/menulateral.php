@@ -141,7 +141,7 @@
                             <span class="title">Novo usuário</span>
                         </a>
                     </li>
-                    <?php echo ($_GET['idMenu'] == 52 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <?php echo ($_GET['idMenu'] == 52||$_GET['idMenu'] == 53 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                         <a href="listar/usuario" class="nav-link ">
                             <span class="title">Ver usuários</span>
                         </a>

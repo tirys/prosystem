@@ -7,10 +7,12 @@ $cargaHoraria = isset($_POST['cargaHoraria']) ? $_POST['cargaHoraria'] : '';
 $funcao = isset($_POST['funcao']) ? $_POST['funcao'] : '';
 $tipoUsuario = isset($_POST['tipoUsuario']) ? $_POST['tipoUsuario'] : '';
 $empresaUsuario = isset($_POST['empresaUsuario']) ? $_POST['empresaUsuario'] : '';
+$fotoAtual = isset($_POST['fotoExistente']) ? $_POST['fotoExistente'] : '';
 $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
-$idUser = isset($_GET['idUser']) ? $_GET['idUser'] : '';
+$idUser = isset($_POST['idUser']) ? $_POST['idUser'] : '';
 
 include('../config/conexao.php');
+include('../config/funcoes.php');
 
 if ($acao == 1) {
     $conexao = new classeConexao();
@@ -18,7 +20,27 @@ if ($acao == 1) {
     $nomeUsuario = mysqli_real_escape_string($conexao->obj(),$nomeUsuario);
     $emailUsuario = mysqli_real_escape_string($conexao->obj(),$emailUsuario);
 
-    $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','default/user.jpg','1')");
+    if ($_FILES['fotoUser']['tmp_name'] != "" && $_FILES['fotoUser']['size'] <= 2097152) {
+
+        date_default_timezone_set("Brazil/East");
+        $imagem_tmp = $_FILES[ 'fotoUser' ][ 'tmp_name' ];
+        $nomeImagem = $_FILES[ 'fotoUser' ][ 'name' ];
+        $destinoImagem = '..\view\images\uploads\usuarios/';
+        $extensaoImagem = pathinfo ( $nomeImagem, PATHINFO_EXTENSION );
+        $extensaoImagem = strtolower ( $extensaoImagem );
+        $nomeSemAcento = str_replace(" ","",$nomeUsuario);
+        $nomeSemAcento = RetiraAcentos($nomeSemAcento);
+        $nomeSemAcento = strtolower($nomeSemAcento);
+        if ( strstr ( '.jpg;.jpeg;.gif;.png', $extensaoImagem ) ) {
+            $novoNomeImagem = $idUser.date("_dmy-His") .".". $extensaoImagem;
+            $destinoImagem = $destinoImagem. $novoNomeImagem;
+            move_uploaded_file ( $imagem_tmp, $destinoImagem );
+        }
+        $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','uploads\\\usuarios/{$novoNomeImagem}','1')");
+    }else{
+        $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','default/user.jpg','1')");
+    }
+
 
     if ($insert) {
         if($tipoUsuario == "cli" || $tipoUsuario == "fun"){
@@ -46,7 +68,27 @@ if ($acao == 2) {
     $nomeUsuario = mysqli_real_escape_string($conexao->obj(),$nomeUsuario);
     $emailUsuario = mysqli_real_escape_string($conexao->obj(),$emailUsuario);
 
-    $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}' WHERE id = '".$idUser."'");
+    if ($_FILES['fotoUser']['tmp_name'] != "" && $_FILES['fotoUser']['size'] <= 2097152) {
+
+        date_default_timezone_set("Brazil/East");
+        $imagem_tmp = $_FILES[ 'fotoUser' ][ 'tmp_name' ];
+        $nomeImagem = $_FILES[ 'fotoUser' ][ 'name' ];
+        $destinoImagem = '..\view\images\uploads\usuarios/';
+        $extensaoImagem = pathinfo ( $nomeImagem, PATHINFO_EXTENSION );
+        $extensaoImagem = strtolower ( $extensaoImagem );
+        $nomeSemAcento = str_replace(" ","",$nomeUsuario);
+        $nomeSemAcento = RetiraAcentos($nomeSemAcento);
+        $nomeSemAcento = strtolower($nomeSemAcento);
+        if ( strstr ( '.jpg;.jpeg;.gif;.png', $extensaoImagem ) ) {
+            $novoNomeImagem = $nomeSemAcento.date("_dmy-His") .".". $extensaoImagem;
+            $destinoImagem = $destinoImagem. $novoNomeImagem;
+            move_uploaded_file ( $imagem_tmp, $destinoImagem );
+        }
+        $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}',tb_usuarios_foto = 'uploads\\\usuarios/{$novoNomeImagem}' WHERE id = '".$idUser."'");
+        unlink('../view/images/'.$fotoAtual);
+    }else{
+        $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}' WHERE id = '".$idUser."'");
+    }
 
     if ($update) {
         if($tipoUsuario == "fun"){
@@ -57,4 +99,5 @@ if ($acao == 2) {
 
         header('location:../listar/usuario');
     }
+
 }
