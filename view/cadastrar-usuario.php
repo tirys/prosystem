@@ -68,7 +68,7 @@ if($idUser != ""){
 
                                 <?php if ($idUser != "") {?>
                                 <form action="model/cadastraUsuario.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
-                                    <input type="hidden" name="idUser" value="<?=$idUser?>"/>
+                                    <input type="hidden" name="idUser" id="idUser" value="<?=$idUser?>"/>
                                     <input type="hidden" name="fotoExistente" value="<?=$user['tb_usuarios_foto']?>"/>
                                     <?php } else { ?>
                                     <form action="model/cadastraUsuario.php?acao=1" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
@@ -234,7 +234,7 @@ if($idUser != ""){
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
                                                 <button type="submit" class="btn green">Enviar</button>
-                                                <button type="button" class="btn grey-salsa btn-outline">Cancelar</button>
+                                                <button type="button" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -293,6 +293,7 @@ if($idUser != ""){
 
 
 <script>
+
     var jq = jQuery.noConflict();
 
     //Jquery para ativar campos extras
@@ -313,6 +314,32 @@ if($idUser != ""){
             jq('#funcaoU').attr('style','display:none;');
         }
     });
+
+
+    if( jq('#tipoUsuario').val() == 'cli') {
+        jq('#empresaU').attr('style','');
+        jq('#cargahorariaU').attr('style','display:none;');
+        jq('#funcaoU').attr('style','display:none;');
+    }
+    else if (jq('#tipoUsuario').val() == 'fun') {
+        jq('#cargahorariaU').attr('style','');
+        jq('#funcaoU').attr('style','');
+        jq('#empresaU').attr('style','display:none;');
+    }
+    else {
+        jq('#empresaU').attr('style','display:none;');
+        jq('#cargahorariaU').attr('style','display:none;');
+        jq('#funcaoU').attr('style','display:none;');
+    }
+
+    jq('#btnCancelar').on('click', function() {
+        if(jq('#idUser').val() != undefined){
+            window.location.href = "../prosystem/listar/usuario";
+        }else{
+            window.location.href = "../prosystem/dashboard";
+        }
+    });
+
 </script>
 <?= include("rodape.php") ?>
 

@@ -46,7 +46,7 @@ $dadosEmpresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '".$id
                                 <!-- BEGIN FORM-->
                                 <?php
                                     if($dadosEmpresa['id'] > 0){
-                                        echo'<form action="model/cadastraEmpresa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal"><input type="hidden" name="idEmpresa" value="'.$idEmpresa.'"/>';
+                                        echo'<form action="model/cadastraEmpresa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal"><input type="hidden" name="idEmpresa" id="idEmpresa" value="'.$idEmpresa.'"/>';
                                     }else{
                                         echo'<form action="model/cadastraEmpresa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">';
                                     }
@@ -118,7 +118,7 @@ $dadosEmpresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '".$id
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
                                                 <button type="submit" class="btn green">Cadastrar</button>
-                                                <button type="button" class="btn grey-salsa btn-outline">Cancelar</button>
+                                                <button type="button" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -180,19 +180,11 @@ $dadosEmpresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '".$id
 <script>
     var jq = jQuery.noConflict();
 
-    //Jquery para ativar campos extras
-    jq('#tipoUsuario').on('change', function () {
-        if( jq(this).val() == 'clientes') {
-            jq('#empresaU').attr('style','');
-            jq('#cargahorariaU').attr('style','display:none;');
-        }
-        else if (jq(this).val() == 'funcionarios') {
-            jq('#cargahorariaU').attr('style','');
-            jq('#empresaU').attr('style','display:none;');
-        }
-        else {
-            jq('#empresaU').attr('style','display:none;');
-            jq('#cargahorariaU').attr('style','display:none;');
+    jq('#btnCancelar').on('click', function() {
+        if(jq('#idEmpresa').val() != undefined){
+            window.location.href = "../prosystem/listar/empresas";
+        }else{
+            window.location.href = "../prosystem/dashboard";
         }
     });
 </script>

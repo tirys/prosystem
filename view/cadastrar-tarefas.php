@@ -50,7 +50,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                             <!-- BEGIN FORM-->
                             <?php if (isset($dadosTarefa['id'])) {?>
                             <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal">
-                                <input type="hidden" name="idTarefa" value="<?=$dadosTarefa['id']?>"/>
+                                <input type="hidden" name="idTarefa" id="idTarefa" value="<?=$dadosTarefa['id']?>"/>
                                 <?php } else { ?>
                                 <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
                                     <?php } ?>
@@ -278,7 +278,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
                                                     <button type="submit" class="btn green">Cadastrar</button>
-                                                    <a href="listar/tarefas" class="btn grey-salsa btn-outline">Cancelar</a>
+                                                    <a href="listar/tarefas" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -365,6 +365,14 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                 }
             }
         });
+    });
+
+    jq('#btnCancelar').on('click', function() {
+        if(jq('#idTarefa').val() != undefined){
+            window.location.href = "../prosystem/listar/tarefas";
+        }else{
+            window.location.href = "../prosystem/dashboard";
+        }
     });
 
 </script>

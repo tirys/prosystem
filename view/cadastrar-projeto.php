@@ -45,7 +45,7 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                             <!-- BEGIN FORM-->
                             <?php if (isset($dadosProjetos['id'])) {?>
                                 <form action="model/cadastraProjeto.php?acao=2" method="post" id="form_sample_1" class="form-horizontal">
-                                <input type="hidden" name="idProjeto" value="<?=$dadosProjetos['id']?>"/>
+                                <input type="hidden" name="idProjeto" id="idProjeto" value="<?=$dadosProjetos['id']?>"/>
                             <?php } else { ?>
                                 <form action="model/cadastraProjeto.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
                                 <?php } ?>
@@ -116,7 +116,7 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
                                                 <button type="submit" class="btn green">Cadastrar</button>
-                                                <button type="button" class="btn grey-salsa btn-outline">Cancelar</button>
+                                                <button type="button" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -178,19 +178,11 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
 <script>
     var jq = jQuery.noConflict();
 
-    //Jquery para ativar campos extras
-    jq('#tipoUsuario').on('change', function () {
-        if( jq(this).val() == 'clientes') {
-            jq('#empresaU').attr('style','');
-            jq('#cargahorariaU').attr('style','display:none;');
-        }
-        else if (jq(this).val() == 'funcionarios') {
-            jq('#cargahorariaU').attr('style','');
-            jq('#empresaU').attr('style','display:none;');
-        }
-        else {
-            jq('#empresaU').attr('style','display:none;');
-            jq('#cargahorariaU').attr('style','display:none;');
+    jq('#btnCancelar').on('click', function() {
+        if(jq('#idProjeto').val() != undefined){
+            window.location.href = "../prosystem/listar/projetos";
+        }else{
+            window.location.href = "../prosystem/dashboard";
         }
     });
 </script>
