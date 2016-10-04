@@ -57,15 +57,15 @@ $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos t
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-print"></i> Print </a>
+                                                        <i class="fa fa-print"></i> Imprimir </a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-file-pdf-o"></i> Save as PDF </a>
+                                                        <i class="fa fa-file-pdf-o"></i> Salvar como PDF </a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:;">
-                                                        <i class="fa fa-file-excel-o"></i> Export to Excel </a>
+                                                        <i class="fa fa-file-excel-o"></i> Exportar para Excel </a>
                                                 </li>
                                             </ul>
                                         </div>
