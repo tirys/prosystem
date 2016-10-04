@@ -49,7 +49,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                         <div class="portlet-body">
                             <!-- BEGIN FORM-->
                             <?php if (isset($dadosTarefa['id'])) {?>
-                            <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal">
+                            <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
                                 <input type="hidden" name="idTarefa" id="idTarefa" value="<?=$dadosTarefa['id']?>"/>
                                 <?php } else { ?>
                                 <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal">
@@ -274,6 +274,29 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Insira um anexo:
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-paperclip"></i>
+                                                            </span>
+                                                    <input type="file" name="anexo1" id="anexo1" class="anexos form-control"/>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="numero-anexos" name="numero-anexos" value="1"/>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">
+                                            </label>
+                                            <div class="col-md-7">
+                                                <a class="btn btn-success adicionar-arquivos"><i class="fa fa-plus"></i> Adicionar mais arquivos</a>
+                                            </div>
+                                        </div>
+
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
@@ -339,6 +362,19 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
 <script>
     var jq = jQuery.noConflict();
+
+    jq('.adicionar-arquivos').on('click', function(){
+        var numero = jq('#numero-anexos').val();
+        numero++;
+
+        var conteudo =   '<div class="form-group"><label class="control-label col-md-3">Insira um anexo: </label>'
+                         + '<div class="col-md-7"><div class="input-group"><span class="input-group-addon"><i class="fa fa-paperclip"></i></span>'
+                         + '<input type="file" name="anexo'+numero+'" id="anexo'+numero+'" class="anexos form-control"/>'
+                         + '</div></div></div>';
+
+        jq('#numero-anexos').val(numero);
+        jq(this).parent().parent().prepend(conteudo);
+    });
 
     //Jquery para mudar projetos
     jq('#empresaId').on('change', function() {
