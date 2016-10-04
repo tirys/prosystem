@@ -40,7 +40,7 @@ if ($acao == 1) {
         // Tamanho máximo do arquivo (em Bytes)
         $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
         // Renomeia o arquivo?
-        $_UP['renomeia'] = true;
+        $_UP['renomeia'] = false;
 
         // Faz a verificação do tamanho do arquivo
         if ($_UP['tamanho'] < $_FILES['anexo'.$i]['size']) {
@@ -83,7 +83,7 @@ else if ($acao == 2) {
         // Tamanho máximo do arquivo (em Bytes)
         $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
         // Renomeia o arquivo?
-        $_UP['renomeia'] = true;
+        $_UP['renomeia'] = false;
 
         // Faz a verificação do tamanho do arquivo
         if ($_UP['tamanho'] < $_FILES['anexo'.$i]['size']) {
@@ -113,7 +113,7 @@ else if ($acao == 2) {
 
 
     if ($update) {
-        //Trocar aqui por página do projeto depois
+        //Trocar aqui por página do projeto ou da tarefa depois
         header('location:../listar/tarefas');
     }
 }
