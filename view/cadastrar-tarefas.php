@@ -367,10 +367,10 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
         var numero = jq('#numero-anexos').val();
         numero++;
 
-        var conteudo =   '<div class="form-group"><label class="control-label col-md-3">Insira um anexo: </label>'
+        var conteudo =   '<label class="control-label col-md-3">Insira um anexo: </label>'
                          + '<div class="col-md-7"><div class="input-group"><span class="input-group-addon"><i class="fa fa-paperclip"></i></span>'
                          + '<input type="file" name="anexo'+numero+'" id="anexo'+numero+'" class="anexos form-control"/>'
-                         + '</div></div></div>';
+                         + '</div></div><br><br><br>';
 
         jq('#numero-anexos').val(numero);
         jq(this).parent().parent().prepend(conteudo);
