@@ -35,37 +35,39 @@ if ($acao == 1) {
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
-        // Pasta onde o arquivo vai ser salvo
-        $_UP['pasta'] = '../view/images/uploads/anexos/';
-        // Tamanho máximo do arquivo (em Bytes)
-        $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
-        // Renomeia o arquivo?
-        $_UP['renomeia'] = false;
+        if($_FILES['anexo'.$i]['name']!='') {
+            // Pasta onde o arquivo vai ser salvo
+            $_UP['pasta'] = '../view/images/uploads/anexos/';
+            // Tamanho máximo do arquivo (em Bytes)
+            $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
+            // Renomeia o arquivo?
+            $_UP['renomeia'] = false;
 
-        // Faz a verificação do tamanho do arquivo
-        if ($_UP['tamanho'] < $_FILES['anexo'.$i]['size']) {
-            echo "O arquivo enviado é muito grande, envie arquivos de até 2Mb.";
-            exit;
+            // Faz a verificação do tamanho do arquivo
+            if ($_UP['tamanho'] < $_FILES['anexo' . $i]['size']) {
+                echo "O arquivo enviado é muito grande, envie arquivos de até 2Mb.";
+                exit;
+            }
+            $extensao = strtolower(end(explode('.', $_FILES['anexo' . $i]['name'])));
+
+            // Primeiro verifica se deve trocar o nome do arquivo
+            if ($_UP['renomeia'] == true) {
+                // Cria um nome baseado no UNIX TIMESTAMP atual e com extensão .jpg
+                $nome_final = time() . '_' . rand(1, 100) . '.' . $extensao;
+            } else {
+                // Mantém o nome original do arquivo
+                $nome_final = $_FILES['anexo' . $i]['name'];
+            }
+
+            // Depois verifica se é possível mover o arquivo para a pasta escolhida
+            if (move_uploaded_file($_FILES['anexo' . $i]['tmp_name'], $_UP['pasta'] . $nome_final)) {
+
+            } else {
+                echo "Não foi possível enviar o arquivo, tente novamente";
+            }
+
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','{$nome_final}','{$extensao}')");
         }
-        $extensao = strtolower(end(explode('.', $_FILES['anexo'.$i]['name'])));
-
-        // Primeiro verifica se deve trocar o nome do arquivo
-        if ($_UP['renomeia'] == true) {
-            // Cria um nome baseado no UNIX TIMESTAMP atual e com extensão .jpg
-            $nome_final = time().'_'.rand(1,100).'.'.$extensao;
-        } else {
-            // Mantém o nome original do arquivo
-            $nome_final = $_FILES['anexo'.$i]['name'];
-        }
-
-        // Depois verifica se é possível mover o arquivo para a pasta escolhida
-        if (move_uploaded_file($_FILES['anexo'.$i]['tmp_name'], $_UP['pasta'] . $nome_final)) {
-
-        } else {
-            echo "Não foi possível enviar o arquivo, tente novamente";
-        }
-
-        $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','{$nome_final}','{$extensao}')");
     }
 
     if ($insert) {
@@ -78,37 +80,39 @@ else if ($acao == 2) {
     $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID} WHERE id = {$idTarefa}");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
-        // Pasta onde o arquivo vai ser salvo
-        $_UP['pasta'] = '../view/images/uploads/anexos/';
-        // Tamanho máximo do arquivo (em Bytes)
-        $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
-        // Renomeia o arquivo?
-        $_UP['renomeia'] = false;
+        if($_FILES['anexo'.$i]['name']!='') {
+            // Pasta onde o arquivo vai ser salvo
+            $_UP['pasta'] = '../view/images/uploads/anexos/';
+            // Tamanho máximo do arquivo (em Bytes)
+            $_UP['tamanho'] = 1024 * 1024 * 2; // 2Mb
+            // Renomeia o arquivo?
+            $_UP['renomeia'] = false;
 
-        // Faz a verificação do tamanho do arquivo
-        if ($_UP['tamanho'] < $_FILES['anexo'.$i]['size']) {
-            echo "O arquivo enviado é muito grande, envie arquivos de até 2Mb.";
-            exit;
+            // Faz a verificação do tamanho do arquivo
+            if ($_UP['tamanho'] < $_FILES['anexo' . $i]['size']) {
+                echo "O arquivo enviado é muito grande, envie arquivos de até 2Mb.";
+                exit;
+            }
+            $extensao = strtolower(end(explode('.', $_FILES['anexo' . $i]['name'])));
+
+            // Primeiro verifica se deve trocar o nome do arquivo
+            if ($_UP['renomeia'] == true) {
+                // Cria um nome baseado no UNIX TIMESTAMP atual e com extensão .jpg
+                $nome_final = time() . '_' . rand(1, 100) . '.' . $extensao;
+            } else {
+                // Mantém o nome original do arquivo
+                $nome_final = $_FILES['anexo' . $i]['name'];
+            }
+
+            // Depois verifica se é possível mover o arquivo para a pasta escolhida
+            if (move_uploaded_file($_FILES['anexo' . $i]['tmp_name'], $_UP['pasta'] . $nome_final)) {
+
+            } else {
+                echo "Não foi possível enviar o arquivo, tente novamente";
+            }
+
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa},'anexos','{$nome_final}','{$extensao}')");
         }
-        $extensao = strtolower(end(explode('.', $_FILES['anexo'.$i]['name'])));
-
-        // Primeiro verifica se deve trocar o nome do arquivo
-        if ($_UP['renomeia'] == true) {
-            // Cria um nome baseado no UNIX TIMESTAMP atual e com extensão .jpg
-            $nome_final = time().'_'.rand(1,100).'.'.$extensao;
-        } else {
-            // Mantém o nome original do arquivo
-            $nome_final = $_FILES['anexo'.$i]['name'];
-        }
-
-        // Depois verifica se é possível mover o arquivo para a pasta escolhida
-        if (move_uploaded_file($_FILES['anexo'.$i]['tmp_name'], $_UP['pasta'] . $nome_final)) {
-
-        } else {
-            echo "Não foi possível enviar o arquivo, tente novamente";
-        }
-
-        $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa},'anexos','{$nome_final}','{$extensao}')");
     }
 
 
