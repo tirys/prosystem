@@ -178,7 +178,7 @@ if(count($cookie)>0) {
                     <!-- BEGIN TAREFAS -->
                     <?php
                     $tarefas = $conexao::fetchuniq("SELECT count(*) as qtd FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1");
-                    $tarefasLista = $conexao::fetch("SELECT * FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1");
+                    $tarefasLista = $conexao::fetch("SELECT * FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1 ORDER BY tb_tarefas_data_termino ASC");
                     ?>
                     <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -197,12 +197,26 @@ if(count($cookie)>0) {
                                     <?php
                                     //Listagem das minhas tarefas pendentes no topo
 
+
+
                                     foreach ($tarefasLista as $tarefa) {
+
+                                        $estilo = '';
+                                        $atual = strtotime(date("Y-m-d"));
+                                        $data    = strtotime($tarefa['tb_tarefas_data_termino']);
+
+                                        $datediff = $data - $atual;
+                                        $diferenca = floor($datediff/(60*60*24));
+                                        if($diferenca<3)
+                                        {
+                                            $estilo = 'color:#E7505A';
+                                        }
+
                                         echo '<li>';
                                         echo '<a href="editar/tarefa/'.$tarefa['id'].'">';
                                         echo '<span class="task">';
                                         echo '<span class="desc">'.$tarefa['tb_tarefas_nome'].'</span>';
-                                        echo '<span class="percent">'.DataBrasil($tarefa['tb_tarefas_data_termino']).'</span>';
+                                        echo '<span class="percent" style="'.$estilo.'">'.DataBrasil($tarefa['tb_tarefas_data_termino']).'</span>';
                                         echo '</span>';
                                         echo '</a>';
                                         echo '</li>';

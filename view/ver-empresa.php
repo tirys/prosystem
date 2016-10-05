@@ -14,9 +14,12 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
 
 
 ?>
+<link href="view/assets/pages/css/about.min.css" rel="stylesheet" type="text/css" />
+<link href="view/assets/pages/css/contact.min.css" rel="stylesheet" type="text/css" />
+
 <link href="view/assets/pages/css/contact.min.css" rel="stylesheet" type="text/css" />
     <div class="clearfix"> </div>
-    <div class="page-container">
+    <div class="page-container page-container-bg-solid">
         <?php include("menulateral.php"); ?>
         <div class="page-content-wrapper">
             <div class="page-content">
@@ -80,6 +83,50 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
                     </div>
                     <div id="gmapbg" class="c-content-contact-1-gmap" style="height: 615px;"></div>
                 </div>
+
+                <!-- START PARTICIPANTES -->
+                <div class="row margin-bottom-40 stories-header" data-auto-height="true">
+                    <div class="col-md-12">
+                        <h1>Clientes</h1>
+                        <h2>Usuários cadastrador nesta empresa</h2>
+                    </div>
+                </div>
+                <div class="row margin-bottom-20 stories-cont">
+
+                    <?php
+                    $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_clientes tc WHERE tu.tb_usuarios_tipo = 2 AND tu.id=tc.tb_clientes_usuario_id");
+
+                    foreach ($usuarios as $usuario) {
+
+
+                        echo '<div class="col-lg-3 col-md-6"><div class="portlet light"><div class="photo">';
+                        echo "<img src='view/images/{$usuario['tb_usuarios_foto']}' alt='' class='img-responsive'/></div>";
+                        echo '<div class="title">';
+                        echo "<span>{$usuario['tb_usuarios_nome']}</span>";
+                        echo '<div class="desc">';
+
+                        if($usuario['tb_usuarios_tipo'] == 1) {
+                            //Obter dados se for funcionario
+                            $funcionarios = $conexao::fetchuniq("SELECT * FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = {$usuario['id']}");
+                            echo "<span>{$funcionarios['tb_funcionarios_funcao']}</span>";
+                        }
+                        else if ($usuario['tb_usuarios_tipo'] == 2) {
+                            echo "<span>Cliente</span>";
+                        }
+                        else {
+                            echo "<span>Administrador do Sistema</span>";
+                        }
+
+                        echo "<span>{$usuario['tb_usuario_funcao']}</span>";
+
+
+                        echo '</div>';
+                        echo '</div></div></div>';
+                    }
+                    ?>
+                </div>
+                <!--END PARTICIPANTES-->
+
 
             </div>
         </div>
