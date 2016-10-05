@@ -276,6 +276,29 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                         </div>
 
                                         <div class="form-group">
+                                            <div class="col-md-7 col-md-offset-3">
+                                        <?php  if($dadosTarefa['id'] > 0) { ?>
+                                            <?php
+                                                $arquivos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$dadosTarefa['id']}");
+
+                                                foreach ($arquivos as $key => $arquivo){
+
+                                                    echo '<div id="'.$arquivo['id'].'">';
+                                                    echo '<br/>';
+                                                    echo '<a target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download>';
+                                                    echo '<input style="border:0px;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
+                                                    echo '</a>';
+                                                    echo '<a class="btn-danger btn excluir-anexo" data-role="'.$arquivo['id'].'"><i class="fa fa-times"></i></a>';
+                                                    echo '<span class="span'.$arquivo['id'].'" style="display:none;"><i style="font-size:17px;margin-left:11px;" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span></span>';
+                                                    echo '<br/>';
+                                                    echo '</div>';
+                                                }
+                                            ?>
+                                        <?php  } ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="control-label col-md-3">Insira um anexo:
                                             </label>
                                             <div class="col-md-7">
@@ -362,6 +385,35 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
 <script>
     var jq = jQuery.noConflict();
+
+    jq('.excluir-anexo').on('click',function () {
+        var arquivo = jq(this).attr('data-role');
+        var nome = jq('#arquivo'+arquivo).val();
+
+        $.ajax({
+            url: 'model/ws/processaArquivos.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'excluir',
+                id: arquivo,
+                nome:nome
+            },
+            beforeSend: function () {
+                jq('.span'+arquivo).attr('style','');
+            },
+            error: function () {
+                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+            },
+            dataType: 'json',
+            success: function (result) {
+                //success
+                jq('#'+arquivo).attr('style','display:none;');
+            }
+        });
+
+
+    });
 
     jq('.adicionar-arquivos').on('click', function(){
         var numero = jq('#numero-anexos').val();
