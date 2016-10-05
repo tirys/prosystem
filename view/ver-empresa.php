@@ -62,7 +62,7 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
                                     <br/>
                                     <ul class="c-content-iconlist-1 ">
                                         <li>
-                                            <a href="www.<?=$empresa['tb_empresas_site']?>">
+                                            <a href="http://<?=$empresa['tb_empresas_site']?>">
                                                 <i class="fa fa-globe"></i>
                                             </a>
                                         </li>
