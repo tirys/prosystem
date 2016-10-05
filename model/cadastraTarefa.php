@@ -11,6 +11,7 @@ $descricaoTarefa = isset($_POST['descricaoTarefa']) ? $_POST['descricaoTarefa'] 
 $criador = isset($_POST['criador']) ? $_POST['criador'] : '';
 $idTarefa = isset($_POST['idTarefa']) ? $_POST['idTarefa'] : '';
 $qtdAnexo = isset($_POST['numero-anexos']) ? $_POST['numero-anexos'] : '';
+$tempoGasto = isset($_POST['tempoGasto']) ? $_POST['tempoGasto'] : '';
 
 if($oculto=='') {
     $oculto = 0;
@@ -31,7 +32,7 @@ $descricaoTarefa = mysqli_real_escape_string($conexao->obj(),$descricaoTarefa);
 if ($acao == 1) {
 
     $conexao = new classeConexao();
-    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},null,0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})");
+    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})");
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
@@ -77,7 +78,7 @@ if ($acao == 1) {
 else if ($acao == 2) {
 
     $conexao = new classeConexao();
-    $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID} WHERE id = {$idTarefa}");
+    $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_horas_gastas = {$tempoGasto}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID} WHERE id = {$idTarefa}");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
         if($_FILES['anexo'.$i]['name']!='') {

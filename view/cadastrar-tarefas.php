@@ -161,7 +161,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Data de Término
                                             </label>
-                                            <div class="col-md-3">
+                                            <div class="col-md-7">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
@@ -169,7 +169,9 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                     <input type="date" class="form-control" name="dataTarefa" placeholder="dd/mm/yyyy" value="<?=$dadosTarefa['tb_tarefas_data_termino']?>" required>
                                                 </div>
                                             </div>
-                                            <label class="control-label col-md-1">Tempo Est.
+                                          </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Tempo Estimado
                                             </label>
                                             <div class="col-md-3">
                                                 <div class="input-group">
@@ -177,6 +179,17 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                                 <i class="fa fa-clock-o"></i>
                                                             </span>
                                                     <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_tarefas_horas']?>" required>
+                                                </div>
+                                            </div>
+
+                                            <label class="control-label col-md-1">Tempo Gasto
+                                            </label>
+                                            <div class="col-md-3">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-clock-o"></i>
+                                                            </span>
+                                                    <input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Tempo Gasto" value="<?=$dadosTarefa['tb_tarefas_horas_gastas']?>" required>
                                                 </div>
                                             </div>
                                         </div>

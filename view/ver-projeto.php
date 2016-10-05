@@ -15,12 +15,22 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$projeto[
 
 $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_projeto = {$id}");
 
-//Realizar os cálculos de status
-
 //Obter os participantes do projeto através das tarefas
-$usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHERE tt.tb_tarefas_projeto = {$id} AND tt.tb_tarefas_funcionario = tu.id");
+$usuarios = $conexao::fetch("SELECT DISTINCT tu.* FROM tb_usuarios tu, tb_tarefas tt WHERE tt.tb_tarefas_projeto = {$id} AND tt.tb_tarefas_funcionario = tu.id");
 
+//Qtd tarefas a fazer
+$tarefasFazer = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=0 AND tb_tarefas_projeto = ".$id);
+
+//Qtd tarefas feitas
+$tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$id);
+
+//Somatória das horas
+$horas = $conexao::fetchuniq("SELECT SUM(tb_tarefas_horas) as horasPrevistas, SUM(tb_tarefas_horas_gastas) as horasGastas FROM tb_tarefas WHERE tb_tarefas_projeto = ".$id);
+
+//Porcentagem
+$porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
 ?>
+
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="view/assets/pages/css/about.min.css" rel="stylesheet" type="text/css" />
 <link href="view/assets/pages/css/contact.min.css" rel="stylesheet" type="text/css" />
@@ -49,7 +59,7 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
                 <div class="row margin-bottom-40 about-header" style="height: 310px;">
                     <div class="col-md-12">
                         <h1 style="margin-top:70px;"><?=$projeto['tb_projetos_nome']?></h1>
-                        <h2>Life is either a great adventure or nothing</h2>
+                        <h2><?=$porcentagem?>%</h2>
                         <a href="cadastrar/tarefa-projeto/<?=$projeto['id']?>" class="btn btn-success">NOVA TAREFA <i class="fa fa-plus"></i></a>
                     </div>
                 </div>
@@ -60,43 +70,53 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
                     <div class="col-lg-3 col-md-6">
                         <div class="portlet light">
                             <div class="card-icon">
-                                <i class="icon-user-follow font-red-sunglo theme-font"></i>
+
+                                    <div id="tarefas-concluidas" style="height:170px;"></div>
+
                             </div>
                             <div class="card-title">
-                                <span> Status </span>
+                                <span> Tarefas </span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="portlet light">
                             <div class="card-icon">
-                                <i class="icon-trophy font-green-haze theme-font"></i>
+
+                                <div id="horas-restantes" style="height:170px;"></div>
+
                             </div>
                             <div class="card-title">
-                                <span> Status </span>
+                                <span> Horas </span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="portlet light">
-                            <div class="card-icon">
-                                <i class="icon-basket font-purple-wisteria theme-font"></i>
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="portlet light"  style="height:222px;">
+                                    <h3><?= $empresa['tb_empresas_nome'] ?></h3>
+                                    <br/>
+
+                                    <h5><i class="fa fa-map-pin fa-lg font-green" style="min-width:25px;"></i>
+                                        <?=$empresa['tb_empresas_endereco'] ?></h5>
+
+                                    <h5><i class="fa fa-envelope fa-lg font-green" style="min-width:25px;"></i>
+                                        <?= $empresa['tb_empresas_email'] ?></h5>
+
+                                    <h5><i class="fa fa-globe fa-lg font-green" style="min-width:25px;"></i>
+
+                                        <a href="www.<?= $empresa['tb_empresas_site'] ?>">
+                                            www.<?= $empresa['tb_empresas_site'] ?>
+                                        </a>
+                                    </h5>
+
+                                    <h5><i class="fa fa-pencil fa-lg font-green" style="min-width:25px;"></i>
+                                        <?= $empresa['tb_empresas_anotacao'] ?>
+                                    </h5>
                             </div>
-                            <div class="card-title">
-                                <span> Status </span>
-                            </div>
-                        </div>
+
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="portlet light">
-                            <div class="card-icon">
-                                <i class="icon-layers font-blue theme-font"></i>
-                            </div>
-                            <div class="card-title">
-                                <span> Status </span>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <!-- END CARDS -->
 
@@ -105,7 +125,7 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
                     <div class="">
 
                         <!-- START TAREFAS -->
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <div class="portlet light bordered">
                                 <div class="portlet-title">
                                     <div class="caption font-dark">
@@ -120,7 +140,6 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
                                         <tr>
                                             <th> ID </th>
                                             <th> Nome </th>
-                                            <th> Cliente </th>
                                             <th> Data Término </th>
                                             <th> Horas Est. </th>
                                             <th> Prioridade </th>
@@ -136,8 +155,6 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
                                                 <td> <?=$tarefa['id']?> </td>
 
                                                 <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
-
-                                                <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>
 
                                                 <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 
@@ -197,44 +214,7 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
                         </div>
                         <!-- END TAREFAS -->
 
-                        <!-- START EMPRESA -->
 
-                        <div class="col-md-3">
-                            <div class="portlet light" style="min-height:356px;">
-                                <div class="c-body">
-                                    <div class="c-section">
-                                        <h3><?= $empresa['tb_empresas_nome'] ?></h3>
-                                        <br/>
-                                    </div>
-                                    <div class="c-section">
-                                        <h5><i class="fa fa-map-pin fa-lg font-green" style="min-width:25px;"></i>
-                                        <?=$empresa['tb_empresas_endereco'] ?></h5>
-                                        <br/>
-
-                                    </div>
-                                    <div class="c-section">
-                                        <h5><i class="fa fa-envelope fa-lg font-green" style="min-width:25px;"></i>
-                                        <?= $empresa['tb_empresas_email'] ?></h5>
-                                        <br/>
-                                    </div>
-                                    <div class="c-section">
-                                        <h5><i class="fa fa-globe fa-lg font-green" style="min-width:25px;"></i>
-
-                                        <a href="www.<?= $empresa['tb_empresas_site'] ?>">
-                                            www.<?= $empresa['tb_empresas_site'] ?>
-                                        </a>
-                                        </h5>
-                                        <br/>
-                                    </div>
-                                    <div class="c-section">
-                                        <h5><i class="fa fa-pencil fa-lg font-green" style="min-width:25px;"></i>
-                                        <?= $empresa['tb_empresas_anotacao'] ?>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END EMPRESA -->
 
                     </div>
                 </div>
@@ -292,3 +272,49 @@ $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_tarefas tt WHER
 <script src="view/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 <script src="view/assets/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+<script src="view/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+<script src="view/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+
+<script>
+
+    var horasPrevistas = '<?=$horas['horasPrevistas']?>';
+    var horasGastas = '<?=$horas['horasGastas']?>';
+
+    //Caso ainda não tenha sido gasto nada:
+    if(horasGastas=='') {
+        horasGastas = 0;
+    }
+    var horasRestantes = horasPrevistas - horasGastas;
+
+
+    new Morris.Donut({
+        // ID of the element in which to draw the chart.
+        element: 'tarefas-concluidas',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: [
+            { label: 'A Fazer', value: <?=$tarefasFazer['qtd']?> },
+            { label: 'Concluídas', value: <?=$tarefasFeitas['qtd']?> }
+        ],
+        colors: [
+            '#cb3c3c','#3ccbcb'
+        ]
+    });
+
+    new Morris.Donut({
+        // ID of the element in which to draw the chart.
+        element: 'horas-restantes',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: [
+            { label: 'Restantes', value: horasRestantes },
+            { label: 'Utilizadas', value: horasGastas }
+        ],
+        colors: [
+            '#cccccc','#3ccbcb'
+        ]
+    });
+
+
+
+</script>

@@ -27,7 +27,7 @@ if ($acao == 1) {
 }
 else if ($acao == 2) {
     $conexao = new classeConexao();
-   $update = $conexao::exec("UPDATE tb_projetos SET tb_projetos_nome = '{$nomedoProjeto}', tb_projetos_data_termino = '{$dataProjeto}', tb_projetos_descricao = '{$descricaoProjeto}' WHERE id = {$idProjeto}");
+   $update = $conexao::exec("UPDATE tb_projetos SET tb_projetos_nome = '{$nomedoProjeto}', id_projetos_empresas_id = '{$empresaId}', tb_projetos_data_termino = '{$dataProjeto}', tb_projetos_descricao = '{$descricaoProjeto}' WHERE id = {$idProjeto}");
 
     if ($update) {
         //Trocar aqui por página do projeto depois
