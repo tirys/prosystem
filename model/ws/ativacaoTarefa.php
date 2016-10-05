@@ -25,3 +25,14 @@ if($acao=='pausar') {
     $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_status = 3 WHERE id = {$id}");
     echo json_encode(array("status" => true));
 }
+
+//Excluindo as tarefas
+if($acao=='excluir') {
+    $conexao = new classeConexao();
+    $empresas = $conexao::exec("DELETE FROM tb_tarefas WHERE id = {$id}");
+
+    //Deletando também todos os anexos referentes a esta tarefa
+    $empresas = $conexao::exec("DELETE FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$id}");
+
+    echo json_encode(array("status" => true));
+}

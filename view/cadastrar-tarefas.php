@@ -45,6 +45,26 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                 <span class="caption-subject font-green sbold uppercase">Nova Tarefa</span>
                             </div>
 
+                            <?php if($usuario['tb_usuarios_tipo']!=2) { ?>
+                            <div class="actions">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a class="deletarTarefa">
+                                                <i class="fa fa-trash-o"></i> Delete </a>
+                                        </li>
+                                        <li>
+                                            <a class="enviarAprovacao">
+                                                <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <?php } ?>
+
                         </div>
                         <div class="portlet-body">
                             <!-- BEGIN FORM-->
@@ -355,27 +375,24 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 </div>
 <!-- BEGIN CORE PLUGINS -->
 <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
-        type="text/javascript"></script>
+
+<!--ISSO AQUI EMBAIXO BUGAVA O JS-->
+<!--<script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
+<!--<script src="view/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>-->
+<!--<script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>-->
+<!--<script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>-->
+<!--<script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>-->
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="view/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"
-        type="text/javascript"></script>
-<script src="view/assets/global/plugins/jquery-validation/js/additional-methods.min.js"
-        type="text/javascript"></script>
-<script src="view/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
-        type="text/javascript"></script>
+<script src="view/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="view/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+<script src="view/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>
-<script src="view/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js"
-        type="text/javascript"></script>
+<script src="view/assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script>
 
 <script src="view/assets/global/plugins/autosize/autosize.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
@@ -398,6 +415,29 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
 <script>
     var jq = jQuery.noConflict();
+
+    jq('.deletarTarefa').on('click',function () {
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'excluir',
+                id: '<?=$dadosTarefa['id']?>'
+            },
+            beforeSend: function () {
+
+            },
+            error: function () {
+                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+            },
+            dataType: 'json',
+            success: function (result) {
+                window.location.href = "../prosystem/listar/tarefas";
+            }
+        });
+
+    });
 
     jq('.excluir-anexo').on('click',function () {
         var arquivo = jq(this).attr('data-role');
@@ -424,8 +464,6 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                 jq('#'+arquivo).attr('style','display:none;');
             }
         });
-
-
     });
 
     jq('.adicionar-arquivos').on('click', function(){
