@@ -11,6 +11,15 @@ $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
 
 include('../config/conexao.php');
 
+$address = $enderecoEmpresa; // Google HQ
+$prepAddr = str_replace(' ','+',$address);
+$geocode=file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+$output= json_decode($geocode);
+$latitude = $output->results[0]->geometry->location->lat;
+$longitude = $output->results[0]->geometry->location->lng;
+
+echo $latitude;
+
 if ($acao == 1) {
     $conexao = new classeConexao();
 
@@ -19,7 +28,7 @@ if ($acao == 1) {
     $site = mysqli_real_escape_string($conexao->obj(),$site);
     $anotacao = mysqli_real_escape_string($conexao->obj(),$anotacao);
 
-    $insert = $conexao::exec("INSERT INTO tb_empresas (id,tb_empresas_nome,tb_empresas_endereco,tb_empresas_email,tb_empresas_site,tb_empresas_status,tb_empresas_anotacao) values (null,'{$nomeEmpresa}','{$enderecoEmpresa}','{$email}','{$site}',1,'{$anotacao}')");
+    $insert = $conexao::exec("INSERT INTO tb_empresas (id,tb_empresas_nome,tb_empresas_endereco,tb_empresas_email,tb_empresas_site,tb_empresas_status,tb_empresas_anotacao) values (null,'{$nomeEmpresa}','{$enderecoEmpresa}','{$email}','{$site}',1,'{$anotacao}','{$latitude}','{$longitude}')");
 
 
     if ($insert) {
@@ -35,7 +44,7 @@ if ($acao == 2) {
     $site = mysqli_real_escape_string($conexao->obj(),$site);
     $anotacao = mysqli_real_escape_string($conexao->obj(),$anotacao);
 
-    $insert = $conexao::exec("UPDATE tb_empresas SET tb_empresas_nome = '{$nomeEmpresa}',tb_empresas_endereco = '{$enderecoEmpresa}',tb_empresas_email = '{$email}',tb_empresas_site = '{$site}',tb_empresas_anotacao = '{$anotacao}' WHERE id = '{$idEmpresa}'");
+    $insert = $conexao::exec("UPDATE tb_empresas SET tb_empresas_nome = '{$nomeEmpresa}',tb_empresas_endereco = '{$enderecoEmpresa}',tb_empresas_email = '{$email}',tb_empresas_site = '{$site}',tb_empresas_anotacao = '{$anotacao}', tb_empresas_latitude = '{$latitude}', tb_empresas_longitude = '{$longitude}' WHERE id = '{$idEmpresa}'");
 
 
     if ($insert) {

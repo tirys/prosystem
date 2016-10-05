@@ -104,7 +104,7 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script>
     var Contact=function(){
-        return{init:function(){var n;$(document).ready(function(){n=new GMaps({div:"#gmapbg",lat:-13.004333,lng:-38.494333});var t=n.addMarker({lat:-13.004333,lng:-38.494333,title:"Loop, Inc.",infoWindow:{content:"<b><?=$empresa['tb_empresas_nome']?></b> <?=$empresa['tb_empresas_endereco']?>"}});t.infoWindow.open(n,t)})}}}();jQuery(document).ready(function(){Contact.init()});
+        return{init:function(){var n;$(document).ready(function(){n=new GMaps({div:"#gmapbg",lat:<?=$empresa['tb_empresas_latitude']?>,lng:<?=$empresa['tb_empresas_longitude']?>});var t=n.addMarker({lat:<?=$empresa['tb_empresas_latitude']?>,lng:<?=$empresa['tb_empresas_longitude']?>,title:"Loop, Inc.",infoWindow:{content:"<b><?=$empresa['tb_empresas_nome']?></b> <?=$empresa['tb_empresas_endereco']?>"}});t.infoWindow.open(n,t)})}}}();jQuery(document).ready(function(){Contact.init()});
 </script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
