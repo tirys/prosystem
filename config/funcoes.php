@@ -11,6 +11,14 @@ function DataBrasil($Data)
     $Data = $D[2].'/'.$D[1].'/'.$D[0];
     return $Data;
 }
+function DataBrasilSemHoras($Data)
+{
+    $Shoras = explode(" ",$Data);
+    $D = explode("-",$Shoras[0]);
+    $Data = $D[2].'/'.$D[1].'/'.$D[0];
+    return $Data;
+}
+
 function RetiraAcentos($texto)
 {
     $array1 = array(   "á", "à", "â", "ã", "ä", "é", "è", "ê", "ë", "í", "ì", "î", "ï", "ó", "ò", "ô", "õ", "ö", "ú", "ù", "û", "ü", "ç"

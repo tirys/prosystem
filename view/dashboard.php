@@ -100,6 +100,127 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                 </div>
                 <div class="clearfix"></div>
                 <!-- END DASHBOARD STATS 1-->
+
+                <?php
+                $atividadesRecentes = $conexao::fetch("SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu WHERE tu.id=tl.tb_logs_usuario_id ORDER BY tl.id DESC LIMIT 15");
+                ?>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-12 col-sm-12">
+                        <div class="portlet light bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-share font-dark hide"></i>
+                                    <span class="caption-subject font-dark bold uppercase">Atividades Recentes</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
+                                    <ul class="feeds">
+                                        <?php foreach ($atividadesRecentes as $atividade) {
+                                            $item = '';
+                                            $img = 'fa-check';
+                                            $label = 'label-info';
+                                            $url = 'editar/tarefa/';
+
+                                            if($atividade['tb_logs_descricao']=='atualizou a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-edit';
+                                                $label = 'label-warning';
+                                                $url = 'editar/tarefa/';
+                                            }
+
+                                            echo '<li>';
+                                            echo '<div class="col1" style="width:98%;">';
+                                            echo '<div class="cont">';
+                                            echo '<div class="cont-col1">';
+                                            echo '<div class="label label-sm '.$label.'">';
+                                            echo '<i class="fa '.$img.'"></i>';
+                                            echo '</div>';
+                                            echo '</div>';
+                                            echo '<div class="cont-col2">';
+
+
+
+                                            echo '<div class="desc">O usuário <a href="">'.$atividade['tb_usuarios_nome'].'</a> '.$atividade['tb_logs_descricao'].' <a href="'.$url.$atividade['tb_logs_id_referencia'].'">'.$item.'</a>';
+                                            echo '</div>';
+                                            echo '</div>';
+                                            echo '</div>';
+                                            echo '</div>';
+                                            echo '<div class="col2">';
+                                            echo '<div class="date">'.DataBrasilSemHoras($atividade['tb_logs_data']).'</div>';
+                                            echo '</div>';
+                                            echo '</li>';
+                                        } ?>
+                                    </ul>
+                                </div>
+                                <div class="scroller-footer">
+                                    <div class="btn-arrow-link pull-right">
+                                        <a href="javascript:;">Ver todas</a>
+                                        <i class="icon-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xs-12 col-sm-12">
+                        <div class="portlet light tasks-widget bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-share font-dark hide"></i>
+                                    <span class="caption-subject font-dark bold uppercase">Minhas Tarefas</span>
+                                    <span class="caption-helper"></span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="task-content">
+                                    <div class="scroller" style="height: 312px;" data-always-visible="1" data-rail-visible1="1">
+                                        <!-- START TASK LIST -->
+                                        <ul class="task-list">
+
+                                            <?php
+                                            foreach ($tarefas as $tarefa) {
+                                                //fazer concluir a tarefa qnd clicar no check
+                                                echo ' <li><div class="task-checkbox"><label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">';
+                                                echo '<input type="checkbox" class="checkboxes" value="1" />';
+                                                echo '<span></span></label></div><div class="task-title">';
+                                                echo "<span class='task-title-sp'>{$tarefa['tb_tarefas_nome']}</span>";
+
+                                                if ($tarefa['tb_tarefas_status']==0) {
+                                                    echo '<span class="label label-sm label-warning">Aberto</span></div>';
+                                                } else if ($tarefa['tb_tarefas_status']==1) {
+                                                    echo '<span class="label label-sm label-success">Completa</span></div>';
+                                                } else if ($tarefa['tb_tarefas_status']==2) {
+                                                    echo '<span class="label label-sm label-default">Fechada</span></div>';
+                                                }
+
+                                                echo '
+                                                        <div class="task-config">
+                                                            <div class="task-config-btn btn-group">
+                                                                <a class="btn btn-sm default" href="editar/tarefa/'.$tarefa['id'].'" >
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
+                                                                </div>
+                                                        </div></li>';
+                                            }
+                                            ?>
+                                        </ul>
+                                        <!-- END START TASK LIST -->
+                                    </div>
+                                </div>
+                                <div class="task-footer">
+                                    <div class="btn-arrow-link pull-right">
+                                        <a href="listar/minhas-tarefas">Ver todas as minhas tarefas </a>
+                                        <i class="icon-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="row ui-sortable" id="sortable_portlets">
                     <div class="col-lg-6 col-xs-12 col-sm-12 column sortable">
                         <div class="portlet light bordered">
@@ -531,371 +652,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                             </div>
                                             <!-- END: Completed -->
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-xs-12 col-sm-12">
-                        <div class="portlet light bordered">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-share font-dark hide"></i>
-                                    <span class="caption-subject font-dark bold uppercase">Atividades Recentes</span>
-                                </div>
-                                <div class="actions">
-                                    <div class="btn-group">
-                                        <a class="btn btn-sm blue btn-outline btn-circle" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"> Filtrar por
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-                                            <label class="mt-checkbox mt-checkbox-outline">
-                                                <input type="checkbox" /> Completo
-                                                <span></span>
-                                            </label>
-                                            <label class="mt-checkbox mt-checkbox-outline">
-                                                <input type="checkbox" checked="" /> Novo
-                                                <span></span>
-                                            </label>
-                                            <label class="mt-checkbox mt-checkbox-outline">
-                                                <input type="checkbox" /> Realocado
-                                                <span></span>
-                                            </label>
-                                            <label class="mt-checkbox mt-checkbox-outline">
-                                                <input type="checkbox" checked="" /> Atribuído
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
-                                    <ul class="feeds">
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-info">
-                                                            <i class="fa fa-check"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> You have 4 pending tasks.
-                                                            <span class="label label-sm label-warning "> Take action
-                                                                        <i class="fa fa-share"></i>
-                                                                    </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> Just now </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <div class="col1">
-                                                    <div class="cont">
-                                                        <div class="cont-col1">
-                                                            <div class="label label-sm label-success">
-                                                                <i class="fa fa-bar-chart-o"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc"> Finance Report for year 2013 has been released. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2">
-                                                    <div class="date"> 20 mins </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-danger">
-                                                            <i class="fa fa-user"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 24 mins </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-info">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> New order received with
-                                                            <span class="label label-sm label-success"> Reference Number: DR23923 </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 30 mins </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-success">
-                                                            <i class="fa fa-user"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 24 mins </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-default">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> Web server hardware needs to be upgraded.
-                                                            <span class="label label-sm label-default "> Overdue </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 2 hours </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <div class="col1">
-                                                    <div class="cont">
-                                                        <div class="cont-col1">
-                                                            <div class="label label-sm label-default">
-                                                                <i class="fa fa-briefcase"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc"> IPO Report for year 2013 has been released. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2">
-                                                    <div class="date"> 20 mins </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-info">
-                                                            <i class="fa fa-check"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> You have 4 pending tasks.
-                                                            <span class="label label-sm label-warning "> Take action
-                                                                        <i class="fa fa-share"></i>
-                                                                    </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> Just now </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <div class="col1">
-                                                    <div class="cont">
-                                                        <div class="cont-col1">
-                                                            <div class="label label-sm label-danger">
-                                                                <i class="fa fa-bar-chart-o"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc"> Finance Report for year 2013 has been released. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2">
-                                                    <div class="date"> 20 mins </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-default">
-                                                            <i class="fa fa-user"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 24 mins </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-info">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> New order received with
-                                                            <span class="label label-sm label-success"> Reference Number: DR23923 </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 30 mins </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-success">
-                                                            <i class="fa fa-user"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 24 mins </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="col1">
-                                                <div class="cont">
-                                                    <div class="cont-col1">
-                                                        <div class="label label-sm label-warning">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cont-col2">
-                                                        <div class="desc"> Web server hardware needs to be upgraded.
-                                                            <span class="label label-sm label-default "> Overdue </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col2">
-                                                <div class="date"> 2 hours </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <div class="col1">
-                                                    <div class="cont">
-                                                        <div class="cont-col1">
-                                                            <div class="label label-sm label-info">
-                                                                <i class="fa fa-briefcase"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cont-col2">
-                                                            <div class="desc"> IPO Report for year 2013 has been released. </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col2">
-                                                    <div class="date"> 20 mins </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="scroller-footer">
-                                    <div class="btn-arrow-link pull-right">
-                                        <a href="javascript:;">See All Records</a>
-                                        <i class="icon-arrow-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-xs-12 col-sm-12">
-                        <div class="portlet light tasks-widget bordered">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-share font-dark hide"></i>
-                                    <span class="caption-subject font-dark bold uppercase">Minhas Tarefas</span>
-                                    <span class="caption-helper"></span>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="task-content">
-                                    <div class="scroller" style="height: 312px;" data-always-visible="1" data-rail-visible1="1">
-                                        <!-- START TASK LIST -->
-                                        <ul class="task-list">
-
-                                            <?php
-                                                foreach ($tarefas as $tarefa) {
-                                                //fazer concluir a tarefa qnd clicar no check
-                                                    echo ' <li><div class="task-checkbox"><label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">';
-                                                    echo '<input type="checkbox" class="checkboxes" value="1" />';
-                                                    echo '<span></span></label></div><div class="task-title">';
-                                                    echo "<span class='task-title-sp'>{$tarefa['tb_tarefas_nome']}</span>";
-
-                                                    if ($tarefa['tb_tarefas_status']==0) {
-                                                        echo '<span class="label label-sm label-warning">Aberto</span></div>';
-                                                    } else if ($tarefa['tb_tarefas_status']==1) {
-                                                        echo '<span class="label label-sm label-success">Completa</span></div>';
-                                                    } else if ($tarefa['tb_tarefas_status']==2) {
-                                                        echo '<span class="label label-sm label-default">Fechada</span></div>';
-                                                    }
-
-                                                    echo '
-                                                        <div class="task-config">
-                                                            <div class="task-config-btn btn-group">
-                                                                <a class="btn btn-sm default" href="editar/tarefa/'.$tarefa['id'].'" >
-                                                                    <i class="fa fa-edit"></i>
-                                                                </a>
-                                                                </div>
-                                                        </div></li>';
-                                                }
-                                            ?>
-                                        </ul>
-                                        <!-- END START TASK LIST -->
-                                    </div>
-                                </div>
-                                <div class="task-footer">
-                                    <div class="btn-arrow-link pull-right">
-                                        <a href="listar/minhas-tarefas">Ver todas as minhas tarefas </a>
-                                        <i class="icon-arrow-right"></i>
                                     </div>
                                 </div>
                             </div>
