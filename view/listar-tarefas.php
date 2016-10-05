@@ -1,7 +1,7 @@
 <?php
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
-$usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
+$minhasTarefas = isset($_GET['usuario']) ? $_GET['usuario'] : '';
 
 include("topo.php");
 
@@ -9,7 +9,7 @@ include("topo.php");
 $conexao = new classeConexao();
 
 //Se é minhas tarefas
-if($usuario=='true') {
+if($minhasTarefas=='1') {
     $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
     $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
 }
@@ -25,7 +25,7 @@ else {
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
-                        <span>Tarefas > Ver tarefas</span>
+                        <span>Tarefas > Minhas tarefas</span>
                     </li>
                 </ul>
                 <div class="page-toolbar">
@@ -110,7 +110,7 @@ else {
 
                                         <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 
-                                        <td><?=$tarefa['tb_tarefas_horas']?> horas</td>
+                                        <td><?=$tarefa['tb_tarefas_horas']?></td>
 
 <!--                                        -2 => Muito Baixa -> verde-->
 <!--                                        -1 => Baixa -> azul-->
@@ -135,8 +135,8 @@ else {
                                             <td><span class="label label-sm label-warning"> Aberto </span></td>
                                         <?php } else if ($tarefa['tb_tarefas_status']==1) {?>
                                             <td><span class="label label-sm label-success"> Concluída </span></td>
-                                        <?php } else if ($tarefa['tb_tarefas_status']==2) {?>
-                                            <td><span class="label label-sm label-default"> Fechada </span></td>
+                                        <?php } else if ($tarefa['tb_tarefas_status']==3) {?>
+                                            <td><span class="label label-sm label-default"> Pausada </span></td>
                                         <?php } ?>
 
                                         <td>
@@ -144,13 +144,20 @@ else {
                                             </a>
 
 
-                                            <?php if ($tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0) {?>
+                                            <?php if ($tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0 || $tarefa['tb_tarefas_status']==3) {?>
                                                 <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-success reativar" title="Concluir"> <i class="fa fa-check"></i>
                                                 </a>
-                                            <?php } else {?>
-                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-times"></i>
+                                            <?php } else if ($tarefa['tb_tarefas_status']==1) {?>
+                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-arrow-up" style="width:12px;"></i>
                                                 </a>
                                             <?php } ?>
+
+                                            <?php if ($tarefa['tb_tarefas_status']==1 || $tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0) {?>
+                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-info pausar" title="Pausar"> <i class="fa fa-pause"></i>
+                                            <?php } else { ?>
+                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-arrow-up" style="width:12px;"></i>
+                                            <?php } ?>
+
 
                                         </td>
                                     </tr>
@@ -182,6 +189,29 @@ else {
 
 
 <script>
+
+    $('.pausar').on('click', function () {
+        var idempresa = $(this).attr('data-role'); //pegando o id da empresa
+
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'pausar',
+                id: idempresa
+            },
+            error: function () {
+                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+            },
+            dataType: 'json',
+            success: function (result) {
+                if (result.status) {
+                    location.reload();
+                }
+            }
+        });
+    });
 
     $('.desativar').on('click', function () {
         var idempresa = $(this).attr('data-role'); //pegando o id da empresa

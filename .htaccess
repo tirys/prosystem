@@ -37,7 +37,7 @@
                 RewriteRule ^listar/empresas$										view/listar-empresa.php?idMenu=62
                 RewriteRule ^listar/projetos$										view/listar-projetos.php?idMenu=32
                 RewriteRule ^listar/tarefas										    view/listar-tarefas.php?idMenu=42
-                RewriteRule ^listar/minhas-tarefas              					view/listar-tarefas.php?idMenu=43&usuario=true
+                RewriteRule ^listar/minhas-tarefas              					view/listar-tarefas.php?idMenu=43&usuario=1
 
 				#Regras Edição
                 RewriteRule ^editar/empresa/([_0-9a-z-]+)?$							view/cadastrar-empresa.php?idMenu=62&idEmpresa=$1
