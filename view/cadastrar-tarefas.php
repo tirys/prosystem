@@ -54,7 +54,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                     <ul class="dropdown-menu pull-right">
                                         <li>
                                             <a class="deletarTarefa">
-                                                <i class="fa fa-trash-o"></i> Delete </a>
+                                                <i class="fa fa-trash-o"></i> Deletar </a>
                                         </li>
                                         <li>
                                             <a class="enviarAprovacao">
@@ -67,7 +67,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
                         </div>
                         <div class="portlet-body">
-                            <!-- BEGIN FORM-->
+                            <!-- START FORM-->
                             <?php if (isset($dadosTarefa['id'])) {?>
                             <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
                                 <input type="hidden" name="idTarefa" id="idTarefa" value="<?=$dadosTarefa['id']?>"/>
