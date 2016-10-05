@@ -56,7 +56,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             <a class="deletarTarefa">
                                                 <i class="fa fa-trash-o"></i> Deletar </a>
                                         </li>
-                                        <li>
+                                        <li class="botaoAprovacao">
                                             <a class="enviarAprovacao">
                                                 <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>
                                         </li>
@@ -415,6 +415,38 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
 <script>
     var jq = jQuery.noConflict();
+    var aprovacao = 'enviarAprovacao';
+
+    jq('.enviarAprovacao').on('click',function () {
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: aprovacao,
+                id: '<?=$dadosTarefa['id']?>'
+            },
+            beforeSend: function () {
+
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                if(aprovacao=='enviarAprovacao') {
+                    $('.enviarAprovacao').html('<i class="fa fa-times"></i> Cancelar Aprovação ');
+                    aprovacao = 'cancelarAprovacao';
+                }
+                else {
+                    $('.enviarAprovacao').html('<i class="fa fa-mail-forward"></i> Enviar para Aprovação ');
+                    aprovacao = 'enviarAprovacao';
+                }
+
+            }
+        });
+
+    });
 
     jq('.deletarTarefa').on('click',function () {
         $.ajax({
