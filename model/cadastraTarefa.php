@@ -35,6 +35,10 @@ if ($acao == 1) {
     $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})");
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");
 
+    $data = date("Y-m-d H:i:s");
+    //Inserindo no log
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$criador},'criou a tarefa','{$data}','tarefa',{$ultimoID})");
+
     for($i=1;$i<=$qtdAnexo;$i++) {
         if($_FILES['anexo'.$i]['name']!='') {
             // Pasta onde o arquivo vai ser salvo
@@ -79,6 +83,10 @@ else if ($acao == 2) {
 
     $conexao = new classeConexao();
     $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_horas_gastas = {$tempoGasto}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID} WHERE id = {$idTarefa}");
+
+    $data = date("Y-m-d H:i:s");
+    //Inserindo no log
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$criador},'atualizou a tarefa','{$data}','tarefa',{$idTarefa})");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
         if($_FILES['anexo'.$i]['name']!='') {

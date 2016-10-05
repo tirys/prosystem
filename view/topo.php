@@ -176,84 +176,38 @@ if(count($cookie)>0) {
                     </li>
                     <!-- END INBOX DROPDOWN -->
                     <!-- BEGIN TAREFAS -->
+                    <?php
+                    $tarefas = $conexao::fetchuniq("SELECT count(*) as qtd FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1");
+                    $tarefasLista = $conexao::fetch("SELECT * FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1");
+                    ?>
                     <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-calendar"></i>
-                            <span class="badge badge-default"> 5 </span>
+                            <span class="badge badge-default"> <?=$tarefas['qtd']?> </span>
                         </a>
                         <ul class="dropdown-menu extended tasks">
                             <li class="external">
                                 <h3>
-                                    <span class="bold">5 tarefas</span> pendentes</h3>
-                                <a href="app_todo.html">view all</a>
+                                    <span class="bold"><?=$tarefas['qtd']?> tarefas</span> pendentes</h3>
+                                <a href="listar/minhas-tarefas">ver todas</a>
                             </li>
                             <li>
                                 <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                    <li>
-                                        <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">New release v1.2 </span>
-                                                        <span class="percent">30%</span>
-                                                    </span>
-                                            <span class="progress">
-                                                        <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">40% Complete</span>
-                                                        </span>
-                                                    </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Application deployment</span>
-                                                        <span class="percent">65%</span>
-                                                    </span>
-                                            <span class="progress">
-                                                        <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">65% Complete</span>
-                                                        </span>
-                                                    </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Mobile app release</span>
-                                                        <span class="percent">98%</span>
-                                                    </span>
-                                            <span class="progress">
-                                                        <span style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">98% Complete</span>
-                                                        </span>
-                                                    </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Database migration</span>
-                                                        <span class="percent">10%</span>
-                                                    </span>
-                                            <span class="progress">
-                                                        <span style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">10% Complete</span>
-                                                        </span>
-                                                    </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">Web server upgrade</span>
-                                                        <span class="percent">58%</span>
-                                                    </span>
-                                            <span class="progress">
-                                                        <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">58% Complete</span>
-                                                        </span>
-                                                    </span>
-                                        </a>
-                                    </li>
+
+                                    <?php
+                                    //Listagem das minhas tarefas pendentes no topo
+
+                                    foreach ($tarefasLista as $tarefa) {
+                                        echo '<li>';
+                                        echo '<a href="editar/tarefa/'.$tarefa['id'].'">';
+                                        echo '<span class="task">';
+                                        echo '<span class="desc">'.$tarefa['tb_tarefas_nome'].'</span>';
+                                        echo '<span class="percent">'.DataBrasil($tarefa['tb_tarefas_data_termino']).'</span>';
+                                        echo '</span>';
+                                        echo '</a>';
+                                        echo '</li>';
+                                    }
+                                    ?>
                                 </ul>
                             </li>
                         </ul>
@@ -268,23 +222,25 @@ if(count($cookie)>0) {
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
-                                <a href="page_user_profile_1.html">
+                                <a href="editar/usuario/<?=$usuario['id']?>">
                                     <i class="icon-user"></i> Meu Perfil</a>
                             </li>
                             <li>
                                 <a href="app_calendar.html">
                                     <i class="icon-calendar"></i> Meu Calendário </a>
                             </li>
-                            <li>
+                            
+                            <li style="display: none;">
                                 <a href="app_inbox.html">
                                     <i class="icon-envelope-open"></i> Mensagens
                                     <span class="badge badge-danger"> 2 </span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="app_todo.html">
+                                <a href="listar/minhas-tarefas">
                                     <i class="icon-rocket"></i> Minhas Tarefas
-                                    <span class="badge badge-success"> 5 </span>
+                                    <span class="badge badge-success"> <?=$tarefas['qtd']?> </span>
                                 </a>
                             </li>
                             <li class="divider"> </li>
