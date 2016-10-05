@@ -241,8 +241,8 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
 
                             if($usuario['tb_usuarios_tipo'] == 1) {
                                 //Obter dados se for funcionario
-                                $funcionarios = $conexao::fetch("SELECT * FROM tb_funcionarios WHERE tb_funcionarios_usuario_id = {$usuario['id']}");
-                                echo "<span>{$usuario['tb_funcionarios_funcao']}</span>";
+                                $funcionarios = $conexao::fetchuniq("SELECT * FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = {$usuario['id']}");
+                                echo "<span>{$funcionarios['tb_funcionarios_funcao']}</span>";
                             }
                             else if ($usuario['tb_usuarios_tipo'] == 2) {
                                 echo "<span>Cliente</span>";
