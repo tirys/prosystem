@@ -278,22 +278,24 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Oculto ao Cliente?
-                                            </label>
-                                            <div class="col-md-7">
-                                                <div class="mt-checkbox-inline">
-                                                    <label class="mt-checkbox">
-                                                        <?php  if($dadosTarefa['tb_tarefas_oculto'] == 1) { ?>
-                                                         <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1" checked="checked"> Sim
-                                                        <?php } else { ?>
-                                                            <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
-                                                        <?php } ?>
-                                                        <span></span>
-                                                    </label>
+                                        <?php if($usuario_tipo != 2){?>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Oculto ao Cliente?
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <div class="mt-checkbox-inline">
+                                                        <label class="mt-checkbox">
+                                                            <?php  if($dadosTarefa['tb_tarefas_oculto'] == 1) { ?>
+                                                             <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1" checked="checked"> Sim
+                                                            <?php } else { ?>
+                                                                <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
+                                                            <?php } ?>
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php }?>
 
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Descrição
@@ -356,7 +358,17 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" class="btn green">Cadastrar</button>
+                                                    <?php if( isset($dadosTarefa['id'])){?>
+                                                        <?php if($usuario_tipo == 2){?>
+                                                            <button type="submit" class="btn green" disabled>Salvar</button>
+                                                        <?php }else{?>
+                                                            <button type="submit" class="btn green">Salvar</button>
+                                                        <?php }?>
+                                                    <?php }else{ ?>
+                                                        <button type="submit" class="btn green">Cadastrar</button>
+                                                    <?php } ?>
+
+
                                                     <a href="listar/tarefas" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</a>
                                                 </div>
                                             </div>

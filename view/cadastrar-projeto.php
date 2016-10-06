@@ -71,7 +71,12 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                                         <label class="control-label col-md-3">Empresa
                                         </label>
                                         <div class="col-md-4">
-                                            <select class="form-control" name="empresaId" id="empresaId">
+                                            <?php if($usuario_tipo == 2){?>
+                                                <select class="form-control" name="empresaId" id="empresaId" disabled>
+                                            <?php }else{?>
+                                                <select class="form-control" name="empresaId" id="empresaId">
+                                            <?php }?>
+
                                                 <?php
                                                 $conexao = new classeConexao();
                                                 $empresas = $conexao::fetch("SELECT id, tb_empresas_nome FROM tb_empresas");
@@ -115,7 +120,15 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <button type="submit" class="btn green">Cadastrar</button>
+                                                <?php if( isset($dadosProjetos['id'])){?>
+                                                    <?php if($usuario_tipo == 2){?>
+                                                        <button type="submit" class="btn green" disabled>Salvar</button>
+                                                    <?php }else{?>
+                                                        <button type="submit" class="btn green">Salvar</button>
+                                                    <?php }?>
+                                                <?php }else{ ?>
+                                                    <button type="submit" class="btn green">Cadastrar</button>
+                                                <?php } ?>
                                                 <button type="button" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</button>
                                             </div>
                                         </div>

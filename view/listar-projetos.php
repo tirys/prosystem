@@ -6,8 +6,18 @@ include("topo.php");
 
 //Consultando os projetos
 $conexao = new classeConexao();
-$projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos tp, tb_empresas te WHERE tp.id_projetos_empresas_id = te.id");
+if($usuario_tipo == 2){
+    $cliente = $conexao::fetchuniq("SELECT te.id FROM tb_empresas te, tb_clientes tc WHERE te.id = tc.tb_clientes_empresas_id and tc.tb_clientes_usuario_id = ".$usuario['id']);
+    $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos tp, tb_empresas te WHERE tp.id_projetos_empresas_id = te.id and te.id = ".$cliente['id']);
+
+}else{
+    $projetos = $conexao::fetch("SELECT tp.*, te.tb_empresas_nome FROM tb_projetos tp, tb_empresas te WHERE tp.id_projetos_empresas_id = te.id");
+}
+
+
+
 ?>
+
 <div class="clearfix"> </div>
 <div class="page-container">
     <?php include("menulateral.php"); ?>

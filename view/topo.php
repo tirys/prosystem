@@ -12,8 +12,8 @@ if(count($cookie)>0) {
     $verificalogin = new VerificaLogin();
     $resultado = $verificalogin->verificaToken($cookie['t']);
 
-    $usuario = $conexao::fetchuniq("SELECT tu.id, tu.tb_usuarios_nome, tu.tb_usuarios_foto FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token = '".$cookie['t']."'");
-
+    $usuario = $conexao::fetchuniq("SELECT tu.id, tu.tb_usuarios_nome, tu.tb_usuarios_foto, tu.tb_usuarios_tipo FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token = '".$cookie['t']."'");
+    $usuario_tipo = $usuario['tb_usuarios_tipo'];
     if($resultado==0) {
         header('location:sessaoexpirada');
     }

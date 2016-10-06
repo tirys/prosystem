@@ -233,7 +233,11 @@ if($idUser != ""){
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <button type="submit" class="btn green">Enviar</button>
+                                                <?php if($usuario_tipo == 0){?>
+                                                    <button type="submit" class="btn green">Enviar</button>
+                                                <?php }else{ ?>
+                                                    <button type="submit" class="btn green" disabled>Enviar</button>
+                                                <?php } ?>
                                                 <button type="button" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</button>
                                             </div>
                                         </div>
