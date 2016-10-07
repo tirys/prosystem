@@ -13,6 +13,18 @@ $conexao = new classeConexao();
 $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
 $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
 
+
+//qtd tarefas realizadas
+$tarefasRealizadas = $conexao::fetchuniq("SELECT count(id) as tarefasRealizadas FROM tb_tarefas WHERE tb_tarefas_status = 1");
+
+//qtd tarefas pendentes
+$tarefasPendentes = $conexao::fetchuniq("SELECT count(id) as tarefasPendentes FROM tb_tarefas WHERE tb_tarefas_status != 1");
+
+$projetosCompletos = ProjetosRealizados();
+$projetosPendentes = ProjetosPendentes();
+
+
+
 ?>
     <!-- BEGIN HEADER & CONTENT DIVIDER -->
     <div class="clearfix"> </div>
@@ -49,51 +61,51 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
-                            <div class="visual">
-                                <i class="fa fa-comments"></i>
+                            <div class="visual" style="margin-bottom:51px;">
+                                <i class="fa fa-check"></i>
                             </div>
                             <div class="details">
                                 <div class="number">
-                                    <span data-counter="counterup" data-value="1349">0</span>
+                                    <span data-counter="counterup" data-value="<?=$tarefasRealizadas['tarefasRealizadas']?>">0</span>
                                 </div>
-                                <div class="desc"> New Feedbacks </div>
+                                <div class="desc"> Tarefas Realizadas </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 red" href="#">
-                            <div class="visual">
-                                <i class="fa fa-bar-chart-o"></i>
+                            <div class="visual" style="margin-bottom:51px;">
+                                <i class="fa fa-coffee"></i>
                             </div>
                             <div class="details">
                                 <div class="number">
-                                    <span data-counter="counterup" data-value="12,5">0</span>M$ </div>
-                                <div class="desc"> Total Profit </div>
+                                    <span data-counter="counterup" data-value="<?=$tarefasPendentes['tarefasPendentes']?>">0</span></div>
+                                <div class="desc"> Tarefas Pendentes </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 green" href="#">
-                            <div class="visual">
-                                <i class="fa fa-shopping-cart"></i>
+                            <div class="visual" style="margin-bottom:51px;">
+                                <i class="fa fa-check"></i>
                             </div>
                             <div class="details">
                                 <div class="number">
-                                    <span data-counter="counterup" data-value="549">0</span>
+                                    <span data-counter="counterup" data-value="<?=$projetosCompletos?>">0</span>
                                 </div>
-                                <div class="desc"> New Orders </div>
+                                <div class="desc"> Projetos Completos </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
-                            <div class="visual">
-                                <i class="fa fa-globe"></i>
+                            <div class="visual" style="margin-bottom:51px;">
+                                <i class="fa fa-coffee"></i>
                             </div>
                             <div class="details">
-                                <div class="number"> +
-                                    <span data-counter="counterup" data-value="89"></span>% </div>
-                                <div class="desc"> Brand Popularity </div>
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="<?=$projetosPendentes?>"></span></div>
+                                <div class="desc"> Projetos em aberto </div>
                             </div>
                         </a>
                     </div>
