@@ -355,6 +355,23 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             </div>
                                         </div>
 
+                                        <div class="form-group comentarios" id="comentarios" style="display:none;">
+                                            <label class="control-label col-md-3">
+                                            </label>
+                                            <div class="col-md-7">
+                                                <?php include("comentarios-tarefa.php");?>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group" >
+                                            <label class="control-label col-md-3">Comentários
+                                            </label>
+                                            <div class="col-md-7">
+                                                <a class="btn green adicionar-comentario">Ver/Adicionar Comentário</a>
+                                            </div>
+                                        </div>
+
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
@@ -368,8 +385,8 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                                         <button type="submit" class="btn green">Cadastrar</button>
                                                     <?php } ?>
 
-
                                                     <a href="listar/tarefas" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</a>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -522,6 +539,12 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
         jq('#numero-anexos').val(numero);
         jq(this).parent().parent().prepend(conteudo);
     });
+
+    //adicionar comentários
+    jq('.adicionar-comentario').on('click', function(){
+        $(".comentarios").attr("style","");
+    });
+
 
     //Jquery para mudar projetos
     jq('#empresaId').on('change', function() {
