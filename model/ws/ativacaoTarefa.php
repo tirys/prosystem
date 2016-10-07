@@ -53,5 +53,8 @@ if($acao=='excluir') {
     //Deletando também todos os anexos referentes a esta tarefa
     $empresas = $conexao::exec("DELETE FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$id}");
 
+    //Deletando também todos os anexos referentes a esta tarefa
+    $empresas = $conexao::exec("DELETE FROM tb_logs WHERE tb_logs_tipo = 'tarefas' AND  tb_logs_id_referencia = {$id}");
+
     echo json_encode(array("status" => true));
 }
