@@ -2,6 +2,7 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 $id = isset($_GET['idEmpresa']) ? $_GET['idEmpresa'] : '';
+$idEmpresa = isset($_GET['idEmpresa']) ? $_GET['idEmpresa'] : '';
 
 
 include("topo.php");
@@ -93,7 +94,9 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
                 <div class="row margin-bottom-20 stories-cont">
 
                     <?php
-                    $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_clientes tc WHERE tu.tb_usuarios_tipo = 2 AND tu.id=tc.tb_clientes_usuario_id");
+
+//                    $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_clientes tc WHERE tu.tb_usuarios_tipo = 2 AND tu.id=tc.tb_clientes_usuario_id");
+                    $usuarios = $conexao::fetch("SELECT tu.* FROM tb_usuarios tu, tb_clientes tc WHERE tu.tb_usuarios_tipo = 2 AND tu.id=tc.tb_clientes_usuario_id AND tc.tb_clientes_empresas_id = ".$idEmpresa);
 
                     foreach ($usuarios as $usuario) {
 
