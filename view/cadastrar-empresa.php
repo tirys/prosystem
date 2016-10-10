@@ -22,10 +22,9 @@ $dadosEmpresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '".$id
                         </li>
                     </ul>
                     <div class="page-toolbar">
-                        <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body" data-placement="bottom">
-                            <i class="icon-calendar"></i>
-                            <span class="thin uppercase hidden-xs"></span>
-                            <i class="fa fa-angle-down"></i>
+                        <div class="pull-right tooltips btn btn-sm">
+                            <i class="icon-calendar"></i>&nbsp;
+                            <span class="thin uppercase hidden-xs"><?=strftime('%A, %d de %B de %Y', strtotime('today'))?></span>&nbsp;
                         </div>
                     </div>
                 </div>

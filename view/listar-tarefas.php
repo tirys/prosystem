@@ -35,10 +35,9 @@ else {
                     </li>
                 </ul>
                 <div class="page-toolbar">
-                    <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body" data-placement="bottom">
+                    <div class="pull-right tooltips btn btn-sm">
                         <i class="icon-calendar"></i>&nbsp;
-                        <span class="thin uppercase hidden-xs"></span>&nbsp;
-                        <i class="fa fa-angle-down"></i>
+                        <span class="thin uppercase hidden-xs"><?=strftime('%A, %d de %B de %Y', strtotime('today'))?></span>&nbsp;
                     </div>
                 </div>
             </div>
@@ -108,7 +107,15 @@ else {
                                     <tr class="odd gradeX">
                                         <td> <?=$tarefa['id']?> </td>
 
-                                        <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
+                                        <?php if($tarefa['tb_tarefas_aprovacao']==1) { ?>
+                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>
+                                        <?php } else if ($tarefa['tb_tarefas_aprovacao']==2) { ?>
+                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-check-circle-o widget-title-color-green" title="Tarefa APROVADA pelo cliente"></i></td>
+                                        <?php } else if ($tarefa['tb_tarefas_aprovacao']==3) { ?>
+                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-times-circle-o widget-title-color-red" title="Tarefa NÃO APROVADA pelo cliente"></i></td>
+                                        <?php } else { ?>
+                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
+                                        <?php } ?>
 
                                         <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>
 

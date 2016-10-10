@@ -46,13 +46,12 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                 <span>Projetos > <a href="listar/projetos">Ver Projetos</a> > <?=$projeto['tb_projetos_nome']?> </span>
                             </li>
                         </ul>
-                        <div class="page-toolbar">
-                            <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body" data-placement="bottom">
-                                <i class="icon-calendar"></i>&nbsp;
-                                <span class="thin uppercase hidden-xs"></span>&nbsp;
-                                <i class="fa fa-angle-down"></i>
-                            </div>
+                    <div class="page-toolbar">
+                        <div class="pull-right tooltips btn btn-sm">
+                            <i class="icon-calendar"></i>&nbsp;
+                            <span class="thin uppercase hidden-xs"><?=strftime('%A, %d de %B de %Y', strtotime('today'))?></span>&nbsp;
                         </div>
+                    </div>
                 </div>
 
                 <!-- START CABEÇALHO -->
