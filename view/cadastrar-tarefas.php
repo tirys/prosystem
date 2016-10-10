@@ -374,14 +374,15 @@ $usuario_id = $usuario['id'];
                                             </div>
                                         </div>
 
-
-                                        <div class="form-group" >
-                                            <label class="control-label col-md-3">Comentários
-                                            </label>
-                                            <div class="col-md-7">
-                                                <a class="btn btn-primary adicionar-comentario">Ver/Adicionar Comentários</a>
+                                        <?php if (isset($dadosTarefa['id'])) { ?>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Comentários
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <a class="btn btn-primary adicionar-comentario">Ver/Adicionar Comentários</a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php } ?>
 
                                         <div class="form-actions">
                                             <div class="row">
@@ -515,34 +516,39 @@ $usuario_id = $usuario['id'];
     });
 
 
-    // Função responsável por atualizar as frases
+    // Função responsável por atualizar os comentarios
     function atualizar()
     {
-        // Fazendo requisição AJAX
-        $.ajax({
-            url: 'model/ws/comentariosAtualiza.php',
-            type: 'GET',
-            data: {
-                format: 'json',
-                acao: 'listar',
-                idTarefa: '<?=$dadosTarefa['id']?>'
-            },
-            beforeSend: function () {
+        //Só atualiza se os comentários estiverem visíveis
+        if(jq('.comentarios:visible').length != 0) {
+            // Fazendo requisição AJAX
+            $.ajax({
+                url: 'model/ws/comentariosAtualiza.php',
+                type: 'GET',
+                data: {
+                    format: 'json',
+                    acao: 'listar',
+                    idTarefa: '<?=$dadosTarefa['id']?>'
+                },
+                beforeSend: function () {
 
-            },
-            error: function () {
+                },
+                error: function () {
 
-            },
-            dataType: 'json',
-            success: function (result) {
-                jq('.chats').html(result.status);
-            }
-        });
+                },
+                dataType: 'json',
+                success: function (result) {
+                    jq('.chats').html(result.status);
+                }
+            });
+        }
 
     }
 
+
     // Definindo intervalo que a função será chamada - Aumentar se ficar muito rapido e ruim assim
     setInterval("atualizar()", 1000);
+
 
 
     jq('.enviarAprovacao').on('click',function () {
