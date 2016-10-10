@@ -91,7 +91,8 @@ if(count($cookie)>0) {
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
                     <!-- NOTIFICACOES -->
-                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                    <!--NÃO USA POR ENQUANTO-->
+                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar" style="display:none;">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
                             <span class="badge badge-default"> 3 </span>
@@ -138,8 +139,8 @@ if(count($cookie)>0) {
                     <!-- END NOTIFICACAO ->
 
                     <!-- MENSAGENS -->
-                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                    <!--NÃO USA POR ENQUANTO-->
+                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar" style="display:none;">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
                             <span class="badge badge-default"> 2 </span>

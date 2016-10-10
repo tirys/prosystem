@@ -212,6 +212,7 @@ else {
             data: {
                 format: 'json',
                 acao: 'pausar',
+                idUsuario: '<?=$usuario['id']?>',
                 id: idempresa
             },
             error: function () {
@@ -235,6 +236,7 @@ else {
             data: {
                 format: 'json',
                 acao: 'desativar',
+                idUsuario: '<?=$usuario['id']?>',
                 id: idempresa
             },
             error: function () {
@@ -258,6 +260,7 @@ else {
             data: {
                 format: 'json',
                 acao: 'reativar',
+                idUsuario: '<?=$usuario['id']?>',
                 id: idempresa
             },
             error: function () {

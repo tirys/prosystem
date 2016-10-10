@@ -43,36 +43,49 @@ $usuario_id = $usuario['id'];
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="fa fa-tasks font-green"></i>
-                                <span class="caption-subject font-green sbold uppercase">Nova Tarefa</span>
+                                <?php if (isset($dadosTarefa['id'])) {?>
+                                    <span class="caption-subject font-green sbold uppercase"><?=$dadosTarefa['tb_tarefas_nome']?></span>
+                                <?php } else { ?>
+                                    <span class="caption-subject font-green sbold uppercase">Nova Tarefa</span>
+                                <?php } ?>
                             </div>
+                            <?php if(isset($dadosTarefa['id'])) { ?>
+                                <?php if($usuario_tipo!=2) { ?>
+                                <div class="actions">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li>
+                                                <a class="deletarTarefa">
+                                                    <i class="fa fa-trash-o"></i> Deletar </a>
+                                            </li>
 
-                            <?php if($usuario_tipo!=2) { ?>
-                            <div class="actions">
-                                <div class="btn-group">
-                                    <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li>
-                                            <a class="deletarTarefa">
-                                                <i class="fa fa-trash-o"></i> Deletar </a>
-                                        </li>
-                                        <li class="botaoAprovacao">
-                                            <a class="enviarAprovacao">
-                                                <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>
-                                        </li>
-                                    </ul>
+                                            <?php if ($dadosTarefa['tb_tarefas_aprovacao'] != 1) { ?>
+                                            <li class="botaoAprovacao">
+                                                <a class="enviarAprovacao">
+                                                    <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>
+                                            </li>
+                                            <?php } else { ?>
+                                                <li class="botaoAprovacao">
+                                                    <a class="enviarAprovacao">
+                                                        <i class="fa fa-times"></i> Cancelar Aprovação
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <?php } else {?>
-                                <div class="pull-right">
-                                    <a class="btn btn-success">
-                                        <i class="fa fa-check aprovarTarefa"></i> Aprovar
-                                    </a>
-                                    <a class="btn btn-danger">
-                                        <i class="fa fa-times reprovarTarefa"></i> Não Aprovar
-                                    </a>
-                                </div>
+                                <?php } else if ($dadosTarefa['tb_tarefas_aprovacao'] != 0) {?>
+                                    <div class="pull-right">
+                                        <a class="btn btn-success">
+                                            <i class="fa fa-check aprovarTarefa"></i> Aprovar
+                                        </a>
+                                        <a class="btn btn-danger">
+                                            <i class="fa fa-times reprovarTarefa"></i> Não Aprovar
+                                        </a>
+                                    </div>
+                                <?php } ?>
                             <?php } ?>
 
                         </div>
@@ -455,7 +468,15 @@ $usuario_id = $usuario['id'];
 
 <script>
     var jq = jQuery.noConflict();
-    var aprovacao = 'enviarAprovacao';
+
+    var statusAprovacao = '<?=$dadosTarefa['tb_tarefas_aprovacao']?>';
+
+    if(statusAprovacao!=1) {
+        var aprovacao = 'enviarAprovacao';
+    }
+    else {
+        var aprovacao = 'cancelarAprovacao';
+    }
 
     //Fazer cadastro de comentario também quando teclar enter no input
     document.getElementById('enviarComentario').onkeypress = function(e){

@@ -1,6 +1,7 @@
 <?php
 $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
+$idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : '';
 
 include('../../config/conexao.php');
 
@@ -8,6 +9,11 @@ include('../../config/conexao.php');
 if($acao=='reativar') {
     $conexao = new classeConexao();
     $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_status = 1 WHERE id = {$id}");
+
+    //Inserindo no log
+    $data = date("Y-m-d H:i:s");
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'completou a tarefa','{$data}','tarefa',{$id})");
+
     echo json_encode(array("status" => true));
 }
 
@@ -16,6 +22,12 @@ if($acao=='reativar') {
 if($acao=='desativar') {
     $conexao = new classeConexao();
     $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_status = 0 WHERE id = {$id}");
+
+    //Inserindo no log
+    $data = date("Y-m-d H:i:s");
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'reativou a tarefa','{$data}','tarefa',{$id})");
+
+
     echo json_encode(array("status" => true));
 }
 
@@ -23,15 +35,22 @@ if($acao=='desativar') {
 if($acao=='pausar') {
     $conexao = new classeConexao();
     $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_status = 3 WHERE id = {$id}");
+
+    //Inserindo no log
+    $data = date("Y-m-d H:i:s");
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'pausou a tarefa','{$data}','tarefa',{$id})");
+
+
     echo json_encode(array("status" => true));
 }
 
+
 //Enviando para aprovação
+
 //  se 0, não é tarefa aprovação
 //	se 1, foi enviada para aprovação
 //	se 2, foi aprovada pelo cliente
 //	se 3, não foi aprovada pelo cliente
-//	se 4, retorno de aprovação
 
 if($acao=='enviarAprovacao') {
     $conexao = new classeConexao();

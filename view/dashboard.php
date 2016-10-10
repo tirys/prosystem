@@ -163,6 +163,27 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                 $label = 'label-warning';
                                                 $url = 'editar/tarefa/';
                                             }
+                                            else if ($atividade['tb_logs_descricao']=='completou a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-check';
+                                                $label = 'label-success';
+                                                $url = 'editar/tarefa/';
+                                            }
+                                            else if ($atividade['tb_logs_descricao']=='reativou a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-arrow-up';
+                                                $label = 'label-danger';
+                                                $url = 'editar/tarefa/';
+                                            }
+                                            else if ($atividade['tb_logs_descricao']=='pausou a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-pause';
+                                                $label = 'label-primary';
+                                                $url = 'editar/tarefa/';
+                                            }
 
                                             echo '<li>';
                                             echo '<div class="col1" style="width:98%;">';
