@@ -1,2 +1,9 @@
 
 /*** Formulários ****/
+
+/*** DashBoard ****/
+.mt-actions {
+    max-height:428px;
+    overflow:overlay;
+    overflow-y: auto;
+}

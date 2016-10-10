@@ -21,7 +21,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
      $empresa = $conexao::fetchuniq("SELECT tb_clientes_empresas_id FROM tb_clientes WHERE tb_clientes_usuario_id = {$usuario['id']}");
 
      //Aprovações Clientes
-     $aprovacoes = $conexao::fetch("SELECT ta.* FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ");
+     $aprovacoes = $conexao::fetch("SELECT ta.* FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
 
      //qtd tarefas realizadas CLIENTE
      $tarefasRealizadas = $conexao::fetchuniq("SELECT count(tt.id) as tarefasRealizadas FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_status = 1 AND tt.tb_tarefas_projeto = tp.id AND tt.tb_tarefas_oculto=0 AND tp.id_projetos_empresas_id =".$empresa['tb_clientes_empresas_id']);
@@ -36,6 +36,9 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
  }
  else {
+
+     //Aprovações Clientes
+     $aprovacoes = $conexao::fetch("SELECT ta.* FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 ORDER BY tb_tarefas_aprovacao");
 
     //qtd tarefas realizadas
     $tarefasRealizadas = $conexao::fetchuniq("SELECT count(id) as tarefasRealizadas FROM tb_tarefas WHERE tb_tarefas_status = 1");
@@ -405,39 +408,38 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                     <i class=" icon-social-twitter font-dark hide"></i>
                                     <span class="caption-subject font-dark bold uppercase">Aprovações</span>
                                 </div>
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a href="#tab_actions_pending" data-toggle="tab"> Aprovados </a>
-                                    </li>
-                                    <li>
-                                        <a href="#tab_actions_completed" data-toggle="tab"> Rejeitados </a>
-                                    </li>
-                                </ul>
+
                             </div>
                             <div class="portlet-body">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_actions_pending">
-                                        <!-- BEGIN: Actions -->
                                         <div class="mt-actions">
+                                        <!-- START Aprovacoes -->
+                                        <?php foreach ($aprovacoes as $aprovacao) { ?>
                                             <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar10.jpg" /> </div>
+<!--                                                <div class="mt-action-img">-->
+<!--                                                    <img src="view/assets/pages/media/users/avatar10.jpg" /> -->
+<!--                                                </div>-->
                                                 <div class="mt-action-body">
                                                     <div class="mt-action-row">
                                                         <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-magnet"></i>
+                                                            <div class="mt-action-icon action<?=$aprovacao['id']?>">
+                                                                <?php if($aprovacao['tb_tarefas_aprovacao'] == 1) {?>
+                                                                    <i class="icon-clock" title="Aguardando aprovação"></i>
+                                                                <?php } else if ($aprovacao['tb_tarefas_aprovacao'] == 3){ ?>
+                                                                    <i class="icon-check" title="Aprovada"></i>
+                                                                <?php } else {?>
+                                                                    <i class="icon-close" title="Não aprovada"></i>
+                                                                <?php } ?>
                                                             </div>
                                                             <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Natasha Kim</span>
-                                                                <p class="mt-action-desc">Dummy text of the printing</p>
+                                                              <a href="editar/tarefa/<?=$aprovacao['id']?>">
+                                                                  <span class="mt-action-author"><?=$aprovacao['tb_tarefas_nome']?></span>
+                                                              </a>
+                                                                <p class="mt-action-desc">NOME DO PROJETO</p>
                                                             </div>
                                                         </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-green"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
+
                                                         <div class="mt-action-buttons ">
                                                             <div class="btn-group btn-group-circle">
                                                                 <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
@@ -447,266 +449,9 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar3.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class=" icon-bubbles"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Gavin Bond</span>
-                                                                <p class="mt-action-desc">pending for approval</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-red"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar2.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-call-in"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Diana Berri</span>
-                                                                <p class="mt-action-desc">Lorem Ipsum is simply dummy text</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-green"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar7.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class=" icon-bell"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">John Clark</span>
-                                                                <p class="mt-action-desc">Text of the printing and typesetting industry</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-red"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar8.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-magnet"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Donna Clarkson </span>
-                                                                <p class="mt-action-desc">Simply dummy text of the printing</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-green"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar9.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-magnet"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Tom Larson</span>
-                                                                <p class="mt-action-desc">Lorem Ipsum is simply dummy text</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-green"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <?php } ?>
                                         </div>
                                         <!-- END: Actions -->
-                                    </div>
-                                    <div class="tab-pane" id="tab_actions_completed">
-                                        <!-- BEGIN:Completed-->
-                                        <div class="mt-actions">
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar1.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-action-redo"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Frank Cameron</span>
-                                                                <p class="mt-action-desc">Lorem Ipsum is simply dummy</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-red"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar8.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-cup"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Ella Davidson </span>
-                                                                <p class="mt-action-desc">Text of the printing and typesetting industry</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-green"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar5.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class=" icon-graduation"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Jason Dickens </span>
-                                                                <p class="mt-action-desc">Dummy text of the printing and typesetting industry</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-red"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-action">
-                                                <div class="mt-action-img">
-                                                    <img src="view/assets/pages/media/users/avatar2.jpg" /> </div>
-                                                <div class="mt-action-body">
-                                                    <div class="mt-action-row">
-                                                        <div class="mt-action-info ">
-                                                            <div class="mt-action-icon ">
-                                                                <i class="icon-badge"></i>
-                                                            </div>
-                                                            <div class="mt-action-details ">
-                                                                <span class="mt-action-author">Jan Kim</span>
-                                                                <p class="mt-action-desc">Lorem Ipsum is simply dummy</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-action-datetime ">
-                                                            <span class="mt-action-date">3 jun</span>
-                                                            <span class="mt-action-dot bg-green"></span>
-                                                            <span class="mt=action-time">9:30-13:00</span>
-                                                        </div>
-                                                        <div class="mt-action-buttons ">
-                                                            <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- END: Completed -->
-                                        </div>
                                     </div>
                                 </div>
                             </div>

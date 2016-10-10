@@ -344,9 +344,9 @@ $usuario_id = $usuario['id'];
                                                     echo '<div id="'.$arquivo['id'].'">';
                                                     echo '<br/>';
                                                     echo '<a target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download>';
-                                                    echo '<input style="border:0px;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
+                                                    echo '<input style="border:1px solid #cccccc;padding:7px;vertical-align:bottom;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
                                                     echo '</a>';
-                                                    echo '<a class="btn-danger btn excluir-anexo" data-role="'.$arquivo['id'].'"><i class="fa fa-times"></i></a>';
+                                                    echo '<a class="btn-danger btn excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i></a>';
                                                     echo '<span class="span'.$arquivo['id'].'" style="display:none;"><i style="font-size:17px;margin-left:11px;" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span></span>';
                                                     echo '<br/>';
                                                     echo '</div>';
@@ -603,26 +603,29 @@ $usuario_id = $usuario['id'];
     });
 
     jq('.deletarTarefa').on('click',function () {
-        $.ajax({
-            url: 'model/ws/ativacaoTarefa.php',
-            type: 'GET',
-            data: {
-                format: 'json',
-                acao: 'excluir',
-                id: '<?=$dadosTarefa['id']?>'
-            },
-            beforeSend: function () {
+        var resposta = confirm("Deseja realmente DELETAR essa tarefa?");
 
-            },
-            error: function () {
-                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
-            },
-            dataType: 'json',
-            success: function (result) {
-                window.location.href = "../prosystem/listar/tarefas";
-            }
-        });
+        if (resposta == true) {
+            $.ajax({
+                url: 'model/ws/ativacaoTarefa.php',
+                type: 'GET',
+                data: {
+                    format: 'json',
+                    acao: 'excluir',
+                    id: '<?=$dadosTarefa['id']?>'
+                },
+                beforeSend: function () {
 
+                },
+                error: function () {
+                    $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+                },
+                dataType: 'json',
+                success: function (result) {
+                    window.location.href = "../prosystem/listar/tarefas";
+                }
+            });
+        }
     });
 
     jq('.excluir-anexo').on('click',function () {

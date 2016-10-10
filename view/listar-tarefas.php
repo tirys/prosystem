@@ -109,9 +109,9 @@ else {
 
                                         <?php if($tarefa['tb_tarefas_aprovacao']==1) { ?>
                                             <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>
-                                        <?php } else if ($tarefa['tb_tarefas_aprovacao']==2) { ?>
-                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-check-circle-o widget-title-color-green" title="Tarefa APROVADA pelo cliente"></i></td>
                                         <?php } else if ($tarefa['tb_tarefas_aprovacao']==3) { ?>
+                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-check-circle-o widget-title-color-green" title="Tarefa APROVADA pelo cliente"></i></td>
+                                        <?php } else if ($tarefa['tb_tarefas_aprovacao']==2) { ?>
                                             <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-times-circle-o widget-title-color-red" title="Tarefa NÃO APROVADA pelo cliente"></i></td>
                                         <?php } else { ?>
                                             <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
