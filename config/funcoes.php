@@ -72,6 +72,33 @@ function ProjetosRealizados() {
     return $count;
 }
 
+function ProjetosRealizadosCliente($empresa = null) {
+
+    $count = 0;
+    $conexao = new classeConexao();
+
+    //selecionando id dos projetos
+    $projetos = $conexao::fetch("SELECT id FROM tb_projetos WHERE id_projetos_empresas_id = {$empresa}");
+
+    foreach ($projetos as $projeto) {
+
+        //Qtd tarefas a fazer
+        $tarefasFazer = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=0 AND tb_tarefas_projeto = ".$projeto['id']);
+
+        //Qtd tarefas feitas
+        $tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$projeto['id']);
+
+        //Porcentagem
+        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+
+        if($porcentagem==100) {
+            $count++;
+        }
+    }
+
+    return $count;
+}
+
 
 function ProjetosPendentes() {
 
@@ -80,6 +107,34 @@ function ProjetosPendentes() {
 
     //selecionando id dos projetos
     $projetos = $conexao::fetch("SELECT id FROM tb_projetos");
+
+    foreach ($projetos as $projeto) {
+
+        //Qtd tarefas a fazer
+        $tarefasFazer = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=0 AND tb_tarefas_projeto = ".$projeto['id']);
+
+        //Qtd tarefas feitas
+        $tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$projeto['id']);
+
+        //Porcentagem
+        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+
+        if($porcentagem!=100) {
+            $count++;
+        }
+    }
+
+    return $count;
+}
+
+
+function ProjetosPendentesCliente($empresa = null) {
+
+    $count = 0;
+    $conexao = new classeConexao();
+
+    //selecionando id dos projetos
+    $projetos = $conexao::fetch("SELECT id FROM tb_projetos WHERE id_projetos_empresas_id = {$empresa}");
 
     foreach ($projetos as $projeto) {
 

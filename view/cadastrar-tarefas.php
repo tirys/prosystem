@@ -12,6 +12,8 @@ $conexao = new classeConexao();
 $dadosTarefa = $conexao::fetchuniq("SELECT tt.*,tp.id_projetos_empresas_id FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_projeto = tp.id  AND tt.id = '".$idTarefa."'");
 $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
 
+$usuario_id = $usuario['id'];
+
 ?>
 <div class="clearfix"></div>
 <div class="page-container">
@@ -45,7 +47,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                 <span class="caption-subject font-green sbold uppercase">Nova Tarefa</span>
                             </div>
 
-                            <?php if($usuario['tb_usuarios_tipo']!=2) { ?>
+                            <?php if($usuario_tipo!=2) { ?>
                             <div class="actions">
                                 <div class="btn-group">
                                     <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações
@@ -63,6 +65,15 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                     </ul>
                                 </div>
                             </div>
+                            <?php } else {?>
+                                <div class="pull-right">
+                                    <a class="btn btn-success">
+                                        <i class="fa fa-check aprovarTarefa"></i> Aprovar
+                                    </a>
+                                    <a class="btn btn-danger">
+                                        <i class="fa fa-times reprovarTarefa"></i> Não Aprovar
+                                    </a>
+                                </div>
                             <?php } ?>
 
                         </div>
@@ -351,7 +362,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             <label class="control-label col-md-3">
                                             </label>
                                             <div class="col-md-7">
-                                                <a class="btn btn-success adicionar-arquivos"><i class="fa fa-plus"></i> Adicionar mais arquivos</a>
+                                                <a class="btn btn-primary adicionar-arquivos"><i class="fa fa-plus"></i> Adicionar mais arquivos</a>
                                             </div>
                                         </div>
 
@@ -368,7 +379,7 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
                                             <label class="control-label col-md-3">Comentários
                                             </label>
                                             <div class="col-md-7">
-                                                <a class="btn green adicionar-comentario">Ver/Adicionar Comentário</a>
+                                                <a class="btn btn-primary adicionar-comentario">Ver/Adicionar Comentários</a>
                                             </div>
                                         </div>
 
@@ -445,6 +456,94 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 <script>
     var jq = jQuery.noConflict();
     var aprovacao = 'enviarAprovacao';
+
+    //Fazer cadastro de comentario também quando teclar enter no input
+    document.getElementById('enviarComentario').onkeypress = function(e){
+        if (!e) e = window.event;
+        if (e.keyCode == '13'){
+            var comentario = jq('.comentarioTexto').val();
+
+            $.ajax({
+                url: 'model/ws/comentariosTarefa.php',
+                type: 'GET',
+                data: {
+                    format: 'json',
+                    acao: 'inserir',
+                    comentario: comentario,
+                    idUsuario: '<?=$usuario_id?>',
+                    idTarefa: '<?=$dadosTarefa['id']?>'
+                },
+                beforeSend: function () {
+
+                },
+                error: function () {
+
+                },
+                dataType: 'json',
+                success: function (result) {
+
+                }
+            });
+        }
+    }
+
+    //grava o comentario
+    jq('.enviarComentario').on('click', function () {
+        var comentario = jq('.comentarioTexto').val();
+
+        $.ajax({
+            url: 'model/ws/comentariosTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'inserir',
+                comentario: comentario,
+                idUsuario: '<?=$usuario_id?>',
+                idTarefa: '<?=$dadosTarefa['id']?>'
+            },
+            beforeSend: function () {
+
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+
+            }
+        });
+    });
+
+
+    // Função responsável por atualizar as frases
+    function atualizar()
+    {
+        // Fazendo requisição AJAX
+        $.ajax({
+            url: 'model/ws/comentariosAtualiza.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'listar',
+                idTarefa: '<?=$dadosTarefa['id']?>'
+            },
+            beforeSend: function () {
+
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                jq('.chats').html(result.status);
+            }
+        });
+
+    }
+
+    // Definindo intervalo que a função será chamada - Aumentar se ficar muito rapido e ruim assim
+    setInterval("atualizar()", 1000);
+
 
     jq('.enviarAprovacao').on('click',function () {
         $.ajax({
@@ -542,7 +641,16 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 
     //adicionar comentários
     jq('.adicionar-comentario').on('click', function(){
-        $(".comentarios").attr("style","");
+        if($('.comentarios:visible').length == 0)
+        {
+            $(".adicionar-comentario").html('Ocultar Comentários');
+            $(".comentarios").attr("style","");
+        }
+        else {
+            $(".adicionar-comentario").html('Ver/Adicionar Comentários');
+            $(".comentarios").attr("style",'display:none;');
+        }
+
     });
 
 

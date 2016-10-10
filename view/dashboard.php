@@ -14,16 +14,42 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
 
 
-//qtd tarefas realizadas
-$tarefasRealizadas = $conexao::fetchuniq("SELECT count(id) as tarefasRealizadas FROM tb_tarefas WHERE tb_tarefas_status = 1");
+//Se é cliente
+ if($usuario_tipo == 2) {
 
-//qtd tarefas pendentes
-$tarefasPendentes = $conexao::fetchuniq("SELECT count(id) as tarefasPendentes FROM tb_tarefas WHERE tb_tarefas_status != 1");
+     //Empresa do Cliente
+     $empresa = $conexao::fetchuniq("SELECT tb_clientes_empresas_id FROM tb_clientes WHERE tb_clientes_usuario_id = {$usuario['id']}");
 
-$projetosCompletos = ProjetosRealizados();
-$projetosPendentes = ProjetosPendentes();
+     //Aprovações Clientes
+     $aprovacoes = $conexao::fetch("SELECT ta.* FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ");
+
+     //qtd tarefas realizadas CLIENTE
+     $tarefasRealizadas = $conexao::fetchuniq("SELECT count(tt.id) as tarefasRealizadas FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_status = 1 AND tt.tb_tarefas_projeto = tp.id AND tt.tb_tarefas_oculto=0 AND tp.id_projetos_empresas_id =".$empresa['tb_clientes_empresas_id']);
+
+     //qtd tarefas pendentes CLIENTE
+     $tarefasPendentes = $conexao::fetchuniq("SELECT count(tt.id) as tarefasPendentes FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_status != 1 AND tt.tb_tarefas_projeto = tp.id AND tt.tb_tarefas_oculto=0 AND tp.id_projetos_empresas_id =".$empresa['tb_clientes_empresas_id']);
+
+     $projetosCompletos = ProjetosRealizadosCliente($empresa['tb_clientes_empresas_id']);
+     $projetosPendentes = ProjetosPendentesCliente($empresa['tb_clientes_empresas_id']);
+
+     $atividadesRecentes = $conexao::fetch("SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu WHERE tu.id=tl.tb_logs_usuario_id ORDER BY tl.id DESC LIMIT 15");
+
+ }
+ else {
+
+    //qtd tarefas realizadas
+    $tarefasRealizadas = $conexao::fetchuniq("SELECT count(id) as tarefasRealizadas FROM tb_tarefas WHERE tb_tarefas_status = 1");
+
+    //qtd tarefas pendentes
+    $tarefasPendentes = $conexao::fetchuniq("SELECT count(id) as tarefasPendentes FROM tb_tarefas WHERE tb_tarefas_status != 1");
 
 
+
+     $projetosCompletos = ProjetosRealizados();
+     $projetosPendentes = ProjetosPendentes();
+
+     $atividadesRecentes = $conexao::fetch("SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu WHERE tu.id=tl.tb_logs_usuario_id ORDER BY tl.id DESC LIMIT 15");
+ }
 
 ?>
     <!-- BEGIN HEADER & CONTENT DIVIDER -->
@@ -113,9 +139,6 @@ $projetosPendentes = ProjetosPendentes();
                 <div class="clearfix"></div>
                 <!-- END DASHBOARD STATS 1-->
 
-                <?php
-                $atividadesRecentes = $conexao::fetch("SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu WHERE tu.id=tl.tb_logs_usuario_id ORDER BY tl.id DESC LIMIT 15");
-                ?>
                 <div class="row">
                     <div class="col-lg-6 col-xs-12 col-sm-12">
                         <div class="portlet light bordered">
