@@ -13,7 +13,7 @@ $conexao = new classeConexao();
 $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
 $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
 
-
+//Separar o bloco abaixo em métodos em outra classe depois (fiz assim para ser mais rápido)
 //Se é cliente
  if($usuario_tipo == 2) {
 
@@ -37,7 +37,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
  }
  else {
 
-     //Aprovações Clientes
+     //Aprovações Geral
      $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 ORDER BY tb_tarefas_aprovacao");
 
     //qtd tarefas realizadas
@@ -153,7 +153,9 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                             <div class="portlet-body">
                                 <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
                                     <ul class="feeds">
-                                        <?php foreach ($atividadesRecentes as $atividade) {
+                                        <?php
+                                        //Criar um método disso também e restringir caso seja cliente
+                                        foreach ($atividadesRecentes as $atividade) {
                                             $item = '';
                                             $img = 'fa-check';
                                             $label = 'label-info';
@@ -252,14 +254,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                     echo '<span class="label label-sm label-default">Fechada</span></div>';
                                                 }
 
-                                                echo '
-                                                        <div class="task-config">
-                                                            <div class="task-config-btn btn-group">
-                                                                <a class="btn btn-sm default" href="editar/tarefa/'.$tarefa['id'].'" >
-                                                                    <i class="fa fa-edit"></i>
-                                                                </a>
-                                                                </div>
-                                                        </div></li>';
+                                                echo '<div class="task-config"><div class="task-config-btn btn-group"><a class="btn btn-sm default" href="editar/tarefa/'.$tarefa['id'].'" ><i class="fa fa-edit"></i></a></div></div></li>';
                                             }
                                             ?>
                                         </ul>
@@ -280,7 +275,23 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
 
                 <div class="row ui-sortable" id="sortable_portlets">
-                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable">
+                    <div class="col-lg-6 col-xs-12 col-sm-12">
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet light calendar bordered">
+                            <div class="portlet-title ">
+                                <div class="caption">
+                                    <i class="icon-calendar font-dark hide"></i>
+                                    <span class="caption-subject font-dark bold uppercase">Feeds</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div id="calendar"> </div>
+                            </div>
+                        </div>
+                        <!-- END PORTLET-->
+                    </div>
+                    <!-- Comentarios - USAR DEPOIS -->
+                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable" style="display: none;">
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
                                 <div class="caption">
@@ -461,24 +472,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                     </div>
                 </div>
 
-
-                <div class="row">
-                    <div class="col-lg-6 col-xs-12 col-sm-12">
-                        <!-- BEGIN PORTLET-->
-                        <div class="portlet light calendar bordered">
-                            <div class="portlet-title ">
-                                <div class="caption">
-                                    <i class="icon-calendar font-dark hide"></i>
-                                    <span class="caption-subject font-dark bold uppercase">Feeds</span>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="calendar"> </div>
-                            </div>
-                        </div>
-                        <!-- END PORTLET-->
-                    </div>
-                </div>
             </div>
             <!-- END CONTENT BODY -->
         </div>
