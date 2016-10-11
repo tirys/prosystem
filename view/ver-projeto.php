@@ -184,8 +184,9 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                                     <td><span class="label label-sm label-success"> Concluída </span></td>
                                                 <?php } else if ($tarefa['tb_tarefas_status']==2) {?>
                                                     <td><span class="label label-sm label-default"> Fechada </span></td>
+                                                <?php } else if ($tarefa['tb_tarefas_status']==3) {?>
+                                                    <td><span class="label label-sm label-primary"> Pausada </span></td>
                                                 <?php } ?>
-
                                                 <td>
                                                     <a href="editar/tarefa/<?=$tarefa['id']?>" class="btn btn-xs btn-warning" title="Editar"> <i class="fa fa-edit"></i>
                                                     </a>
@@ -212,8 +213,6 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
 
                         </div>
                         <!-- END TAREFAS -->
-
-
 
                     </div>
                 </div>

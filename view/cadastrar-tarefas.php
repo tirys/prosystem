@@ -90,8 +90,13 @@ $usuario_id = $usuario['id'];
 
                         </div>
                         <div class="portlet-body">
+
                             <!-- START FORM-->
                             <?php if (isset($dadosTarefa['id'])) {?>
+                            <span class="solicitado-por">solicitado por:
+                            <?php $criador = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$dadosTarefa['tb_tarefas_criador']}"); ?>
+                            <label><?=$criador['tb_usuarios_nome']?></label></span>
+
                             <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
                                 <input type="hidden" name="idTarefa" id="idTarefa" value="<?=$dadosTarefa['id']?>"/>
                                 <?php } else { ?>

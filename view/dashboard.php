@@ -240,7 +240,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                             foreach ($tarefas as $tarefa) {
                                                 //fazer concluir a tarefa qnd clicar no check
                                                 echo ' <li><div class="task-checkbox"><label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">';
-                                                echo '<input type="checkbox" class="checkboxes" value="1" />';
+                                                echo '<input type="checkbox" class="checkboxes concluirTarefa" value="'.$tarefa['id'].'" />';
                                                 echo '<span></span></label></div><div class="task-title">';
                                                 echo "<span class='task-title-sp'>{$tarefa['tb_tarefas_nome']}</span>";
 
@@ -492,5 +492,37 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
     <script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
     <script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-    <!-- END CORE PLUGINS -->
+
+
+
+
 <?=include("rodape.php")?>
+
+<script>
+//    var $ = jQuery.noConflict();
+
+
+    $('.concluirTarefa').on('click', function () {
+        var idTarefa = $(this).val();
+        $(this).parent().parent().parent().fadeOut(400, function(){ $(this).remove();}); //efeito fade pra sumir com a tarefa
+
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'reativar',
+                idUsuario: '<?=$usuario['id']?>',
+                id: idTarefa
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function ( result) {
+
+            }
+        });
+    });
+</script>
+

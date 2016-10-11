@@ -7,3 +7,13 @@
     overflow:overlay;
     overflow-y: auto;
 }
+
+.solicitado-por {
+    margin-left:20px;
+    color: #cccccc;
+}
+
+.solicitado-por label{
+    color: #afafaf;
+    font-weight:bold;
+}
