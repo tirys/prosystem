@@ -21,7 +21,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
      $empresa = $conexao::fetchuniq("SELECT tb_clientes_empresas_id FROM tb_clientes WHERE tb_clientes_usuario_id = {$usuario['id']}");
 
      //Aprovações Clientes
-     $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
+     $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
 
      //qtd tarefas realizadas CLIENTE
      $tarefasRealizadas = $conexao::fetchuniq("SELECT count(tt.id) as tarefasRealizadas FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_status = 1 AND tt.tb_tarefas_projeto = tp.id AND tt.tb_tarefas_oculto=0 AND tp.id_projetos_empresas_id =".$empresa['tb_clientes_empresas_id']);
@@ -38,7 +38,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
  else {
 
      //Aprovações Geral
-     $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 ORDER BY tb_tarefas_aprovacao");
+     $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 ORDER BY tb_tarefas_aprovacao");
 
     //qtd tarefas realizadas
     $tarefasRealizadas = $conexao::fetchuniq("SELECT count(id) as tarefasRealizadas FROM tb_tarefas WHERE tb_tarefas_status = 1");
@@ -455,8 +455,9 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
                                                         <div class="mt-action-buttons ">
                                                             <div class="btn-group btn-group-circle">
-                                                                <button type="button" class="btn btn-outline green btn-sm">Aprovar</button>
-                                                                <button type="button" class="btn btn-outline red btn-sm">Rejeitar</button>
+                                                                <!-- Desabilitar botão de acordo com o status da aprovação -->
+                                                                <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline green btn-sm aprovarTarefa">Aprovar</button>
+                                                                <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline red btn-sm rejeitarTarefa">Rejeitar</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -493,7 +494,54 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
 <script>
 //    var $ = jQuery.noConflict();
+    $('.aprovarTarefa').on('click', function () {
+        var idTarefa = $(this).attr('data-role');
 
+        $.ajax({
+            url: 'model/ws/aprovacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'aprovar',
+                idUsuario: '<?=$usuario['id']?>',
+                id: idTarefa
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                if(result) {
+                    $('.action'+idTarefa).html('<i class="icon-check" title="Aprovada"></i>');
+                    $('.aprovarTarefa').attr('disable','disable');
+                }
+            }
+        });
+
+    });
+
+    $('.rejeitarTarefa').on('click', function () {
+        var idTarefa = $(this).attr('data-role');
+
+        $.ajax({
+            url: 'model/ws/aprovacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'rejeitar',
+                idUsuario: '<?=$usuario['id']?>',
+                id: idTarefa
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function ( result) {
+                $('.action'+idTarefa).html('<i class="icon-close" title="Não aprovada"></i>');
+                $('.rejeitarTarefa').attr('disable','disable');
+            }
+        });
+    });
 
     $('.concluirTarefa').on('click', function () {
         var idTarefa = $(this).val();
