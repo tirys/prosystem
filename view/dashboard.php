@@ -205,6 +205,21 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                 $label = 'label-danger';
                                                 $url = 'editar/tarefa/';
                                             }
+                                            else if ($atividade['tb_logs_descricao']=='enviou para aprovação a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-mail-forward';
+                                                $label = 'label-info';
+                                                $url = 'editar/tarefa/';
+                                            }
+                                            else if ($atividade['tb_logs_descricao']=='cancelou a aprovação da tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-times';
+                                                $label = 'label-warning';
+                                                $url = 'editar/tarefa/';
+                                            }
+
 
                                             echo '<li>';
                                             echo '<div class="col1" style="width:98%;">';

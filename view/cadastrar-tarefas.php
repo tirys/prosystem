@@ -614,6 +614,7 @@ $usuario_id = $usuario['id'];
                 data: {
                     format: 'json',
                     acao: 'listar',
+                    idUsuario: '<?=$usuario_id?>',
                     idTarefa: '<?=$dadosTarefa['id']?>'
                 },
                 beforeSend: function () {
@@ -644,6 +645,7 @@ $usuario_id = $usuario['id'];
             data: {
                 format: 'json',
                 acao: aprovacao,
+                idUsuario: '<?=$usuario_id?>',
                 id: '<?=$dadosTarefa['id']?>'
             },
             beforeSend: function () {

@@ -56,12 +56,20 @@ if($acao=='enviarAprovacao') {
     $conexao = new classeConexao();
     $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_aprovacao = 1 WHERE id = {$id}");
     echo json_encode(array("status" => true));
+
+    $data = date("Y-m-d H:i:s");
+    //Inserindo no log
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'enviou para aprovação a tarefa','{$data}','aprovacao',{$id})");
 }
 
 if($acao=='cancelarAprovacao') {
     $conexao = new classeConexao();
     $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_aprovacao = 0 WHERE id = {$id}");
     echo json_encode(array("status" => true));
+
+    $data = date("Y-m-d H:i:s");
+    //Inserindo no log
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'cancelou a aprovação da tarefa','{$data}','aprovacao',{$id})");
 }
 
 //Excluindo as tarefas
