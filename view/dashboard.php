@@ -11,6 +11,8 @@ $conexao = new classeConexao();
 //Se é minhas tarefas
 
 $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
+$usuario_id = $usuario['id'];
+
 $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
 
 //Separar o bloco abaixo em métodos em outra classe depois (fiz assim para ser mais rápido)
@@ -187,6 +189,20 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                 $item = $tarefa['tb_tarefas_nome'];
                                                 $img = 'fa-pause';
                                                 $label = 'label-primary';
+                                                $url = 'editar/tarefa/';
+                                            }
+                                            else if ($atividade['tb_logs_descricao']=='aprovou a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-check';
+                                                $label = 'label-success';
+                                                $url = 'editar/tarefa/';
+                                            }
+                                            else if ($atividade['tb_logs_descricao']=='reprovou a tarefa') {
+                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
+                                                $item = $tarefa['tb_tarefas_nome'];
+                                                $img = 'fa-times';
+                                                $label = 'label-danger';
                                                 $url = 'editar/tarefa/';
                                             }
 
@@ -493,9 +509,13 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 <?=include("rodape.php")?>
 
 <script>
+
 //    var $ = jQuery.noConflict();
     $('.aprovarTarefa').on('click', function () {
         var idTarefa = $(this).attr('data-role');
+        var idUsuario = '<?=$usuario_id?>';
+
+
 
         $.ajax({
             url: 'model/ws/aprovacaoTarefa.php',
@@ -503,8 +523,8 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
             data: {
                 format: 'json',
                 acao: 'aprovar',
-                idUsuario: '<?=$usuario['id']?>',
-                id: idTarefa
+                id: idTarefa,
+                idUsuario: idUsuario
             },
             error: function () {
 
@@ -522,6 +542,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
     $('.rejeitarTarefa').on('click', function () {
         var idTarefa = $(this).attr('data-role');
+        var idUsuario = '<?=$usuario_id?>';
 
         $.ajax({
             url: 'model/ws/aprovacaoTarefa.php',
@@ -529,8 +550,8 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
             data: {
                 format: 'json',
                 acao: 'rejeitar',
-                idUsuario: '<?=$usuario['id']?>',
-                id: idTarefa
+                id: idTarefa,
+                idUsuario: idUsuario
             },
             error: function () {
 

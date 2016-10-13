@@ -44,8 +44,16 @@ $usuario_id = $usuario['id'];
                             <div class="caption">
                                 <i class="fa fa-tasks font-green"></i>
                                 <?php if (isset($dadosTarefa['id'])) {?>
-                                    <span class="caption-subject font-green sbold uppercase"><?=$dadosTarefa['tb_tarefas_nome']?></span>
-                                <?php } else { ?>
+                                    <?php if($dadosTarefa['tb_tarefas_aprovacao']==1) { ?>
+                                        <span class="caption-subject font-green sbold uppercase"><?=$dadosTarefa['tb_tarefas_nome']?></span> <label class="label label-sm label-primary status-tarefa">enviada</label>
+                                    <?php } else if ($dadosTarefa['tb_tarefas_aprovacao']==3) {?>
+                                        <span class="caption-subject font-green sbold uppercase"><?=$dadosTarefa['tb_tarefas_nome']?></span> <label class="label label-sm widget-bg-color-green status-tarefa">aprovada</label>
+                                    <?php } else if ($dadosTarefa['tb_tarefas_aprovacao']==2) {?>
+                                        <span class="caption-subject font-green sbold uppercase"><?=$dadosTarefa['tb_tarefas_nome']?></span> <label class="label label-sm label-danger status-tarefa">reprovada</label>
+                                     <?php } else {?>
+                                        <span class="caption-subject font-green sbold uppercase"><?=$dadosTarefa['tb_tarefas_nome']?></span>
+                                     <?php } ?>
+                                    <?php } else {?>
                                     <span class="caption-subject font-green sbold uppercase">Nova Tarefa</span>
                                 <?php } ?>
                             </div>
@@ -78,11 +86,11 @@ $usuario_id = $usuario['id'];
                                 </div>
                                 <?php } else if ($dadosTarefa['tb_tarefas_aprovacao'] != 0) {?>
                                     <div class="pull-right">
-                                        <a class="btn btn-success">
+                                        <a class="btn btn-success aprovarTarefa" data-role="<?=$dadosTarefa['id']?>">
                                             <i class="fa fa-check aprovarTarefa"></i> Aprovar
                                         </a>
-                                        <a class="btn btn-danger">
-                                            <i class="fa fa-times reprovarTarefa"></i> Não Aprovar
+                                        <a class="btn btn-danger rejeitarTarefa" data-role="<?=$dadosTarefa['id']?>">
+                                            <i class="fa fa-times rejeitarTarefa"></i> Não Aprovar
                                         </a>
                                     </div>
                                 <?php } ?>
@@ -482,6 +490,59 @@ $usuario_id = $usuario['id'];
     else {
         var aprovacao = 'cancelarAprovacao';
     }
+
+    jq('.aprovarTarefa').on('click', function () {
+        var idTarefa = jq(this).attr('data-role');
+        var idUsuario = '<?=$usuario_id?>';
+
+
+
+        $.ajax({
+            url: 'model/ws/aprovacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'aprovar',
+                id: idTarefa,
+                idUsuario: idUsuario
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                if(result) {
+                   jq('.status-tarefa').attr('class','label label-sm widget-bg-color-green status-tarefa');
+                   jq('.status-tarefa').html('aprovada');
+                }
+            }
+        });
+
+    });
+
+    jq('.rejeitarTarefa').on('click', function () {
+        var idTarefa = jq(this).attr('data-role');
+        var idUsuario = '<?=$usuario_id?>';
+
+        $.ajax({
+            url: 'model/ws/aprovacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'rejeitar',
+                id: idTarefa,
+                idUsuario: idUsuario
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function ( result) {
+                jq('.status-tarefa').attr('class','label label-sm label-danger status-tarefa');
+                jq('.status-tarefa').html('reprovada');
+            }
+        });
+    });
 
     //Fazer cadastro de comentario também quando teclar enter no input
     document.getElementById('enviarComentario').onkeypress = function(e){
