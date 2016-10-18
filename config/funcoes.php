@@ -62,7 +62,13 @@ function ProjetosRealizados() {
         $tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$projeto['id']);
 
         //Porcentagem
-        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        if(($tarefasFeitas['qtd'] + $tarefasFazer['qtd']) == 0){
+            $qtd1 = 1;
+        }else{
+            $qtd1 = ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        }
+
+        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($qtd1);
 
         if($porcentagem==100) {
             $count++;
@@ -89,7 +95,12 @@ function ProjetosRealizadosCliente($empresa = null) {
         $tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$projeto['id']);
 
         //Porcentagem
-        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        if(($tarefasFeitas['qtd'] + $tarefasFazer['qtd']) == 0){
+            $qtd2 = 1;
+        }else{
+            $qtd2 = ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        }
+        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($qtd2);
 
         if($porcentagem==100) {
             $count++;
@@ -117,7 +128,12 @@ function ProjetosPendentes() {
         $tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$projeto['id']);
 
         //Porcentagem
-        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        if(($tarefasFeitas['qtd'] + $tarefasFazer['qtd']) == 0){
+            $qtd3 = 1;
+        }else{
+            $qtd3 = ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        }
+        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($qtd3);
 
         if($porcentagem!=100) {
             $count++;
@@ -145,7 +161,12 @@ function ProjetosPendentesCliente($empresa = null) {
         $tarefasFeitas = $conexao::fetchuniq("SELECT COUNT(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status=1 AND tb_tarefas_projeto = ".$projeto['id']);
 
         //Porcentagem
-        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        if(($tarefasFeitas['qtd'] + $tarefasFazer['qtd']) == 0){
+            $qtd4 = 1;
+        }else{
+            $qtd4 = ($tarefasFeitas['qtd'] + $tarefasFazer['qtd']);
+        }
+        $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($qtd4);
 
         if($porcentagem!=100) {
             $count++;
@@ -154,3 +175,210 @@ function ProjetosPendentesCliente($empresa = null) {
 
     return $count;
 }
+
+function AtividadesRecentesGeral($logs_descricao = "", $logs_id_referencia = 0,$usuarios_nome = "", $logs_data = ""){
+
+    $conexao = new classeConexao();
+
+    if($logs_descricao=='atualizou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-edit';
+        $label = 'label-warning';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='completou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-check';
+        $label = 'label-success';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='reativou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-arrow-up';
+        $label = 'label-danger';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='pausou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-pause';
+        $label = 'label-primary';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='aprovou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-check';
+        $label = 'label-success';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='reprovou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-times';
+        $label = 'label-danger';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='enviou para aprovação a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-mail-forward';
+        $label = 'label-info';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='cancelou a aprovação da tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-times';
+        $label = 'label-warning';
+        $url = 'editar/tarefa/';
+    }
+
+    //$exibeHTML = '<li><div class="col1" style="width:98%;"><div class="cont"><div class="cont-col1"><div class="label label-sm '.$label.'"><i class="fa '.$imagem.'"></i></div></div><div class="cont-col2">';
+    //$exibeHTML .= '<div class="desc">O usuário <a href="">'.$usuarios_nome.'</a> '.$logs_descricao.' <a href="'.$url.$logs_id_referencia.'">'.$item.'</a></div></div></div></div><div class="col2">'.'<div class="date">'.DataBrasilSemHoras($logs_data).'</div></div></li>';
+
+    //return $exibeHTML;
+
+    echo '<li>';
+    echo '<div class="col1" style="width:98%;">';
+    echo '<div class="cont">';
+    echo '<div class="cont-col1">';
+    echo '<div class="label label-sm '.$label.'">';
+    echo '<i class="fa '.$imagem.'"></i>';
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="cont-col2">';
+
+
+
+    echo '<div class="desc">O usuário <a href="">'.$usuarios_nome.'</a> '.$logs_descricao.' <a href="'.$url.$logs_id_referencia.'">'.$item.'</a>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="col2">';
+    echo '<div class="date">'.DataBrasilSemHoras($logs_data).'</div>';
+    echo '</div>';
+    echo '</li>';
+}
+
+function AtividadesRecentesCliente($logs_descricao = "", $logs_id_referencia = 0,$usuarios_nome = "", $logs_data = ""){
+
+    $conexao = new classeConexao();
+
+    if($logs_descricao=='atualizou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE tb_tarefas_oculto =0 and id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-edit';
+        $label = 'label-warning';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='completou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-check';
+        $label = 'label-success';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='reativou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-arrow-up';
+        $label = 'label-danger';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='pausou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-pause';
+        $label = 'label-primary';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='aprovou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-check';
+        $label = 'label-success';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='reprovou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-times';
+        $label = 'label-danger';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='enviou para aprovação a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-mail-forward';
+        $label = 'label-info';
+        $url = 'editar/tarefa/';
+    }
+    else if ($logs_descricao=='cancelou a aprovação da tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-times';
+        $label = 'label-warning';
+        $url = 'editar/tarefa/';
+    }
+
+    //$exibeHTML = '<li><div class="col1" style="width:98%;"><div class="cont"><div class="cont-col1"><div class="label label-sm '.$label.'"><i class="fa '.$imagem.'"></i></div></div><div class="cont-col2">';
+    //$exibeHTML .= '<div class="desc">O usuário <a href="">'.$usuarios_nome.'</a> '.$logs_descricao.' <a href="'.$url.$logs_id_referencia.'">'.$item.'</a></div></div></div></div><div class="col2">'.'<div class="date">'.DataBrasilSemHoras($logs_data).'</div></div></li>';
+
+    //return $exibeHTML;
+
+    echo '<li>';
+    echo '<div class="col1" style="width:98%;">';
+    echo '<div class="cont">';
+    echo '<div class="cont-col1">';
+    echo '<div class="label label-sm '.$label.'">';
+    echo '<i class="fa '.$imagem.'"></i>';
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="cont-col2">';
+
+
+
+    echo '<div class="desc">O usuário <a href="">'.$usuarios_nome.'</a> '.$logs_descricao.' <a href="'.$url.$logs_id_referencia.'">'.$item.'</a>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="col2">';
+    echo '<div class="date">'.DataBrasilSemHoras($logs_data).'</div>';
+    echo '</div>';
+    echo '</li>';
+}
+
+
+//SQL >>>> SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE tu.id=tl.tb_logs_usuario_id AND tl.tb_logs_id_referencia = ta.id
+//AND ta.tb_tarefas_projeto = tp.id
+//AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id
+//AND tc.tb_clientes_usuario_id = 5 GROUP BY 4 ORDER BY tl.id DESC LIMIT 15
+
+//SELECT tl.*,tu.tb_usuarios_nome,te.tb_empresas_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE tu.id=tl.tb_logs_usuario_id AND
+//(tl.tb_logs_id_referencia = ta.id
+//    AND ta.tb_tarefas_projeto = tp.id
+//    AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id
+//    AND tc.tb_clientes_usuario_id = 5)
+//GROUP BY 4 ORDER BY tl.id DESC LIMIT 15
+
+
+//SELECT tl.*,tu.tb_usuarios_nome,te.tb_empresas_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE tu.id=tl.tb_logs_usuario_id AND
+//(tl.tb_logs_id_referencia = ta.id
+//    AND ta.tb_tarefas_projeto = tp.id
+//    AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id
+//    AND tc.tb_clientes_usuario_id = 5)
+//GROUP BY 4 ORDER BY tl.id DESC LIMIT 15
+//
+//
+//
+//SELECT tl.*,tu.tb_usuarios_nome,te.tb_empresas_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE (select tt.id from tb_tarefas tt, tb_projetos tp, tb_clientes tc WHERE tt.tb_tarefas_projeto = tp.id AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id AND tc.tb_clientes_usuario_id = 5)
+//
+//    SELECT tl.*,tu.tb_usuarios_nome,te.tb_empresas_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE tl.tb_logs_usuario_id = tu.id and tl.tb_logs_id_referencia in (select tt.id from tb_tarefas tt, tb_projetos tp, tb_clientes tc WHERE tt.tb_tarefas_projeto = tp.id AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id AND tc.tb_clientes_usuario_id = 5) group by 4
+//
+//SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE tl.tb_logs_usuario_id = tu.id and tl.tb_logs_id_referencia in (select tt.id from tb_tarefas tt, tb_projetos tp, tb_clientes tc WHERE tt.tb_tarefas_projeto = tp.id AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id AND tc.tb_clientes_usuario_id = 5) group by 4 order by tl.id desc limit 15

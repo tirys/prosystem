@@ -34,7 +34,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
      $projetosCompletos = ProjetosRealizadosCliente($empresa['tb_clientes_empresas_id']);
      $projetosPendentes = ProjetosPendentesCliente($empresa['tb_clientes_empresas_id']);
 
-     $atividadesRecentes = $conexao::fetch("SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu WHERE tu.id=tl.tb_logs_usuario_id ORDER BY tl.id DESC LIMIT 15");
+     $atividadesRecentes = $conexao::fetch("SELECT tl.*,tu.tb_usuarios_nome FROM tb_logs tl, tb_usuarios tu, tb_tarefas ta, tb_projetos tp, tb_clientes tc, tb_empresas te WHERE tl.tb_logs_usuario_id = tu.id and tl.tb_logs_id_referencia in (select tt.id from tb_tarefas tt, tb_projetos tp, tb_clientes tc WHERE (tt.tb_tarefas_oculto <> 1) AND tt.tb_tarefas_projeto = tp.id AND tp.id_projetos_empresas_id = tc.tb_clientes_empresas_id AND tc.tb_clientes_usuario_id = {$usuario['id']}) group by 4 order by tl.id desc limit 15");
 
  }
  else {
@@ -156,92 +156,17 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                 <div class="scroller" style="height: 300px;" data-always-visible="1" data-rail-visible="0">
                                     <ul class="feeds">
                                         <?php
-                                        //Criar um método disso também e restringir caso seja cliente
+                                        //Criar um método disso também e restringir caso seja cliente - ok
+                                        
                                         foreach ($atividadesRecentes as $atividade) {
+
                                             $item = '';
                                             $img = 'fa-check';
                                             $label = 'label-info';
                                             $url = 'editar/tarefa/';
 
-                                            if($atividade['tb_logs_descricao']=='atualizou a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-edit';
-                                                $label = 'label-warning';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='completou a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-check';
-                                                $label = 'label-success';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='reativou a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-arrow-up';
-                                                $label = 'label-danger';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='pausou a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-pause';
-                                                $label = 'label-primary';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='aprovou a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-check';
-                                                $label = 'label-success';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='reprovou a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-times';
-                                                $label = 'label-danger';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='enviou para aprovação a tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-mail-forward';
-                                                $label = 'label-info';
-                                                $url = 'editar/tarefa/';
-                                            }
-                                            else if ($atividade['tb_logs_descricao']=='cancelou a aprovação da tarefa') {
-                                                $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$atividade['tb_logs_id_referencia']);
-                                                $item = $tarefa['tb_tarefas_nome'];
-                                                $img = 'fa-times';
-                                                $label = 'label-warning';
-                                                $url = 'editar/tarefa/';
-                                            }
+                                                AtividadesRecentesGeral($atividade['tb_logs_descricao'],$atividade['tb_logs_id_referencia'],$atividade['tb_usuarios_nome'],$atividade['tb_logs_data']);
 
-
-                                            echo '<li>';
-                                            echo '<div class="col1" style="width:98%;">';
-                                            echo '<div class="cont">';
-                                            echo '<div class="cont-col1">';
-                                            echo '<div class="label label-sm '.$label.'">';
-                                            echo '<i class="fa '.$img.'"></i>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '<div class="cont-col2">';
-
-
-
-                                            echo '<div class="desc">O usuário <a href="">'.$atividade['tb_usuarios_nome'].'</a> '.$atividade['tb_logs_descricao'].' <a href="'.$url.$atividade['tb_logs_id_referencia'].'">'.$item.'</a>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '</div>';
-                                            echo '<div class="col2">';
-                                            echo '<div class="date">'.DataBrasilSemHoras($atividade['tb_logs_data']).'</div>';
-                                            echo '</div>';
-                                            echo '</li>';
                                         } ?>
                                     </ul>
                                 </div>
