@@ -372,16 +372,21 @@ $usuario_id = $usuario['id'];
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Insira um anexo:
                                             </label>
-                                            <div class="col-md-7">
-                                                <div class="input-group">
+                                            <div class="col-md-3">
+                                                <div class="input-group col-md-12">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-paperclip"></i>
                                                             </span>
                                                     <input type="file" name="anexo1" id="anexo1" class="anexos form-control"/>
-
                                                 </div>
                                             </div>
+                                            <label class="control-label col-md-1">Descrição:
+                                            </label>
+                                            <div class="col-md-3">
+                                                <input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Descrição do anexo">
+                                            </div>
                                         </div>
+
                                         <input type="hidden" id="numero-anexos" name="numero-anexos" value="1"/>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">
@@ -728,9 +733,10 @@ $usuario_id = $usuario['id'];
         numero++;
 
         var conteudo =   '<label class="control-label col-md-3">Insira um anexo: </label>'
-                         + '<div class="col-md-7"><div class="input-group"><span class="input-group-addon"><i class="fa fa-paperclip"></i></span>'
+                         + '<div class="col-md-3"><div class="input-group"><span class="input-group-addon"><i class="fa fa-paperclip"></i></span>'
                          + '<input type="file" name="anexo'+numero+'" id="anexo'+numero+'" class="anexos form-control"/>'
-                         + '</div></div><br><br><br>';
+                         + '</div></div><label class="control-label col-md-1">Descrição:</label><div class="col-md-3">'
+                         + '<input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Descrição do anexo"></div><br><br><br>';
 
         jq('#numero-anexos').val(numero);
         jq(this).parent().parent().prepend(conteudo);
