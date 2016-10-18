@@ -263,4 +263,5 @@ function AtividadesRecentesGeral($logs_descricao = "", $logs_id_referencia = 0,$
     echo '<div class="date">'.DataBrasilSemHoras($logs_data).'</div>';
     echo '</div>';
     echo '</li>';
+    
 }

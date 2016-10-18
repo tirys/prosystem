@@ -695,7 +695,7 @@ $usuario_id = $usuario['id'];
                 },
                 dataType: 'json',
                 success: function (result) {
-                    window.location.href = "../prosystem/listar/tarefas";
+                    window.location.href = "../prosystem/listar/tarefas" ;
                 }
             });
         }
