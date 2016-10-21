@@ -216,7 +216,7 @@ if(count($cookie)>0) {
 
                                         $datediff = $data - $atual;
                                         $diferenca = floor($datediff/(60*60*24));
-                                        if($diferenca<3)
+                                        if($diferenca<1)
                                         {
                                             $estilo = 'color:#E7505A';
                                         }
