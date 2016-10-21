@@ -247,7 +247,7 @@ function AtividadesRecentesGeral($logs_descricao = "", $logs_id_referencia = 0,$
     echo '<div class="cont">';
     echo '<div class="cont-col1">';
     echo '<div class="label label-sm '.$label.'">';
-    echo '<i class="fa '.$imagem.'"></i>';
+    echo '<i class="fa '.$img.'"></i>';
     echo '</div>';
     echo '</div>';
     echo '<div class="cont-col2">';

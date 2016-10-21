@@ -44,6 +44,18 @@ if($acao=='pausar') {
     echo json_encode(array("status" => true));
 }
 
+if($acao=='voltarCriador') {
+    $idCriador = isset($_GET['idCriador']) ? $_GET['idCriador'] : '';
+
+    $conexao = new classeConexao();
+
+    //voltando a tarefa para o criador
+    $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_funcionario = {$idCriador} WHERE id = {$id}");
+
+    //enviar email para o criador aqui
+
+    echo json_encode(array("status" => true));
+}
 
 //Enviando para aprovação
 

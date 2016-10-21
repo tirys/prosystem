@@ -60,29 +60,47 @@ $usuario_id = $usuario['id'];
                             <?php if(isset($dadosTarefa['id'])) { ?>
                                 <?php if($usuario_tipo!=2) { ?>
                                 <div class="actions">
-                                    <div class="btn-group">
-                                        <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li>
-                                                <a class="deletarTarefa">
-                                                    <i class="fa fa-trash-o"></i> Deletar </a>
-                                            </li>
 
-                                            <?php if ($dadosTarefa['tb_tarefas_aprovacao'] != 1) { ?>
-                                            <li class="botaoAprovacao">
-                                                <a class="enviarAprovacao">
-                                                    <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>
-                                            </li>
-                                            <?php } else { ?>
-                                                <li class="botaoAprovacao">
-                                                    <a class="enviarAprovacao">
-                                                        <i class="fa fa-times"></i> Cancelar Aprovação
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
-                                    </div>
+                                    <?php if($dadosTarefa['tb_tarefas_status']==1 && $dadosTarefa['tb_tarefas_criador'] != $dadosTarefa['tb_tarefas_funcionario']) { //se a tarefa está aberta?>
+                                        <a class="btn btn-primary acao-tarefa retornarCriador" onclick="retornarCriador()"><i class="fa fa-mail-reply"></i> Retornar ao Criador</a>
+                                    <?php } else if($dadosTarefa['tb_tarefas_status']!=1) { ?>
+                                        <a class="btn btn-primary acao-tarefa concluirTarefa"><i class="fa fa-check"></i> Concluir</a>
+                                    <?php } ?>
+
+                                    <?php if ($dadosTarefa['tb_tarefas_aprovacao'] != 1 && $dadosTarefa['tb_tarefas_status']==1 ) { ?>
+                                            <a class="enviarAprovacao btn btn-primary acao-tarefa" onclick="enviarAprovacao()">
+                                                <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>
+                                    <?php } else if($dadosTarefa['tb_tarefas_aprovacao'] != 0 ){ ?>
+                                            <a class="enviarAprovacao btn btn-primary acao-tarefa" onclick="enviarAprovacao()">
+                                                <i class="fa fa-times"></i> Cancelar Aprovação </a>
+                                    <?php } ?>
+
+                                    <a class="deletarTarefa btn btn-danger acao-tarefa"><i class="fa fa-trash-o"></i> Deletar </a>
+
+                                    <!-- ANTES DA POSSIBILIDADE DE RETORNO DE TAREFAS-->
+<!--                                    <div class="btn-group">-->
+<!--                                        <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações-->
+<!--                                            <i class="fa fa-angle-down"></i>-->
+<!--                                        </a>-->
+<!--                                        <ul class="dropdown-menu pull-right">-->
+<!--                                            <li>-->
+<!--                                                <a class="deletarTarefa">-->
+<!--                                                    <i class="fa fa-trash-o"></i> Deletar </a>-->
+<!--                                            </li>-->
+<!---->
+<!--                                            --><?php //if ($dadosTarefa['tb_tarefas_aprovacao'] != 1) { ?>
+<!--                                            <li class="botaoAprovacao">-->
+<!--                                                <a class="enviarAprovacao">-->
+<!--                                                    <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>-->
+<!--                                            </li>-->
+<!--                                            --><?php //} else { ?>
+<!--                                                <li class="botaoAprovacao">-->
+<!--                                                    <a class="enviarAprovacao">-->
+<!--                                                        <i class="fa fa-times"></i> Cancelar Aprovação-->
+<!--                                                </li>-->
+<!--                                            --><?php //} ?>
+<!--                                        </ul>-->
+<!--                                    </div>-->
                                 </div>
                                 <?php } else if ($dadosTarefa['tb_tarefas_aprovacao'] != 0) {?>
                                     <div class="pull-right">
@@ -347,6 +365,19 @@ $usuario_id = $usuario['id'];
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="control-label col-md-3">Legenda (utilizar apenas para postagens)
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-tag"></i>
+                                                            </span>
+                                                    <input type="text" name="legendaTarefa" placeholder="Legenda" class="form-control" value="<?=$dadosTarefa['tb_tarefas_legenda']?>"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <div class="col-md-7 col-md-offset-3">
                                         <?php  if($dadosTarefa['id'] > 0) { ?>
                                             <?php
@@ -354,18 +385,83 @@ $usuario_id = $usuario['id'];
 
                                                 foreach ($arquivos as $key => $arquivo){
 
-                                                    echo '<div id="'.$arquivo['id'].'">';
+                                                    echo '<div id="'.$arquivo['id'].'" class="col-md-12">';
                                                     echo '<br/>';
+                                                    echo '<div class="col-md-3">';
+
+                                                    $arquivoExtensao = explode('.',$arquivo['tb_arquivos_nome']);
+
+                                                    if($arquivoExtensao[1]=='pdf') {
+                                                        echo '<embed src="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" width="200" height="200" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">';
+                                                    }
+                                                    else {
+                                                        echo '<img class="myImg img'.$arquivo['id'].'" id="myImg" alt="'.$arquivo['tb_arquivos_nome'].'" src="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" width="200" height="200" />';
+                                                    }
+
+
+                                                    echo '</div>';
+                                                    echo '<div class="col-md-9">';
+
+                                                    echo '<div class="row">';
                                                     echo '<a target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download>';
-                                                    echo '<input style="border:1px solid #cccccc;padding:7px;vertical-align:bottom;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
+                                                    //echo '<input class="anexotarefa" style="border:1px solid #cccccc;padding:7px;vertical-align:bottom;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
                                                     echo '</a>';
-                                                    echo '<a class="btn-danger btn excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i></a>';
+                                                    if($arquivoExtensao[1]=='pdf') {
+                                                        echo '<a class="btn-info btn botoes-anexo" target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" style="height:35px;"><i class="fa fa-eye"></i> Ver</a>';
+                                                    }
+                                                    else {
+                                                        echo '<a class="btn-info btn botoes-anexo imgbtn" data-role="' . $arquivo['id'] . '" style="height:35px;"><i class="fa fa-eye"></i> Ver</a>';
+                                                    }
+                                                    echo '<a class="btn-success btn botoes-anexo" target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-download"></i> Baixar</a>';
+                                                    echo '<a class="btn-danger btn botoes-anexo excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i> Deletar</a>';
+
+
                                                     echo '<span class="span'.$arquivo['id'].'" style="display:none;"><i style="font-size:17px;margin-left:11px;" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span></span>';
+                                                    echo '</div>';
+
+                                                    echo '<div class="row">';
+                                                    echo '<br><span class="descricao-anexo">Descrição:</span>';
+                                                    echo '</div>';
+
+                                                    echo '<div class="row">';
+                                                    echo '<br><textarea class="form-control textareaanexo" id="editarAnexo'.$arquivo['id'].'">'.$arquivo['tb_arquivos_descricao'].'</textarea>';
+                                                    echo '</div>';
+
+                                                    echo '</div>';
                                                     echo '<br/>';
                                                     echo '</div>';
+
+//                                                    if(isset($arquivos[$key+1])) {
+                                                        echo '<div class="clearfix"></div>';
+                                                        echo '<hr></hr>';
+//                                                    }
                                                 }
+
+//                                                $arquivos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$dadosTarefa['id']}");
+//
+//                                                foreach ($arquivos as $key => $arquivo){
+//
+//                                                    echo '<div id="'.$arquivo['id'].'">';
+//                                                    echo '<br/>';
+//                                                    echo '<a target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download>';
+//                                                    echo '<input style="border:1px solid #cccccc;padding:7px;vertical-align:bottom;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
+//                                                    echo '</a>';
+//                                                    echo '<a class="btn-danger btn excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i></a>';
+//                                                    echo '<span class="span'.$arquivo['id'].'" style="display:none;"><i style="font-size:17px;margin-left:11px;" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span></span>';
+//                                                    echo '<br/>';
+//                                                    echo '</div>';
+//                                                }
                                             ?>
                                         <?php  } ?>
+                                                <!-- The Modal -->
+                                                <div id="myModal" class="modal" onclick="document.getElementById('myModal').style.display='none'">
+
+                                                    <!-- Modal Content (The Image) -->
+                                                    <img class="modal-content" id="img01">
+
+                                                    <!-- Modal Caption (Image Text) -->
+                                                    <div id="caption"></div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -383,7 +479,7 @@ $usuario_id = $usuario['id'];
                                             <label class="control-label col-md-1">Descrição:
                                             </label>
                                             <div class="col-md-3">
-                                                <input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Descrição do anexo">
+                                                <input type="text" class="form-control" name="descricaoAnexo1" placeholder="Descrição do anexo">
                                             </div>
                                         </div>
 
@@ -447,13 +543,6 @@ $usuario_id = $usuario['id'];
 <!-- BEGIN CORE PLUGINS -->
 <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
-<!--ISSO AQUI EMBAIXO BUGAVA O JS-->
-<!--<script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
-<!--<script src="view/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>-->
-<!--<script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>-->
-<!--<script src="view/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>-->
-<!--<script src="view/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>-->
-<!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="view/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
@@ -488,12 +577,66 @@ $usuario_id = $usuario['id'];
     var jq = jQuery.noConflict();
 
     var statusAprovacao = '<?=$dadosTarefa['tb_tarefas_aprovacao']?>';
+    var criadorTarefa = '<?=$dadosTarefa['tb_tarefas_criador']?>';
+    var tarefa = '<?=$dadosTarefa['id']?>';
+    var usuarioAtual = '<?=$usuario_id?>';
+
 
     if(statusAprovacao!=1) {
         var aprovacao = 'enviarAprovacao';
     }
     else {
         var aprovacao = 'cancelarAprovacao';
+    }
+
+    jq('.concluirTarefa').on('click',function() {
+
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'reativar',
+                id: tarefa,
+                idUsuario:usuarioAtual
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                jq('.concluirTarefa').remove();
+                var funcResp =  jq('#funcionarioID').val;
+
+                if(funcResp!=criadorTarefa) {
+                    jq('.actions').prepend('<a class="enviarAprovacao btn btn-primary acao-tarefa" onclick="enviarAprovacao()"> <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>');
+                    jq('.actions').prepend('<a class="btn btn-primary acao-tarefa retornarCriador" onclick="retornarCriador()"><i class="fa fa-mail-reply"></i> Retornar ao Criador</a>');
+                }
+            }
+        });
+    });
+
+   function retornarCriador() {
+
+
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'voltarCriador',
+                id: tarefa,
+                idCriador: criadorTarefa
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+                jq('#funcionarioID').val(criadorTarefa);
+                jq('.retornarCriador').fadeOut(600, function(){ $(this).remove();})
+            }
+        });
     }
 
     jq('.aprovarTarefa').on('click', function () {
@@ -643,7 +786,7 @@ $usuario_id = $usuario['id'];
 
 
 
-    jq('.enviarAprovacao').on('click',function () {
+    function enviarAprovacao () {
         $.ajax({
             url: 'model/ws/ativacaoTarefa.php',
             type: 'GET',
@@ -673,7 +816,7 @@ $usuario_id = $usuario['id'];
             }
         });
 
-    });
+    }
 
     jq('.deletarTarefa').on('click',function () {
         var resposta = confirm("Deseja realmente DELETAR essa tarefa?");
@@ -736,7 +879,7 @@ $usuario_id = $usuario['id'];
                          + '<div class="col-md-3"><div class="input-group"><span class="input-group-addon"><i class="fa fa-paperclip"></i></span>'
                          + '<input type="file" name="anexo'+numero+'" id="anexo'+numero+'" class="anexos form-control"/>'
                          + '</div></div><label class="control-label col-md-1">Descrição:</label><div class="col-md-3">'
-                         + '<input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Descrição do anexo"></div><br><br><br>';
+                         + '<input type="text" class="form-control" name="descricaoAnexo'+numero+'" placeholder="Descrição do anexo"></div><br><br><br>';
 
         jq('#numero-anexos').val(numero);
         jq(this).parent().parent().prepend(conteudo);
@@ -792,6 +935,37 @@ $usuario_id = $usuario['id'];
         }
     });
 
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+    jq('.imgbtn').on('click',function(){
+        var id = jq(this).attr('data-role');
+
+
+        modal.style.display = "block";
+        modalImg.src = jq('.img'+id).attr('src');
+        captionText.innerHTML = jq('.img'+id).attr('alt');
+    });
+
+    jq('img').on('click',function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 </script>
 <?= include("rodape.php") ?>
 

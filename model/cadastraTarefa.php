@@ -12,6 +12,7 @@ $criador = isset($_POST['criador']) ? $_POST['criador'] : '';
 $idTarefa = isset($_POST['idTarefa']) ? $_POST['idTarefa'] : '';
 $qtdAnexo = isset($_POST['numero-anexos']) ? $_POST['numero-anexos'] : '';
 $tempoGasto = isset($_POST['tempoGasto']) ? $_POST['tempoGasto'] : '';
+$legendaTarefa = isset($_POST['legendaTarefa']) ? $_POST['legendaTarefa'] : '';
 
 if($oculto=='') {
     $oculto = 0;
@@ -32,7 +33,7 @@ $descricaoTarefa = mysqli_real_escape_string($conexao->obj(),$descricaoTarefa);
 if ($acao == 1) {
 
     $conexao = new classeConexao();
-    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID})");
+    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID},'{$legendaTarefa}')");
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");
 
     $data = date("Y-m-d H:i:s");
@@ -40,7 +41,11 @@ if ($acao == 1) {
     $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$criador},'criou a tarefa','{$data}','tarefa',{$ultimoID})");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
+        $descricao = '';
+
         if($_FILES['anexo'.$i]['name']!='') {
+            $descricao = isset($_POST['descricaoAnexo'.$i]) ? $_POST['descricaoAnexo'.$i] : ''; //pegando descricao
+
             // Pasta onde o arquivo vai ser salvo
             $_UP['pasta'] = '../view/images/uploads/anexos/';
             // Tamanho máximo do arquivo (em Bytes)
@@ -71,7 +76,7 @@ if ($acao == 1) {
                 echo "Não foi possível enviar o arquivo, tente novamente";
             }
 
-            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','{$nome_final}','{$extensao}')");
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','{$nome_final}','{$extensao}','{$descricao}')");
         }
     }
 
@@ -82,14 +87,19 @@ if ($acao == 1) {
 else if ($acao == 2) {
 
     $conexao = new classeConexao();
-    $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_horas_gastas = {$tempoGasto}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID} WHERE id = {$idTarefa}");
+    $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_horas_gastas = {$tempoGasto}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID}, tb_tarefas_legenda = '{$legendaTarefa}' WHERE id = {$idTarefa}");
 
     $data = date("Y-m-d H:i:s");
     //Inserindo no log
     $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$criador},'atualizou a tarefa','{$data}','tarefa',{$idTarefa})");
 
     for($i=1;$i<=$qtdAnexo;$i++) {
+
+        $descricao = '';
+
         if($_FILES['anexo'.$i]['name']!='') {
+            $descricao = isset($_POST['descricaoAnexo'.$i]) ? $_POST['descricaoAnexo'.$i] : ''; //pegando descricao
+
             // Pasta onde o arquivo vai ser salvo
             $_UP['pasta'] = '../view/images/uploads/anexos/';
             // Tamanho máximo do arquivo (em Bytes)
@@ -120,7 +130,7 @@ else if ($acao == 2) {
                 echo "Não foi possível enviar o arquivo, tente novamente";
             }
 
-            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa},'anexos','{$nome_final}','{$extensao}')");
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa},'anexos','{$nome_final}','{$extensao}','{$descricao}')");
         }
     }
 
