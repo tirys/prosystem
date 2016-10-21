@@ -46,6 +46,7 @@ if(count($cookie)>0) {
     <link href="view/assets/prospecta.css" rel="stylesheet" type="text/css" />
     <!-- FIM PROSPECTA-->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link rel="shortcut icon" href="view/images/favicon.png">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css" />
     <link href="view/libs/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="view/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
