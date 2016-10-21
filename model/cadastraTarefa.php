@@ -33,12 +33,14 @@ $descricaoTarefa = mysqli_real_escape_string($conexao->obj(),$descricaoTarefa);
 if ($acao == 1) {
 
     $conexao = new classeConexao();
-    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID},'{$legendaTarefa}')");
+    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID},0,'{$legendaTarefa}')");
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");
 
     $data = date("Y-m-d H:i:s");
     //Inserindo no log
-    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$criador},'criou a tarefa','{$data}','tarefa',{$ultimoID})");
+
+    $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$criador},'criou a tarefa','{$data}','tarefa',{$ultimoID['ultimo']})");
+
 
     for($i=1;$i<=$qtdAnexo;$i++) {
         $descricao = '';
