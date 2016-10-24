@@ -13,12 +13,13 @@ if($usuario_tipo == 2) {
     $empresa = $conexao::fetchuniq("SELECT tb_clientes_empresas_id FROM tb_clientes WHERE tb_clientes_usuario_id = {$usuario['id']}");
 
     //Aprovações Clientes
-        $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
+     $aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
 }
 else {
     //Aprovações Geral
-    $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 ORDER BY tb_tarefas_aprovacao");
+    $aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 ORDER BY tb_tarefas_aprovacao");
 }
+
 
 ?>
     <div class="clearfix"> </div>
@@ -48,89 +49,113 @@ else {
                 <!-- START: APROVAÇÕES -->
                 <div class="container-fluid">
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="imagem-aprovacao">
-                                <img class="myImg" id="myImg" src="view/images/uploads/anexos/Desert.jpg" width="200px" height="200px"/>
+                    <?php
+                    foreach ($aprovacoes as $aprovacao) {
+                        $anexos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id =".$aprovacao['tarefaID']);
+
+                        foreach ($anexos as $key => $anexo) {
+                            if($anexo['tb_arquivos_tipo']!="pdf") {
+                    ?>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="imagem-aprovacao">
+                                        <img class="myImg" id="myImg" src="view/images/uploads/anexos/<?=$anexo['tb_arquivos_nome']?>" title="<?=$aprovacao['tb_tarefas_nome']?>" alt="<?=$aprovacao['tb_tarefas_nome']?>" width="200px" height="200px"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="texto-aprovacao">
+                                        <span style="color:#6f6e6e;"><b>Data:</b> <?=DataBrasil($aprovacao['tb_tarefas_data_termino'])?><br></span>
+                                        <span style="color:#6f6e6e;"><b>Projeto:</b> <a target="_blank" href="projeto/<?=$aprovacao['projetoID']?>"><?=$aprovacao['tb_projetos_nome']?></a><br></span>
+                                        <span style="color:#6f6e6e;"><b>Tarefa:</b> <a target="_blank" href="editar/tarefa/<?=$aprovacao['id']?>"><?=$aprovacao['tb_tarefas_nome']?></a><br></span>
+                                        <span style="color:#6f6e6e;"><b>Solicitado por:</b> Nome Criador<br></span>
+
+                                        <br>
+                                        <?=$aprovacao['tb_tarefas_legenda']?>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="botoes-aprovacao">
+                                        <a class="btn btn-success aprovarPeca" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-check"></span> Aprovar</a>
+                                        <a class="btn btn-danger NaprovarPeca" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-times"></span> Não Aprovar</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="texto-aprovacao">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A debitis deserunt dicta dolore, eius eos est in iste iusto labore natus, nihil quidem ratione soluta, voluptate. Architecto deserunt illum placeat?
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="botoes-aprovacao">
-                                <a class="btn btn-success aprovarPeca" data-role="observacoes1"><span class="fa fa-check"></span> Aprovar</a>
-                                <a class="btn btn-danger NaprovarPeca" data-role="observacoes1"><span class="fa fa-times"></span> Não Aprovar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row observacoes1" style="display: none;">
-                        <div class="col-md-12">
-                            <br>
-                            <b>Observações?</b>
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                            <textarea class="form-control">
+                            <div class="row observacoes<?=$anexo['id']?>" style="display: none;">
+                                <div class="col-md-12">
+                                    <br>
+                                    <b>Observações?</b>
+                                </div>
+                                <div class="col-md-12">
+                                    <br>
+                                    <textarea class="form-control">
 
                             </textarea>
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                           <div class="pull-right botoes-aprovacao">
-                               <a class="btn green-sharp btn-outline sbold cancelarObservacao" data-role="observacoes1"><span class="fa fa-times"></span> Cancelar</a>
-                               <a class="btn btn-success enviarObservacao" data-role="observacoes1"><span class="fa fa-send"></span> Enviar</a>
-                           </div>
-                        </div>
-                    </div>
-
-                    <br>
-                    <hr></hr>
-                    <br>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="imagem-aprovacao">
-                                <img class="myImg" id="myImg" src="view/images/uploads/anexos/Desert.jpg" width="200px" height="200px"/>
+                                </div>
+                                <div class="col-md-12">
+                                    <br>
+                                    <div class="pull-right botoes-aprovacao">
+                                        <a class="btn green-sharp btn-outline sbold cancelarObservacao" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-times"></span> Cancelar</a>
+                                        <a class="btn btn-success enviarObservacao" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-send"></span> Enviar</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="texto-aprovacao">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A debitis deserunt dicta dolore, eius eos est in iste iusto labore natus, nihil quidem ratione soluta, voluptate. Architecto deserunt illum placeat?
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="botoes-aprovacao">
-                                <a class="btn btn-success aprovarPeca" data-role="observacoes2"><span class="fa fa-check"></span> Aprovar</a>
-                                <a class="btn btn-danger NaprovarPeca" data-role="observacoes2"><span class="fa fa-times"></span> Não Aprovar</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row observacoes2" style="display: none;">
-                        <div class="col-md-12">
-                            <br>
-                            <b>Observações?</b>
-                        </div>
-                        <div class="col-md-12">
-                            <br>
-                            <textarea class="form-control">
 
-                            </textarea>
-                        </div>
-                        <div class="col-md-12">
                             <br>
-                            <div class="pull-right botoes-aprovacao">
-                                <a class="btn green-sharp btn-outline sbold cancelarObservacao" data-role="observacoes2"><span class="fa fa-times"></span> Cancelar</a>
-                                <a class="btn btn-success enviarObservacao" data-role="observacoes2"><span class="fa fa-send"></span> Enviar</a>
-                            </div>
-                        </div>
-                    </div>
+                            <hr></hr>
+                            <br>
+                    <?php
+                            }
+                        }
+                    }
+                    ?>
 
-                    <br>
-                    <hr></hr>
-                    <br>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-2">-->
+<!--                            <div class="imagem-aprovacao">-->
+<!--                                <img class="myImg" id="myImg" src="view/images/uploads/anexos/Desert.jpg" title="texto" alt="texto" width="200px" height="200px"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-8">-->
+<!--                            <div class="texto-aprovacao">-->
+<!--                                <span style="color:#6f6e6e;"><b>Data:</b> 24/10/2016<br></span>-->
+<!--                                <span style="color:#6f6e6e;"><b>Projeto:</b> Teste<br></span>-->
+<!--                                <span style="color:#6f6e6e;"><b>Tarefa:</b> teste<br></span>-->
+<!--                                <span style="color:#6f6e6e;"><b>Solicitado por:</b> Jéssica<br></span>-->
+<!---->
+<!--                                <br>-->
+<!--                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A debitis deserunt dicta dolore, eius eos est in iste iusto labore natus, nihil quidem ratione soluta, voluptate. Architecto deserunt illum placeat?-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-2">-->
+<!--                            <div class="botoes-aprovacao">-->
+<!--                                <a class="btn btn-success aprovarPeca" data-role="observacoes1"><span class="fa fa-check"></span> Aprovar</a>-->
+<!--                                <a class="btn btn-danger NaprovarPeca" data-role="observacoes1"><span class="fa fa-times"></span> Não Aprovar</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row observacoes1" style="display: none;">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <br>-->
+<!--                            <b>Observações?</b>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-12">-->
+<!--                            <br>-->
+<!--                            <textarea class="form-control">-->
+<!---->
+<!--                            </textarea>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-12">-->
+<!--                            <br>-->
+<!--                           <div class="pull-right botoes-aprovacao">-->
+<!--                               <a class="btn green-sharp btn-outline sbold cancelarObservacao" data-role="observacoes1"><span class="fa fa-times"></span> Cancelar</a>-->
+<!--                               <a class="btn btn-success enviarObservacao" data-role="observacoes1"><span class="fa fa-send"></span> Enviar</a>-->
+<!--                           </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!---->
+<!--                    <br>-->
+<!--                    <hr></hr>-->
+<!--                    <br>-->
 
                 </div>
                 <!-- END: APROVAÇÕES -->

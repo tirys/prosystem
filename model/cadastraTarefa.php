@@ -78,11 +78,11 @@ if ($acao == 1) {
                 echo "Não foi possível enviar o arquivo, tente novamente";
             }
 
-            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','{$nome_final}','{$extensao}','{$descricao}')");
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','{$nome_final}','{$extensao}','{$descricao}',0)");
         }
         else if($_POST['descricaoAnexo'.$i]!='') {
             $descricao = isset($_POST['descricaoAnexo'.$i]) ? $_POST['descricaoAnexo'.$i] : ''; //pegando descricao
-            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','sem-anexo.jpg','jpg','{$descricao}')");
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$ultimoID['ultimo']},'anexos','sem-anexo.jpg','jpg','{$descricao}',0)");
         }
     }
 
@@ -188,11 +188,11 @@ else if ($acao == 2) {
                 echo "Não foi possível enviar o arquivo, tente novamente";
             }
 
-            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa},'anexos','{$nome_final}','{$extensao}','{$descricao}')");
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa},'anexos','{$nome_final}','{$extensao}','{$descricao}',0)");
         }
         else if($_POST['descricaoAnexo'.$i]!='') {
             $descricao = isset($_POST['descricaoAnexo'.$i]) ? $_POST['descricaoAnexo'.$i] : ''; //pegando descricao
-            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa['ultimo']},'anexos','sem-anexo.jpg','jpg','{$descricao}')");
+            $inserirAnexo = $conexao::exec("INSERT INTO tb_arquivos values (null,{$idTarefa['ultimo']},'anexos','sem-anexo.jpg','jpg','{$descricao}',0)");
         }
     }
 
