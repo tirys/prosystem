@@ -87,9 +87,7 @@ else {
                                 </div>
                                 <div class="col-md-12">
                                     <br>
-                                    <textarea class="form-control">
-
-                            </textarea>
+                                    <textarea class="form-control descricao<?=$anexo['id']?>" name="descricao<?=$anexo['id']?>"></textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <br>
@@ -175,10 +173,29 @@ else {
 <script>
     $(".aprovarPeca").on("click", function () {
         var observacaoN = $(this).attr("data-role");
+        var id = observacaoN.split("observacoes");
 
         $("."+observacaoN).slideDown( "slow", function() {
             
         });
+
+        $.ajax({
+            url: 'model/ws/aprovacaoAnexo.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'aprovar',
+                id: id[1]
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+
+            }
+        });
+
     });
 
     $(".cancelarObservacao").on("click", function () {
@@ -191,17 +208,55 @@ else {
 
     $(".NaprovarPeca").on("click", function () {
         var observacaoN = $(this).attr("data-role");
+        var id = observacaoN.split("observacoes");
 
         $("."+observacaoN).slideDown( "slow", function() {
 
+        });
+
+        $.ajax({
+            url: 'model/ws/aprovacaoAnexo.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'rejeitar',
+                id: id[1]
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+
+            }
         });
     });
 
     $(".enviarObservacao").on("click", function () {
         var observacaoN = $(this).attr("data-role");
+        var id = observacaoN.split("observacoes");
+        var descricao = $(".descricao"+id[1]).val();
 
         $("."+observacaoN).slideUp( "slow", function() {
 
+        });
+
+        $.ajax({
+            url: 'model/ws/aprovacaoAnexo.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'comentar',
+                id: id[1],
+                descricao:descricao
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+
+            }
         });
     });
 

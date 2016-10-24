@@ -70,7 +70,7 @@ else {
                                             </button>
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
-                                                    <a href="javascript:;">
+                                                    <a href="javascript:window.print();">
                                                         <i class="fa fa-print"></i> Imprimir </a>
                                                 </li>
                                                 <li>
