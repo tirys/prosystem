@@ -44,12 +44,12 @@ if($acao=='listar') {
         if($diaComentario[0]==$hoje) { //se o comentario foi hoje
             $diaComentario = explode(":",$diaComentario[1]); //cortar em horas, minutos e segundos
 
-            $horario = "<span style='color:#9c9c9c'>hoje às " .$diaComentario[0].":".$diaComentario[1]."</span>"; //mostrar só a hora e minutos
+            $horario = "<span style='color:#9c9c9c'>hoje às " .$diaComentario[0].":".$diaComentario[1]."</span>"; //mostrar só a hora:minutos
         }
         else {
             $diaComentario = explode("-",$diaComentario[0]);
 
-            $horario = "<span style='color:#9c9c9c'>em ".$diaComentario[2] . "/" . $diaComentario[1] . "/" . $diaComentario[0]."</span>";
+            $horario = "<span style='color:#9c9c9c'>em ".$diaComentario[2] . "/" . $diaComentario[1] . "/" . $diaComentario[0]."</span>"; //mostrar só o dia/mês/ano
 
         }
 
