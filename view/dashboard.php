@@ -144,7 +144,11 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                 <!-- END DASHBOARD STATS 1-->
 
                 <div class="row">
+                    <?php if($usuario_tipo == 2){?>
+                    <div class="col-lg-6 col-xs-12 col-sm-12" style="display: none;">
+                    <?php } else {?>
                     <div class="col-lg-6 col-xs-12 col-sm-12">
+                    <?php } ?>
                         <div class="portlet light bordered">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -179,7 +183,72 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-xs-12 col-sm-12">
+                   <?php if($usuario_tipo == 2){?>
+                       <div class="col-lg-12 col-xs-12 col-sm-12 column sortable">
+                           <div class="portlet light bordered">
+                               <div class="portlet-title tabbable-line">
+                                   <div class="caption">
+                                       <i class=" icon-social-twitter font-dark hide"></i>
+                                       <span class="caption-subject font-dark bold uppercase">Aprovações</span>
+                                   </div>
+
+                               </div>
+                               <div class="portlet-body">
+                                   <div class="tab-content">
+                                       <div class="tab-pane active" id="tab_actions_pending">
+                                           <div class="mt-actions">
+                                               <!-- START Aprovacoes -->
+                                               <?php foreach ($aprovacoes as $aprovacao) { ?>
+                                                   <div class="mt-action">
+                                                       <!--                                                <div class="mt-action-img">-->
+                                                       <!--                                                    <img src="view/assets/pages/media/users/avatar10.jpg" /> -->
+                                                       <!--                                                </div>-->
+                                                       <div class="mt-action-body">
+                                                           <div class="mt-action-row">
+                                                               <div class="mt-action-info ">
+                                                                   <div class="mt-action-icon action<?=$aprovacao['id']?>">
+                                                                       <?php if($aprovacao['tb_tarefas_aprovacao'] == 1) {?>
+                                                                           <i class="icon-clock" title="Aguardando aprovação"></i>
+                                                                       <?php } else if ($aprovacao['tb_tarefas_aprovacao'] == 3){ ?>
+                                                                           <i class="icon-check" title="Aprovada"></i>
+                                                                       <?php } else {?>
+                                                                           <i class="icon-close" title="Não aprovada"></i>
+                                                                       <?php } ?>
+                                                                   </div>
+                                                                   <div class="mt-action-details ">
+                                                                       <a href="editar/tarefa/<?=$aprovacao['id']?>">
+                                                                           <span class="mt-action-author"><?=$aprovacao['tb_tarefas_nome']?></span>
+                                                                       </a>
+                                                                       <a href="projeto/<?=$aprovacao['projetoID']?>">
+                                                                           <p class="mt-action-desc"><?=$aprovacao['tb_projetos_nome']?></p>
+                                                                       </a>
+                                                                   </div>
+                                                               </div>
+
+                                                               <div class="mt-action-buttons ">
+                                                                   <div class="btn-group btn-group-circle">
+                                                                       <!-- Desabilitar botão de acordo com o status da aprovação -->
+                                                                       <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline green btn-sm aprovarTarefa">Aprovar</button>
+                                                                       <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline red btn-sm rejeitarTarefa">Rejeitar</button>
+                                                                   </div>
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               <?php } ?>
+                                           </div>
+                                           <!-- END: Actions -->
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    <?php } ?>
+                        <?php if($usuario_tipo == 2){?>
+                    <div class="col-lg-6 col-xs-12 col-sm-12" style="display: none">
+                        <?php } else {?>
+                        <div class="col-lg-6 col-xs-12 col-sm-12">
+                        <?php } ?>
                         <div class="portlet light tasks-widget bordered">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -367,8 +436,11 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                             </div>
                         </div>
                     </div>
-
+                    <?php if($usuario_tipo == 2){?>
+                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable" style="display: none">
+                    <?php } else {?>
                     <div class="col-lg-6 col-xs-12 col-sm-12 column sortable">
+                    <?php } ?>
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
                                 <div class="caption">

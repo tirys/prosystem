@@ -382,7 +382,7 @@ $usuario_id = $usuario['id'];
                                         <?php  if($dadosTarefa['id'] > 0) { ?>
                                             <?php
                                                 $arquivos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$dadosTarefa['id']}");
-
+                                                echo '<input type="hidden" name="qtdAnexoEditado" value="'.count($arquivos).'"/>';
                                                 foreach ($arquivos as $key => $arquivo){
 
                                                     echo '<div id="'.$arquivo['id'].'" class="col-md-12">';
@@ -392,7 +392,7 @@ $usuario_id = $usuario['id'];
                                                     $arquivoExtensao = explode('.',$arquivo['tb_arquivos_nome']);
 
                                                     if($arquivoExtensao[1]=='pdf') {
-                                                        echo '<embed src="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" width="200" height="200" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">';
+                                                        echo '<embed src="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" width="200" height="200" alt="pdf"  pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">';
                                                     }
                                                     else {
                                                         echo '<img class="myImg img'.$arquivo['id'].'" id="myImg" alt="'.$arquivo['tb_arquivos_nome'].'" src="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" width="200" height="200" />';
@@ -413,9 +413,13 @@ $usuario_id = $usuario['id'];
                                                         echo '<a class="btn-info btn botoes-anexo imgbtn" data-role="' . $arquivo['id'] . '" style="height:35px;"><i class="fa fa-eye"></i> Ver</a>';
                                                     }
                                                     echo '<a class="btn-success btn botoes-anexo" target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-download"></i> Baixar</a>';
+                                                    //Edição de anexo
+                                                    echo '<input type="hidden" name="anexoEditadoId'.$key.'" value="'.$arquivo['id'].'"/>';
+                                                    echo '<div class="fileUpload btn btn-warning botoes-anexo"><span><i class="fa fa-edit"></i> Editar Anexo</span><input type="file" name="anexoEditado'.$arquivo['id'].'" class="upload" /></div>';
+
                                                     echo '<a class="btn-danger btn botoes-anexo excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i> Deletar</a>';
 
-
+                                                    echo '<input type="hidden" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" />';
                                                     echo '<span class="span'.$arquivo['id'].'" style="display:none;"><i style="font-size:17px;margin-left:11px;" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span></span>';
                                                     echo '</div>';
 
@@ -424,7 +428,7 @@ $usuario_id = $usuario['id'];
                                                     echo '</div>';
 
                                                     echo '<div class="row">';
-                                                    echo '<br><textarea class="form-control textareaanexo" id="editarAnexo'.$arquivo['id'].'">'.$arquivo['tb_arquivos_descricao'].'</textarea>';
+                                                    echo '<br><textarea class="form-control textareaanexo" name="editarAnexoTexto'.$arquivo['id'].'" id="editarAnexoTexto'.$arquivo['id'].'">'.$arquivo['tb_arquivos_descricao'].'</textarea>';
                                                     echo '</div>';
 
                                                     echo '</div>';
