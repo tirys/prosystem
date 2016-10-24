@@ -49,7 +49,7 @@
                 <h3 class="uppercase">Projetos</h3>
             </li>
 
-            <?php if($usuario_tipo != 2){?>
+            <?php if($usuario_tipo != 0 && $usuario_tipo != 1 && $usuario_tipo != 2){?>
 
                 <?php
                 if($_GET['idMenu'] == 2){
@@ -126,6 +126,21 @@
                     </li>
                 </ul>
             </li>
+
+            <?php
+            //menu de aprovações
+            if($_GET['idMenu'] == 71){
+                echo('<li class="nav-item start active open"><a href="aprovacoes" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
+            }else{
+                echo('<li class="nav-item"><a href="aprovacoes" class="nav-link nav-toggle"></span><span class="arrow"></span>');
+            }
+            ?>
+            <i class="fa fa-check-square-o"></i>
+            <span class="title">Aprovações</span>
+            <span class="arrow"></span>
+            </a>
+            </li>
+
 
             <?php if($usuario_tipo != 2){?>
                 <!--START Configurações-->

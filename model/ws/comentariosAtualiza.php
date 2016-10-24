@@ -44,6 +44,7 @@ if($acao=='listar') {
         if($diaComentario[0]==$hoje) { //se o comentario foi hoje
             $diaComentario = explode(":",$diaComentario[1]); //cortar em horas, minutos e segundos
 
+            //mostrando o horario em que o comentário foi inserido
             $horario = "<span style='color:#9c9c9c'>hoje às " .$diaComentario[0].":".$diaComentario[1]."</span>"; //mostrar só a hora:minutos
         }
         else {

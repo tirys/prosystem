@@ -77,30 +77,6 @@ $usuario_id = $usuario['id'];
 
                                     <a class="deletarTarefa btn btn-danger acao-tarefa"><i class="fa fa-trash-o"></i> Deletar </a>
 
-                                    <!-- ANTES DA POSSIBILIDADE DE RETORNO DE TAREFAS-->
-<!--                                    <div class="btn-group">-->
-<!--                                        <a class="btn btn-sm green dropdown-toggle" href="javascript:;" data-toggle="dropdown"> Ações-->
-<!--                                            <i class="fa fa-angle-down"></i>-->
-<!--                                        </a>-->
-<!--                                        <ul class="dropdown-menu pull-right">-->
-<!--                                            <li>-->
-<!--                                                <a class="deletarTarefa">-->
-<!--                                                    <i class="fa fa-trash-o"></i> Deletar </a>-->
-<!--                                            </li>-->
-<!---->
-<!--                                            --><?php //if ($dadosTarefa['tb_tarefas_aprovacao'] != 1) { ?>
-<!--                                            <li class="botaoAprovacao">-->
-<!--                                                <a class="enviarAprovacao">-->
-<!--                                                    <i class="fa fa-mail-forward"></i> Enviar para Aprovação </a>-->
-<!--                                            </li>-->
-<!--                                            --><?php //} else { ?>
-<!--                                                <li class="botaoAprovacao">-->
-<!--                                                    <a class="enviarAprovacao">-->
-<!--                                                        <i class="fa fa-times"></i> Cancelar Aprovação-->
-<!--                                                </li>-->
-<!--                                            --><?php //} ?>
-<!--                                        </ul>-->
-<!--                                    </div>-->
                                 </div>
                                 <?php } else if ($dadosTarefa['tb_tarefas_aprovacao'] != 0) {?>
                                     <div class="pull-right">
@@ -116,14 +92,32 @@ $usuario_id = $usuario['id'];
 
                         </div>
                         <div class="portlet-body">
-
                             <!-- START FORM-->
-                            <?php if (isset($dadosTarefa['id'])) {?>
-                            <span class="solicitado-por">solicitado por:
-                            <?php $criador = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$dadosTarefa['tb_tarefas_criador']}"); ?>
-                            <label><?=$criador['tb_usuarios_nome']?></label></span>
-
                             <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
+
+                                <div class="row">
+                                    <div class="container-fluid">
+                                    <?php if (isset($dadosTarefa['id'])) {?>
+                                    <span class="solicitado-por">solicitado por:
+                                    <?php $criador = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$dadosTarefa['tb_tarefas_criador']}"); ?>
+                                    <label><?=$criador['tb_usuarios_nome']?></label></span>
+
+                                    <div class="pull-right botoes-superiores">
+                                        <?php if( isset($dadosTarefa['id'])){?>
+                                            <?php if($usuario_tipo != 2){?>
+                                                <button type="submit" class="btn green">Salvar</button>
+                                                <a href="listar/tarefas" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</a>
+                                            <?php }?>
+                                        <?php }else{ ?>
+                                            <button type="submit" class="btn green">Cadastrar</button>
+                                            <a href="listar/tarefas" class="btn grey-salsa btn-outline" name="btnCancelar" id="btnCancelar">Cancelar</a>
+                                        <?php } ?>
+
+
+                                    </div>
+                                    </div>
+                                </div>
+
                                 <input type="hidden" name="idTarefa" id="idTarefa" value="<?=$dadosTarefa['id']?>"/>
                                 <?php } else { ?>
                                 <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">

@@ -24,6 +24,7 @@
 				RewriteRule ^clientes                                               view/clientes.php?idMenu=2
 				#RewriteRule ^projetos                                               view/projetos.php?idMenu=3
 				RewriteRule ^tarefas                                                view/tarefas.php?idMenu=4
+                RewriteRule ^aprovacoes                                             view/aprovacoes.php?idMenu=71
 
 				#Regras Cadastros
 				RewriteRule ^cadastrar/usuario$										view/cadastrar-usuario.php?idMenu=51
@@ -49,5 +50,7 @@
 				RewriteRule ^empresa/([_0-9a-z-]+)?$							    view/ver-empresa.php?idMenu=63&idEmpresa=$1
 				RewriteRule ^projeto/([_0-9a-z-]+)?$						        view/ver-projeto.php?idMenu=32&idProjeto=$1
 				RewriteRule ^tarefa/([_0-9a-z-]+)?$						            view/ver-tarefa.php?idMenu=42&idTarefa=$1
+
+
 
 </IfModule>
