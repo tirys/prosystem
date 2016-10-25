@@ -50,6 +50,8 @@
 				RewriteRule ^empresa/([_0-9a-z-]+)?$							    view/ver-empresa.php?idMenu=63&idEmpresa=$1
 				RewriteRule ^projeto/([_0-9a-z-]+)?$						        view/ver-projeto.php?idMenu=32&idProjeto=$1
 				RewriteRule ^tarefa/([_0-9a-z-]+)?$						            view/ver-tarefa.php?idMenu=42&idTarefa=$1
+				RewriteRule ^usuario/([_0-9a-z-]+)?$						        view/ver-usuario.php?idMenu=52&idUsuario=$1
+				RewriteRule ^usuario$                                               view/ver-usuario.php?idMenu=52
 
 
 

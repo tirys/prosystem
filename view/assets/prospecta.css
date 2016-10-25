@@ -1,4 +1,4 @@
-/*** Aprovações ****/
+/*** APROVAÇÕES ****/
 .texto-aprovacao{
     border-left: 1px #cccccc solid;
     min-height: 200px;
@@ -51,7 +51,7 @@
     margin-left:3px;
 }
 
-/*** DashBoard ****/
+/*** DASHBOARD ****/
 .mt-actions {
     max-height:428px;
     overflow:overlay;
@@ -72,8 +72,52 @@
     margin-left:10px;
 }
 
+.aprovarPeca {
+    min-width:123px;
+}
 
-/* Style the Image Used to Trigger the Modal */
+.NaprovarPeca {
+    min-width:123px;
+}
+
+/*** GERAL ***/
+@media print
+{
+    body {-webkit-print-color-adjust: exact;}
+
+    .dataTables_length
+    {
+        display: none !important;
+    }
+
+    .btn-group {
+        display: none !important;
+    }
+
+    .dataTables_filter {
+        display: none !important;
+    }
+
+    .dataTables_paginate {
+        display: none !important;
+    }
+    
+    .dataTables_info {
+        display: none !important;
+    }
+    
+    .printhidden {
+        display: none;
+    }
+}
+
+/*** PERFIL ***/
+
+.pic-bordered {
+    width:100%;
+}
+
+/*** MODAL ***/
 #myImg {
     border-radius: 5px;
     cursor: pointer;
@@ -82,22 +126,20 @@
 
 #myImg:hover {opacity: 0.7;}
 
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 5; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    display: none;
+    position: fixed;
+    z-index: 5;
+    padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
 }
 
-/* Modal Content (Image) */
 .modal-content {
     margin: auto;
     display: block;
@@ -105,7 +147,6 @@
     max-width: 700px;
 }
 
-/* Caption of Modal Image (Image Text) - Same Width as the Image */
 #caption {
     margin: auto;
     display: block;
@@ -117,7 +158,6 @@
     height: 150px;
 }
 
-/* Add Animation - Zoom in the Modal */
 .modal-content, #caption {
     -webkit-animation-name: zoom;
     -webkit-animation-duration: 0.6s;
@@ -135,7 +175,6 @@
     to {transform:scale(1)}
 }
 
-/* The Close Button */
 .close {
     position: absolute;
     top: 15px;
@@ -153,7 +192,6 @@
     cursor: pointer;
 }
 
-/* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
     .modal-content {
         width: 100%;

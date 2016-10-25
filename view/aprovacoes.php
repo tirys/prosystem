@@ -83,7 +83,7 @@ else {
                             <div class="row observacoes<?=$anexo['id']?>" style="display: none;">
                                 <div class="col-md-12">
                                     <br>
-                                    <b>Observações?</b>
+                                    <b>Observações:</b>
                                 </div>
                                 <div class="col-md-12">
                                     <br>
@@ -106,55 +106,6 @@ else {
                         }
                     }
                     ?>
-
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-2">-->
-<!--                            <div class="imagem-aprovacao">-->
-<!--                                <img class="myImg" id="myImg" src="view/images/uploads/anexos/Desert.jpg" title="texto" alt="texto" width="200px" height="200px"/>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-8">-->
-<!--                            <div class="texto-aprovacao">-->
-<!--                                <span style="color:#6f6e6e;"><b>Data:</b> 24/10/2016<br></span>-->
-<!--                                <span style="color:#6f6e6e;"><b>Projeto:</b> Teste<br></span>-->
-<!--                                <span style="color:#6f6e6e;"><b>Tarefa:</b> teste<br></span>-->
-<!--                                <span style="color:#6f6e6e;"><b>Solicitado por:</b> Jéssica<br></span>-->
-<!---->
-<!--                                <br>-->
-<!--                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A debitis deserunt dicta dolore, eius eos est in iste iusto labore natus, nihil quidem ratione soluta, voluptate. Architecto deserunt illum placeat?-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-2">-->
-<!--                            <div class="botoes-aprovacao">-->
-<!--                                <a class="btn btn-success aprovarPeca" data-role="observacoes1"><span class="fa fa-check"></span> Aprovar</a>-->
-<!--                                <a class="btn btn-danger NaprovarPeca" data-role="observacoes1"><span class="fa fa-times"></span> Não Aprovar</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row observacoes1" style="display: none;">-->
-<!--                        <div class="col-md-12">-->
-<!--                            <br>-->
-<!--                            <b>Observações?</b>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-12">-->
-<!--                            <br>-->
-<!--                            <textarea class="form-control">-->
-<!---->
-<!--                            </textarea>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-12">-->
-<!--                            <br>-->
-<!--                           <div class="pull-right botoes-aprovacao">-->
-<!--                               <a class="btn green-sharp btn-outline sbold cancelarObservacao" data-role="observacoes1"><span class="fa fa-times"></span> Cancelar</a>-->
-<!--                               <a class="btn btn-success enviarObservacao" data-role="observacoes1"><span class="fa fa-send"></span> Enviar</a>-->
-<!--                           </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!---->
-<!--                    <br>-->
-<!--                    <hr></hr>-->
-<!--                    <br>-->
-
                 </div>
                 <!-- END: APROVAÇÕES -->
 

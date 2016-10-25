@@ -97,7 +97,7 @@ else {
                                     <th> Horas Est. </th>
                                     <th> Prioridade </th>
                                     <th> Status </th>
-                                    <th> Ações </th>
+                                    <th class="printhidden"> Ações </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -152,7 +152,7 @@ else {
                                             <td><span class="label label-sm label-default"> Pausada </span></td>
                                         <?php } ?>
 
-                                        <td>
+                                        <td class="printhidden">
                                             <a href="editar/tarefa/<?=$tarefa['id']?>" class="btn btn-xs btn-warning" title="Editar"> <i class="fa fa-edit"></i>
                                             </a>
 

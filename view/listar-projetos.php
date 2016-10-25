@@ -65,7 +65,7 @@ if($usuario_tipo == 2){
                                             </button>
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
-                                                    <a href="javascript:;">
+                                                    <a href="javascript:window.print();">
                                                         <i class="fa fa-print"></i> Imprimir </a>
                                                 </li>
                                                 <li>
@@ -89,7 +89,7 @@ if($usuario_tipo == 2){
                                     <th> Cliente </th>
                                     <th> Data Término </th>
                                     <th> Status </th>
-                                    <th> Ações </th>
+                                    <th class="printhidden"> Ações </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -111,7 +111,7 @@ if($usuario_tipo == 2){
                                             <td><span class="label label-sm label-success"> Ativo </span></td>
                                         <?php } ?>
 
-                                        <td>
+                                        <td class="printhidden">
                                             <a href="editar/projeto/<?=$projeto['id']?>" class="btn btn-xs btn-warning" title="Editar"> <i class="fa fa-edit"></i>
                                             </a>
 
