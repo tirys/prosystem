@@ -90,7 +90,16 @@ if($acao=='excluir') {
     $empresas = $conexao::exec("DELETE FROM tb_tarefas WHERE id = {$id}");
 
     //Deletando também todos os anexos referentes a esta tarefa
-    $empresas = $conexao::exec("DELETE FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$id}");
+    $arquivos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$id}");
+
+    //deletar os arquivos também da pasta
+    foreach ($arquivos as $arquivo) {
+        if($arquivos['tb_arquivos_nome']!='sem-anexo.jpg') { //só exclui se não for a imagem de sem anexo
+            unlink('..\..\view\images\uploads\anexos/'.$arquivos['tb_arquivos_nome']);
+        }
+    }
+    
+//    $empresas = $conexao::exec("DELETE FROM tb_arquivos WHERE tb_arquivos_tarefas_id = {$id}");
 
     //Deletando também todos os anexos referentes a esta tarefa
     $empresas = $conexao::exec("DELETE FROM tb_logs WHERE tb_logs_tipo = 'tarefas' AND  tb_logs_id_referencia = {$id}");
