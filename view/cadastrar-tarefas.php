@@ -416,6 +416,15 @@ $usuario_id = $usuario['id'];
 
                                                     echo '<a class="btn-danger btn botoes-anexo excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i> Deletar</a>';
 
+                                                    if($arquivo['tb_arquivos_aprovado'] == 1){
+                                                        echo '<span class="caption-subject font-green sbold uppercase" style="height:35px;"> APROVADO </a>';
+                                                    }else if($arquivo['tb_arquivos_aprovado'] == 2) {
+                                                        echo '<span class="caption-subject font-red sbold uppercase" style="height:35px;"> REPROVADO </a>';
+                                                    }else{
+                                                        echo '<span class="caption-subject font-yellow sbold uppercase" style="height:35px;"> NÂO ENVIADO </a>';
+                                                    }
+
+
                                                     echo '<input type="hidden" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" />';
                                                     echo '<span class="span'.$arquivo['id'].'" style="display:none;"><i style="font-size:17px;margin-left:11px;" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Loading...</span></span>';
                                                     echo '</div>';
