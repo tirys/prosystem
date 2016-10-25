@@ -400,6 +400,7 @@ $usuario_id = $usuario['id'];
                                                     echo '<div class="col-md-9">';
 
                                                     echo '<div class="row">';
+
                                                     echo '<a target="_blank" href="view/images/uploads/anexos/'.$arquivo['tb_arquivos_nome'].'" download>';
                                                     //echo '<input class="anexotarefa" style="border:1px solid #cccccc;padding:7px;vertical-align:bottom;" type="text" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" readonly/>';
                                                     echo '</a>';
@@ -416,13 +417,15 @@ $usuario_id = $usuario['id'];
 
                                                     echo '<a class="btn-danger btn botoes-anexo excluir-anexo" data-role="'.$arquivo['id'].'" style="height:35px;"><i class="fa fa-times"></i> Deletar</a>';
 
-                                                    if($arquivo['tb_arquivos_aprovado'] == 1){
-                                                        echo '<span class="caption-subject font-green sbold uppercase" style="height:35px;"> APROVADO </a>';
-                                                    }else if($arquivo['tb_arquivos_aprovado'] == 2) {
-                                                        echo '<span class="caption-subject font-red sbold uppercase" style="height:35px;"> REPROVADO </a>';
-                                                    }else{
-                                                        echo '<span class="caption-subject font-yellow sbold uppercase" style="height:35px;"> NÂO ENVIADO </a>';
-                                                    }
+                                                    echo '<div class="pull-right status-aprovacao">';
+                                                        if($arquivo['tb_arquivos_aprovado'] == 1){
+                                                            echo '<span class="caption-subject font-green sbold uppercase" style="height:35px;"> APROVADO </a>';
+                                                        }else if($arquivo['tb_arquivos_aprovado'] == 2) {
+                                                            echo '<span class="caption-subject font-red sbold uppercase" style="height:35px;"> REPROVADO </a>';
+                                                        }else{
+                                                            echo '<span class="caption-subject font-yellow sbold uppercase" style="height:35px;"> PENDENTE </a>';
+                                                        }
+                                                    echo '</div>';
 
 
                                                     echo '<input type="hidden" id="arquivo'.$arquivo['id'].'" value="'.$arquivo['tb_arquivos_nome'].'" />';

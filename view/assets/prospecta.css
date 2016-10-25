@@ -30,6 +30,10 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
+
+.status-aprovacao {
+    padding-top:6px;
+}
 /*** TAREFAS ****/
 .acao-tarefa {
     margin-bottom: 2px;
