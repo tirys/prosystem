@@ -171,6 +171,8 @@ else {
 <?=include("rodape.php")?>
 
 <script>
+    var tipoaprovacao = '';
+
     $(".aprovarPeca").on("click", function () {
         var observacaoN = $(this).attr("data-role");
         var id = observacaoN.split("observacoes");
@@ -178,24 +180,7 @@ else {
         $("."+observacaoN).slideDown( "slow", function() {
             
         });
-
-        $.ajax({
-            url: 'model/ws/aprovacaoAnexo.php',
-            type: 'GET',
-            data: {
-                format: 'json',
-                acao: 'aprovar',
-                id: id[1]
-            },
-            error: function () {
-
-            },
-            dataType: 'json',
-            success: function (result) {
-
-            }
-        });
-
+        tipoaprovacao = 'aprovar';
     });
 
     $(".cancelarObservacao").on("click", function () {
@@ -214,22 +199,7 @@ else {
 
         });
 
-        $.ajax({
-            url: 'model/ws/aprovacaoAnexo.php',
-            type: 'GET',
-            data: {
-                format: 'json',
-                acao: 'rejeitar',
-                id: id[1]
-            },
-            error: function () {
-
-            },
-            dataType: 'json',
-            success: function (result) {
-
-            }
-        });
+        tipoaprovacao = 'rejeitar';
     });
 
     $(".enviarObservacao").on("click", function () {
@@ -246,7 +216,7 @@ else {
             type: 'GET',
             data: {
                 format: 'json',
-                acao: 'comentar',
+                acao: tipoaprovacao,
                 id: id[1],
                 descricao:descricao
             },

@@ -11,8 +11,9 @@ if ($acao == 'aprovar') {
 
     $conexao = new classeConexao();
     $resultado = $conexao::exec("UPDATE tb_arquivos SET tb_arquivos_aprovado = 1 WHERE id = {$id}"); //1 para aprovado
+    $resultado = $conexao::exec("INSERT INTO tb_observacoes VALUES (null,{$id},'{$descricao}',1)");
 
-    //inserir no log
+    //inserir no log a aprovação da tarefa
 
     echo json_encode(array("status" => true));
 }
@@ -21,9 +22,10 @@ if ($acao == 'rejeitar') {
 
     $conexao = new classeConexao();
     $resultado = $conexao::exec("UPDATE tb_arquivos SET tb_arquivos_aprovado = 2 WHERE id = {$id}"); //2 para reprovado
+    $resultado = $conexao::exec("INSERT INTO tb_observacoes VALUES (null,{$id},'{$descricao}',2)");
 
 
-    //inserir no log
+    //inserir no log a não aprovação da tarefa
 
     echo json_encode(array("status" => true));
 
