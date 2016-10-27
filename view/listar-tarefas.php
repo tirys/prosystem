@@ -17,7 +17,7 @@ else {
 
     if($usuario_tipo == 2){
         $cliente = $conexao::fetchuniq("SELECT te.id FROM tb_empresas te, tb_clientes tc WHERE te.id = tc.tb_clientes_empresas_id and tc.tb_clientes_usuario_id = ".$usuario['id']);
-        $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto and te.id = ". $cliente['id']);
+        $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tt.tb_tarefas_oculto != 1 AND tp.id = tt.tb_tarefas_projeto and te.id = ". $cliente['id']);
     }else{
         $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto");
     }
@@ -108,13 +108,14 @@ else {
                                         <td> <?=$tarefa['id']?> </td>
 
                                         <?php if($tarefa['tb_tarefas_aprovacao']==1) { ?>
-                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>
+<!--                                            <td><a href="tarefa/--><?//=$tarefa['id']?><!--">--><?//=$tarefa['tb_tarefas_nome']?><!--</a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>-->
+                                            <td><a href="editar/tarefa/<?=$tarefa['id']?>" title="Editar"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>
                                         <?php } else if ($tarefa['tb_tarefas_aprovacao']==3) { ?>
-                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-check-circle-o widget-title-color-green" title="Tarefa APROVADA pelo cliente"></i></td>
+                                            <td><a href="editar/tarefa/<?=$tarefa['id']?>" title="Editar"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-check-circle-o widget-title-color-green" title="Tarefa APROVADA pelo cliente"></i></td>
                                         <?php } else if ($tarefa['tb_tarefas_aprovacao']==2) { ?>
-                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-times-circle-o widget-title-color-red" title="Tarefa NÃO APROVADA pelo cliente"></i></td>
+                                            <td><a href="editar/tarefa/<?=$tarefa['id']?>" title="Editar"><?=$tarefa['tb_tarefas_nome']?></a> <i class="fa fa-times-circle-o widget-title-color-red" title="Tarefa NÃO APROVADA pelo cliente"></i></td>
                                         <?php } else { ?>
-                                            <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
+                                            <td><a href="editar/tarefa/<?=$tarefa['id']?>" title="Editar"><?=$tarefa['tb_tarefas_nome']?></a></td>
                                         <?php } ?>
 
                                         <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>

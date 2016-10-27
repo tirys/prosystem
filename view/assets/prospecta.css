@@ -53,9 +53,10 @@
 
 /*** DASHBOARD ****/
 .mt-actions {
-    max-height:428px;
+    max-height:800px;
     overflow:overlay;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .solicitado-por {

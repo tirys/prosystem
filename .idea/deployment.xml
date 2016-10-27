@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Prosystem" uploadOnCheckin="9388414b-8cb5-4547-a765-b3d0e265e9e5">
+  <component name="PublishConfigData" serverName="Prosystem">
     <serverData>
       <paths name="Prosystem">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/sistema" local="$PROJECT_DIR$" web="/sistema" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
-    <option name="myUploadOnCheckinName" value="Prosystem" />
   </component>
 </project>

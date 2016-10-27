@@ -23,7 +23,8 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
      $empresa = $conexao::fetchuniq("SELECT tb_clientes_empresas_id FROM tb_clientes WHERE tb_clientes_usuario_id = {$usuario['id']}");
 
      //Aprovações Clientes
-     $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
+     //$aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
+     $aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
 
      //qtd tarefas realizadas CLIENTE
      $tarefasRealizadas = $conexao::fetchuniq("SELECT count(tt.id) as tarefasRealizadas FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_status = 1 AND tt.tb_tarefas_projeto = tp.id AND tt.tb_tarefas_oculto=0 AND tp.id_projetos_empresas_id =".$empresa['tb_clientes_empresas_id']);
@@ -40,7 +41,8 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
  else {
 
      //Aprovações Geral
-     $aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 ORDER BY tb_tarefas_aprovacao");
+     //$aprovacoes = $conexao::fetch("SELECT ta.*, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND ta.tb_tarefas_status != 1 ORDER BY tb_tarefas_aprovacao");
+     $aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 ORDER BY tb_tarefas_aprovacao");
 
     //qtd tarefas realizadas
     $tarefasRealizadas = $conexao::fetchuniq("SELECT count(id) as tarefasRealizadas FROM tb_tarefas WHERE tb_tarefas_status = 1");
@@ -198,44 +200,58 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                        <div class="tab-pane active" id="tab_actions_pending">
                                            <div class="mt-actions">
                                                <!-- START Aprovacoes -->
-                                               <?php foreach ($aprovacoes as $aprovacao) { ?>
-                                                   <div class="mt-action">
-                                                       <!--                                                <div class="mt-action-img">-->
-                                                       <!--                                                    <img src="view/assets/pages/media/users/avatar10.jpg" /> -->
-                                                       <!--                                                </div>-->
-                                                       <div class="mt-action-body">
-                                                           <div class="mt-action-row">
-                                                               <div class="mt-action-info ">
-                                                                   <div class="mt-action-icon action<?=$aprovacao['id']?>">
-                                                                       <?php if($aprovacao['tb_tarefas_aprovacao'] == 1) {?>
-                                                                           <i class="icon-clock" title="Aguardando aprovação"></i>
-                                                                       <?php } else if ($aprovacao['tb_tarefas_aprovacao'] == 3){ ?>
-                                                                           <i class="icon-check" title="Aprovada"></i>
-                                                                       <?php } else {?>
-                                                                           <i class="icon-close" title="Não aprovada"></i>
-                                                                       <?php } ?>
-                                                                   </div>
-                                                                   <div class="mt-action-details ">
-                                                                       <a href="editar/tarefa/<?=$aprovacao['id']?>">
-                                                                           <span class="mt-action-author"><?=$aprovacao['tb_tarefas_nome']?></span>
-                                                                       </a>
-                                                                       <a href="projeto/<?=$aprovacao['projetoID']?>">
-                                                                           <p class="mt-action-desc"><?=$aprovacao['tb_projetos_nome']?></p>
-                                                                       </a>
-                                                                   </div>
-                                                               </div>
+                                               <?php foreach ($aprovacoes as $aprovacao) {
+                                                   $anexos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id =".$aprovacao['id']);
 
-                                                               <div class="mt-action-buttons ">
-                                                                   <div class="btn-group btn-group-circle">
-                                                                       <!-- Desabilitar botão de acordo com o status da aprovação -->
-                                                                       <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline green btn-sm aprovarTarefa">Aprovar</button>
-                                                                       <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline red btn-sm rejeitarTarefa">Rejeitar</button>
-                                                                   </div>
-                                                               </div>
+                                                   foreach ($anexos as $key => $anexo) {
+                                                        if($anexo['tb_arquivos_tipo']!="pdf") {
+                                                   ?>
+                                                   <div class="row">
+                                                       <div class="col-md-2">
+                                                           <div class="imagem-aprovacao">
+                                                               <img class="myImg imgAprovacao" id="myImg" src="view/images/uploads/anexos/<?=$anexo['tb_arquivos_nome']?>" title="<?=$aprovacao['tb_tarefas_nome']?>" alt="<?=$aprovacao['tb_tarefas_nome']?>" width="200px" height="200px"/>
+                                                           </div>
+                                                       </div>
+                                                       <div class="col-md-8">
+                                                           <div class="texto-aprovacao">
+                                                               <span style="color:#6f6e6e;"><b>Data:</b> <?=DataBrasil($aprovacao['tb_tarefas_data_termino'])?><br></span>
+                                                               <span style="color:#6f6e6e;"><b>Projeto:</b> <a target="_blank" href="projeto/<?=$aprovacao['projetoID']?>"><?=$aprovacao['tb_projetos_nome']?></a><br></span>
+                                                               <span style="color:#6f6e6e;"><b>Tarefa:</b> <a target="_blank" href="editar/tarefa/<?=$aprovacao['id']?>"><?=$aprovacao['tb_tarefas_nome']?></a><br></span>
+                                                               <span style="color:#6f6e6e;"><b>Solicitado por:</b> Nome Criador<br></span>
+
+                                                               <br>
+                                                               <?=$aprovacao['tb_tarefas_legenda']?>
+                                                           </div>
+                                                       </div>
+                                                       <div class="col-md-2">
+                                                           <div class="botoes-aprovacao">
+                                                               <a class="btn btn-success aprovarPeca" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-check"></span> Aprovar</a>
+                                                               <a class="btn btn-danger NaprovarPeca" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-times"></span> Não Aprovar</a>
                                                            </div>
                                                        </div>
                                                    </div>
-                                               <?php } ?>
+                                                   <div class="row observacoes<?=$anexo['id']?>" style="display: none;">
+                                                       <div class="col-md-12">
+                                                           <br>
+                                                           <b>Observações:</b>
+                                                       </div>
+                                                       <div class="col-md-12">
+                                                           <br>
+                                                           <textarea class="form-control descricao<?=$anexo['id']?>" name="descricao<?=$anexo['id']?>"></textarea>
+                                                       </div>
+                                                       <div class="col-md-12">
+                                                           <br>
+                                                           <div class="pull-right botoes-aprovacao">
+                                                               <a class="btn green-sharp btn-outline sbold cancelarObservacao" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-times"></span> Cancelar</a>
+                                                               <a class="btn btn-success enviarObservacao" data-role="observacoes<?=$anexo['id']?>"><span class="fa fa-send"></span> Enviar</a>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+
+                                                   <br>
+                                                   <hr></hr>
+                                                   <br>
+                                               <?php } } } ?>
                                            </div>
                                            <!-- END: Actions -->
                                        </div>
@@ -298,8 +314,11 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                 </div>
 
 
-
-                <div class="row ui-sortable" id="sortable_portlets">
+                    <?php if($usuario_tipo == 2){?>
+                        <div class="row ui-sortable" id="sortable_portlets" style="display: none;">
+                    <?php } else { ?>
+                        <div class="row ui-sortable" id="sortable_portlets">
+                    <?php } ?>
                     <div class="col-lg-6 col-xs-12 col-sm-12">
                         <!-- BEGIN PORTLET-->
                         <div class="portlet light calendar bordered">
@@ -439,7 +458,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                     <?php if($usuario_tipo == 2){?>
                     <div class="col-lg-6 col-xs-12 col-sm-12 column sortable" style="display: none">
                     <?php } else {?>
-                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable">
+                    <div class="col-lg-6 col-xs-12 col-sm-12 column sortable" style="display: none">
                     <?php } ?>
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
@@ -500,6 +519,15 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                         </div>
                     </div>
                 </div>
+
+
+                    <!-- START: MODAL -->
+                    <div id="myModal" class="modal" onclick="document.getElementById('myModal').style.display='none'">
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
+                    </div>
+                    <!-- END: MODAL -->
+
 
             </div>
             <!-- END CONTENT BODY -->
@@ -600,3 +628,79 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
     });
 </script>
 
+<script>
+    var tipoaprovacao = '';
+
+    $(".aprovarPeca").on("click", function () {
+        var observacaoN = $(this).attr("data-role");
+        var id = observacaoN.split("observacoes");
+
+        $("."+observacaoN).slideDown( "slow", function() {
+
+        });
+        tipoaprovacao = 'aprovar';
+    });
+
+    $(".cancelarObservacao").on("click", function () {
+        var observacaoN = $(this).attr("data-role");
+
+        $("."+observacaoN).slideUp( "slow", function() {
+
+        });
+    });
+
+    $(".NaprovarPeca").on("click", function () {
+        var observacaoN = $(this).attr("data-role");
+        var id = observacaoN.split("observacoes");
+
+        $("."+observacaoN).slideDown( "slow", function() {
+
+        });
+
+        tipoaprovacao = 'rejeitar';
+    });
+
+    $(".enviarObservacao").on("click", function () {
+        var observacaoN = $(this).attr("data-role");
+        var id = observacaoN.split("observacoes");
+        var descricao = $(".descricao"+id[1]).val();
+
+        $("."+observacaoN).slideUp( "slow", function() {
+
+        });
+
+        $.ajax({
+            url: 'model/ws/aprovacaoAnexo.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: tipoaprovacao,
+                id: id[1],
+                descricao:descricao
+            },
+            error: function () {
+
+            },
+            dataType: 'json',
+            success: function (result) {
+
+            }
+        });
+    });
+
+
+    var modal = document.getElementById('myModal');
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+    $('.imgAprovacao').on('click',function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    });
+
+    var span = document.getElementsByClassName("close")[0];
+
+
+</script>

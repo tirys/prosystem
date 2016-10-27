@@ -13,7 +13,12 @@ $projeto = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '{$id}'");
 
 $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$projeto['id_projetos_empresas_id']}'");
 
-$tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_projeto = {$id}");
+if($usuario_tipo == 2) { //se é o cliente que está acessando
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tt.tb_tarefas_oculto != 1 AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_projeto = {$id}");
+}
+else {
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_projeto = {$id}");
+}
 
 //Obter os participantes do projeto através das tarefas
 $usuarios = $conexao::fetch("SELECT DISTINCT tu.* FROM tb_usuarios tu, tb_tarefas tt WHERE tt.tb_tarefas_projeto = {$id} AND tt.tb_tarefas_funcionario = tu.id");
@@ -58,7 +63,7 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                 <div class="row margin-bottom-40 about-header" style="height: 310px;">
                     <div class="col-md-12">
                         <h1 style="margin-top:70px;"><?=$projeto['tb_projetos_nome']?></h1>
-                        <h2><?=$porcentagem?>%</h2>
+                        <h2><?=round($porcentagem)?>%</h2>
                         <a href="cadastrar/tarefa-projeto/<?=$projeto['id']?>" class="btn btn-success">NOVA TAREFA <i class="fa fa-plus"></i></a>
                     </div>
                 </div>
@@ -153,7 +158,7 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                             <tr class="odd gradeX">
                                                 <td> <?=$tarefa['id']?> </td>
 
-                                                <td><a href="tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
+                                                <td><a href="editar/tarefa/<?=$tarefa['id']?>"><?=$tarefa['tb_tarefas_nome']?></a></td>
 
                                                 <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 

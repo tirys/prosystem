@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="9388414b-8cb5-4547-a765-b3d0e265e9e5" name="Prosystem" url="http://ftp.agenciaprospecta.com.br">
-        <fileTransfer host="ftp.agenciaprospecta.com.br" port="21" rootFolder="/www/sistema" password="dfcedfcbdfdcdf9bdf98df9bdf9fdf9bdf98df9bdf9f" username="agenciaprospecta">
+        <fileTransfer host="ftp.agenciaprospecta.com.br" port="21" rootFolder="/www/" password="dfcedfcbdfdcdf9bdf98df9bdf9fdf9bdf98df9bdf9f" username="agenciaprospecta">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
