@@ -56,6 +56,7 @@ else {
                         foreach ($anexos as $key => $anexo) {
                             if($anexo['tb_arquivos_tipo']!="pdf") {
                     ?>
+                        <div>
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="imagem-aprovacao">
@@ -101,6 +102,8 @@ else {
                             <br>
                             <hr></hr>
                             <br>
+                        </div>
+
                     <?php
                             }
                         }
@@ -157,6 +160,7 @@ else {
         var observacaoN = $(this).attr("data-role");
         var id = observacaoN.split("observacoes");
         var descricao = $(".descricao"+id[1]).val();
+        var itemAtual = $(this);
 
         $("."+observacaoN).slideUp( "slow", function() {
 
@@ -176,7 +180,9 @@ else {
             },
             dataType: 'json',
             success: function (result) {
+                itemAtual.parent().parent().parent().parent().fadeOut( "slow", function() {
 
+                });
             }
         });
     });

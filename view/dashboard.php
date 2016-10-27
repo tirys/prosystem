@@ -664,6 +664,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
         var observacaoN = $(this).attr("data-role");
         var id = observacaoN.split("observacoes");
         var descricao = $(".descricao"+id[1]).val();
+        var itemAtual = $(this);
 
         $("."+observacaoN).slideUp( "slow", function() {
 
@@ -683,7 +684,9 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
             },
             dataType: 'json',
             success: function (result) {
+                itemAtual.parent().parent().parent().parent().fadeOut( "slow", function() {
 
+                });
             }
         });
     });
