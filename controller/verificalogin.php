@@ -29,7 +29,7 @@ class VerificaLogin
                 'i' => $idSessao,
                 't' => $token
             );
-            setcookie( 'auth', json_encode( $cookieToken ), $expire, '/', 'agenciaprospecta.com.br', isset( $_SERVER["HTTPS"] ), false );
+            setcookie( 'auth', json_encode( $cookieToken ), $expire, '/', 'localhost', isset( $_SERVER["HTTPS"] ), false );
 
             $conexao::exec("INSERT INTO tb_sessao values (null,{$resultado['id']},'{$token}',null,null,null)");
 
