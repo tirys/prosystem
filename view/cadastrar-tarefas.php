@@ -787,6 +787,11 @@ $usuario_id = $usuario['id'];
                 dataType: 'json',
                 success: function (result) {
                     jq('.chats').html(result.status);
+
+                    var elem = jq('.scroller');
+                    elem.scrollTop = elem.scrollHeight;
+
+                    jq(".scroller").animate({ scrollTop: jq('.chats').height() }, "slow");
                 }
             });
         }
