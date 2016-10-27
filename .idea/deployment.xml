@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Prosystem">
+  <component name="PublishConfigData" serverName="Prosystem" uploadOnCheckin="9388414b-8cb5-4547-a765-b3d0e265e9e5">
     <serverData>
       <paths name="Prosystem">
         <serverdata>
@@ -10,5 +10,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="Prosystem" />
   </component>
 </project>
