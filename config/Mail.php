@@ -6,7 +6,6 @@
  class Email {
 
     public function enviarEmailAtibuido($quemAtribuido, $quemAtribuiu, $tarefaId) {
-        echo 'ok';
         $email = new PHPMailer();
         $email = $this->criarEstrutura();
 
@@ -31,7 +30,7 @@
         $email->Username   = "send@agenciaprospecta.com.br";
         $email->Password   = "prospecta14";
         $email->addReplyTo($email,'Reply');
-        $email->setFrom('send@agenciaprospecta.com.br', 'web');
+        $email->setFrom('send@agenciaprospecta.com.br', 'Prospecta');
 
         return $email;
     }

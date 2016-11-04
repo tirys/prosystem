@@ -3,14 +3,14 @@ $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 
 include("topo.php");
-include("../config/Mail.php");
 
 
 //Consultando as tarefas
 $conexao = new classeConexao();
 
-$email = new Email();
-$email->enviarEmailAtibuido("Jessica","fulano",1);
+//include("../config/Mail.php");
+//$email = new Email();
+//$email->enviarEmailAtibuido("Jessica","fulano",1);
 
 //Se é minhas tarefas
 
