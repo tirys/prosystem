@@ -10,7 +10,7 @@ include("../config/Mail.php");
 $conexao = new classeConexao();
 
 $email = new Email();
-//$email->enviarEmailAtibuido("Jessica","fulano",1);
+$email->enviarEmailAtibuido("Jessica","fulano",1);
 
 //Se é minhas tarefas
 

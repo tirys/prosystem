@@ -7,6 +7,7 @@
  class Email {
 
     public function enviarEmailAtibuido($quemAtribuido, $quemAtribuiu, $tarefaId) {
+        echo 'ok';
         $email = new PHPMailer();
         $email = $this->criarEstrutura();
 
