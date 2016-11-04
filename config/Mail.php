@@ -1,7 +1,6 @@
 <?php
-    use PHPMailer;
-//    include ('../libs/phpmailer/phpmailer/class.phpmailer.php');
-//    include ('../libs/phpmailer/phpmailer/class.smtp.php');
+    include ('../libs/phpmailer/phpmailer/class.phpmailer.php');
+    include ('../libs/phpmailer/phpmailer/class.smtp.php');
 
 
  class Email {
