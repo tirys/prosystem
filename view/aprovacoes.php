@@ -50,11 +50,14 @@ else {
                 <div class="container-fluid">
 
                     <?php
+                    $possui = false;
                     foreach ($aprovacoes as $aprovacao) {
                         $anexos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id =".$aprovacao['tarefaID']);
 
                         foreach ($anexos as $key => $anexo) {
                             if($anexo['tb_arquivos_tipo']!="pdf" && $anexo['tb_arquivos_aprovado'] != 1 && $anexo['tb_arquivos_aprovado'] != 2) {
+
+                                $possui = true;
                     ?>
                         <div>
                             <div class="row">
@@ -107,6 +110,12 @@ else {
                     <?php
                             }
                         }
+                    }
+
+                    if($possui==false) {
+                        ?>
+                        <div class="alert alert-success">Não há aprovações no momento :)</div>
+                    <?php
                     }
                     ?>
                 </div>
