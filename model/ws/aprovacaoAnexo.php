@@ -13,8 +13,8 @@ if ($acao == 'aprovar') {
     $resultado = $conexao::exec("UPDATE tb_arquivos SET tb_arquivos_aprovado = 1 WHERE id = {$id}"); //1 para aprovado
     $resultado = $conexao::exec("INSERT INTO tb_observacoes VALUES (null,{$id},'{$descricao}',1)");
 
-    $idTarefa = $conexao::exec("SELECT tb_arquivos_tarefas_id FROM tb_arquivos WHERE id = {$id}");
-    var_dump($idTarefa);
+    $idTarefa = $conexao::fetchuniq("SELECT tb_arquivos_tarefas_id FROM tb_arquivos WHERE id = {$id}");
+
 
     $contagem = $conexao::fetchuniq("SELECT count(*) as qtd FROM tb_arquivos WHERE tb_arquivos_aprovado != 1 and tb_arquivos_tarefas_id = {$idTarefa['tb_arquivos_tarefas_id']}");
 
