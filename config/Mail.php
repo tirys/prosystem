@@ -13,8 +13,8 @@
 
 
         //receber id quem foi atribuido
-            //pegar os dados de quem foi atribuido
-            //$atribuido = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$quemAtribuido}");
+            //pegar os dados de quem foi atribuído
+            $atribuido = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$quemAtribuido}");
         //receber id quem atribuiu
             //pegar os dados de quem atribuiu
             $atribuiu = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$quemAtribuiu}");
@@ -22,7 +22,7 @@
             //pegar os dados da tarefa que foi atualizada
             $tarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = {$tarefaId}");
 
-        $email->addAddress("jessica@agenciaprospecta.com.br", "Jéssica");
+        $email->addAddress("{$atribuido['tb_usuarios_email']}", "{$atribuido['tb_usuarios_nome']}");
         $email->Subject = "[".utf8_decode(' PROSPECTA ')."] - {$tarefa['tb_tarefas_nome']}";
 
         $mensagem = "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='www.agenciaprospecta.com.br'> nometarefacomlinnk </a>";
