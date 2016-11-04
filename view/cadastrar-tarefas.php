@@ -903,6 +903,7 @@ $usuario_id = $usuario['id'];
         jq(this).parent().parent().prepend(conteudo);
     });
 
+
     //adicionar comentários
     jq('.adicionar-comentario').on('click', function(){
         if($('.comentarios:visible').length == 0)

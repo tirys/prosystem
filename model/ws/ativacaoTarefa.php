@@ -72,6 +72,9 @@ if($acao=='enviarAprovacao') {
     $data = date("Y-m-d H:i:s");
     //Inserindo no log
     $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'enviou para aprovação a tarefa','{$data}','aprovacao',{$id})");
+
+    $alterarAnexos = $conexao::exec("UPDATE tb_arquivos SET tb_arquivos_aprovado = 0 WHERE tb_arquivos_tarefas_id = {$id}");
+
 }
 
 if($acao=='cancelarAprovacao') {

@@ -54,7 +54,7 @@ else {
                         $anexos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id =".$aprovacao['tarefaID']);
 
                         foreach ($anexos as $key => $anexo) {
-                            if($anexo['tb_arquivos_tipo']!="pdf") {
+                            if($anexo['tb_arquivos_tipo']!="pdf" && $anexo['tb_arquivos_aprovado'] != 1 && $anexo['tb_arquivos_aprovado'] != 2) {
                     ?>
                         <div>
                             <div class="row">
