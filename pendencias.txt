@@ -1,0 +1,46 @@
+<----------------------------------- PENDÊNCIAS -------------------------------->
+
+-> inserir data limite nos projetos (manual e automático).
+    |-> manual seria uma data que o cara estipula de término, automático é a data prevista (somando a data final das tarefas abertas + data que foi finalizada as tarefas fechadas)
+
+-> CONTER UM HISTÓRICO DE REUNIÃO COM O CLIENTE, PARA SABER QUAL FOI A ÚLTIMA VEZ QUE ENTRAMOS EM CONTATO COM ELA >>>> Fazer depois
+
+-> Quando uma tarefa for para aprovação, enviar um email para o 'cliente' contendo as informações da mesma (incluindo anexos), e um botão de aprovação que leva para o site (aprovacoes.php)
+
+-> Quando uma tarefa for aprovada pelo cliente, enviar um email para quem enviou a tarefa para aprovação.
+
+-> Quando uma tarefa for alocada para outra pessoa como responsável pela execução da mesma, enviar email para essa pessoa destino.
+
+-> Na hora de deletar a tarefa, deletar tambem os anexos (do diretorio, do banco ja ta excluindo), deletar tb dos logs.
+
+<----------------------------------- CONCLUÍDOS -------------------------------->
+
+[OK] Colocar foto usuário e nome do usuário no topo;
+[OK] Colocar campo "função" no funcionário;
+[OK] Realizar cadastro de tarefas (incluindo pelo projeto);
+[OK] Em todas as listagens de tarefas, mostrar quem é a empresa pertencente e o projeto;
+[OK] Em 'minhas tarefas', não apresentar tarefas concluídas;
+[OK] Quando for fazer as tarefas, deixar as tarefas concluídas por ultimo (order by) na tela do projeto
+[OK] Guardar a foto do usuário sendo o nome dela, o numero do id do usuario (para não duplicar imagens);
+[OK] Edição de tarefa - deixar ou não visivel os campos para o cliente?
+[OK] Realizar Interações nas tarefas (tb_comentarios);
+[OK] cliente não pode ver as contagens na dashboard, ou mudar o tipo de informação (contagem) exibida para ele
+[OK] Trocar o texto do botão de ações "Enviar para aprovação" para "cancelar aprovação" qnd clicado e sucesso.
+[OK] Mostrar quem criou a tarefa (só na tela de exibição da mesma);
+[OK] Quando uma tarefa for aprovação, inserir um botão "aprovar" e outro "não aprovar" na edição de tarefa (apenas para o cliente).
+[OK] Cada anexo ter seu próprio campo de descricao
+[OK] Deixar mais evidente os anexos
+[OK] retirar os logs da dashboard do cliente
+[OK] Em todas as modificações de tarefa, guardar um log na tabela tb_logs, e manter uma 'timeline' de acontecimentos dentro da tarefa;
+[OK] Colocar botões de finalização de tarefa na página de tarefas
+[OK] Na hora que uma tarefa for concluída, exibir opção de enviar para aprovação ou retornar para criador
+[OK] Inserir campo de legenda, deixar o campo de descrição para cada anexo
+[OK] Deixar inserir vários anexos, cada um com sua descricao porém sem anexo propriamente dito;
+[OK] Permitir a edição de um anexo
+[OK] Ver pq os contadores estão errados na tela de dashboard do cliente - tava certo, é que as ocultas ao cliente não são contabilizadas
+[OK] para os funcionarios, deixar os logs embaixo
+[OK] Melhorar a exibição de aprovação de tarefas por parte do cliente (exibir miniatura do anexo), sendo que ele irá aprovar anexo por anexo (tarefa por tarefa);
+[OK] No arquivo também devemos saber se foi aprovado ou não.
+[OK] mostrar a data e hora da melhor forma possível
+[OK] Colocar um botão salvar acima do formulário também
+[OK] Quando todos os arquivos forem aprovados, aprovar também a tarefa
