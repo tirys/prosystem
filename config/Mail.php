@@ -10,7 +10,7 @@
         $email = new PHPMailer();
         $email = $this->criarEstrutura();
 
-        $email->addAddress($quemAtribuido, "Jéssica");
+        $email->addAddress("jessica@agenciaprospecta.com.br", "Jéssica");
         $email->Subject = "[".utf8_decode(' PROSPECTA ')."] - Nome Tarefa";
 
         $mensagem = "Você foi atribuído como responsável pela tarefa: <a href='www.agenciaprospecta.com.br'> nometarefacomlinnk </a>";
