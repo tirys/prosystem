@@ -24,7 +24,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
      //Aprovações Clientes
      //$aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
-     $aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0 AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
+     $aprovacoes = $conexao::fetch("SELECT ta.*,ta.id as tarefaID, pro.tb_projetos_nome, pro.id as projetoID FROM tb_tarefas ta, tb_projetos pro WHERE ta.tb_tarefas_projeto = pro.id AND tb_tarefas_aprovacao != 0  AND pro.id_projetos_empresas_id = {$empresa['tb_clientes_empresas_id']} ORDER BY tb_tarefas_aprovacao");
 
      //qtd tarefas realizadas CLIENTE
      $tarefasRealizadas = $conexao::fetchuniq("SELECT count(tt.id) as tarefasRealizadas FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_status = 1 AND tt.tb_tarefas_projeto = tp.id AND tt.tb_tarefas_oculto=0 AND tp.id_projetos_empresas_id =".$empresa['tb_clientes_empresas_id']);
@@ -204,7 +204,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                    $anexos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id =".$aprovacao['id']);
 
                                                    foreach ($anexos as $key => $anexo) {
-                                                        if($anexo['tb_arquivos_tipo']!="pdf") {
+                                                       if($anexo['tb_arquivos_tipo']!="pdf" && $anexo['tb_arquivos_aprovado'] != 1 && $anexo['tb_arquivos_aprovado'] != 2) {
                                                    ?>
                                                    <div class="row">
                                                        <div class="col-md-2">
