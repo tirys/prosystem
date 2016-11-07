@@ -265,4 +265,74 @@
          $email->send();
      }
 
+     public function enviarEmailNaoAprovadoAnexo($quemCompletou, $tarefaId, $anexoId, $descricao) {
+         $conexao = new classeConexao();
+         $email = new PHPMailer();
+         $email = $this->criarEstrutura();
+
+
+         $completou = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$quemCompletou}");
+
+         $anexo = $conexao::fetchuniq("SELECT * FROM tb_arquivos WHERE id = {$anexoId}");
+
+         $tarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = {$tarefaId}");
+
+         $atribuido = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$tarefa['tb_tarefas_funcionario']}");
+         $criador = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$tarefa['tb_tarefas_criador']}");
+
+         $email->addAddress("{$completou['tb_usuarios_email']}", "{$completou['tb_usuarios_nome']}");
+         $email->addCC("{$atribuido['tb_usuarios_email']}", "{$atribuido['tb_usuarios_nome']}");
+         $email->addCC("{$criador['tb_usuarios_email']}", "{$criador['tb_usuarios_nome']}");
+
+
+         $email->Subject = "[".utf8_decode(' SISTEMA PROSPECTA ')."] - Tarefa: ".utf8_decode($tarefa['tb_tarefas_nome'])."";
+
+         $mensagem = '<style type="text/css"> body {margin-bottom:0; margin:0} </style>';
+         $mensagem .= '<div style="width:100%;text-align:center;height: 100%;background: #f1f1f1;padding-top: 15px;">';
+         $mensagem .= '<div style="width:80%;margin-left:10%;margin-right:10%;text-align:left;padding: 20px;background: #ffffff;">';
+         $mensagem .= '<div style="height:50px;margin-bottom:27px;">';
+         $mensagem .= '<img src="http://www.agenciaprospecta.com.br/images/logo-verm.png" style="height: 100%">';
+         $mensagem .= '</div>';
+         $mensagem .= '<hr></hr>';
+
+         $mensagem .= "O usuário {$completou['tb_usuarios_nome']} NÃO aprovou o anexo: <a href='http://www.agenciaprospecta.com.br/sistema/view/images/uploads/anexos/{$anexo['tb_arquivos_nome']}'>{$anexo['tb_arquivos_nome']} </a> da tarefa: <a href='http://www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
+
+         $mensagem .= "<br><br><b>Comentário sobre a NÃO aprovação:</b><br>";
+         $mensagem .= "<div style='padding-left:2%;padding-right:2%;'>";
+         $mensagem .= $descricao;
+         $mensagem .= "</span>";
+         $mensagem .= "<br><br>";
+
+
+         $mensagem .= '<div style="margin-left:10%;margin-right: 10%;margin-top:50px;padding: 19px;border: solid 1px #9a9a9a;line-height: 25px;"><table>';
+
+         $mensagem .= '<tr>';
+         $mensagem .= '<td><b>Título:</b></td><td style="padding-left:10px;">'.$tarefa['tb_tarefas_nome'].'</td>';
+         $mensagem .= '</tr>';
+
+         $mensagem .= '<tr>';
+         $mensagem .= '<td><b>Data Término:</b></td><td style="padding-left:10px;">'.DataBrasil($tarefa['tb_tarefas_data_termino']).'</td>';
+         $mensagem .= '</tr>';
+
+         $mensagem .= '<tr>';
+         $mensagem .= '<td><b>Descrição:</b></td><td style="padding-left:10px;">'.$tarefa['tb_tarefas_descricao'].'</td>';
+         $mensagem .= '</tr>';
+
+         if($tarefa['tb_tarefas_legenda']!='' && $tarefa['tb_tarefas_legenda']!=null){
+             $mensagem .= '<tr>';
+             $mensagem .= '<td><b>Legenda:</b></td><td style="padding-left:10px;">'.$tarefa['tb_tarefas_legenda'].'</td>';
+             $mensagem .= '</tr>';
+         }
+
+         $mensagem .= '</table></div>';
+         $mensagem .= '</div>';
+         $mensagem .= '</div>';
+
+
+
+
+         $email->msgHTML(nl2br(utf8_decode($mensagem)));
+         $email->send();
+     }
+
 }

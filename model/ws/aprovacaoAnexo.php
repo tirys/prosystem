@@ -40,6 +40,11 @@ if ($acao == 'rejeitar') {
     $resultado = $conexao::exec("UPDATE tb_arquivos SET tb_arquivos_aprovado = 2 WHERE id = {$id}"); //2 para reprovado
     $resultado = $conexao::exec("INSERT INTO tb_observacoes VALUES (null,{$id},'{$descricao}',2)");
 
+    $idTarefa = $conexao::fetchuniq("SELECT tb_arquivos_tarefas_id FROM tb_arquivos WHERE id = {$id}");
+
+    include("../../config/Mail.php");
+    $email = new Email();
+    $email->enviarEmailNaoAprovadoAnexo($usuarioAtual,$idTarefa['tb_arquivos_tarefas_id'],$id, $descricao);
 
     //inserir no log a não aprovação da tarefa
 
@@ -59,6 +64,7 @@ if($acao == 'comentar') {
     }
     else {
         $resultado = $conexao::exec("INSERT INTO tb_observacoes VALUES (null,{$id},'{$descricao}',2)");
+
     }
 
     echo json_encode(array("status" => true));
