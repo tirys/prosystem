@@ -8,6 +8,7 @@
 
 -> Quando uma tarefa for para aprovação, enviar um email para o 'cliente' contendo as informações da mesma (incluindo anexos), e um botão de aprovação que leva para o site (aprovacoes.php)
 
+-> Enviar para aprovação somente os anexos que ainda não estão como aprovados ?
 <----------------------------------- CONCLUÍDOS -------------------------------->
 
 [OK] Colocar foto usuário e nome do usuário no topo;

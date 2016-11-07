@@ -933,10 +933,12 @@ $usuario_id = $usuario['id'];
         {
             $(".adicionar-comentario").html('Ocultar Comentários');
             $(".comentarios").attr("style","");
+
         }
         else {
             $(".adicionar-comentario").html('Ver/Adicionar Comentários');
             $(".comentarios").attr("style",'display:none;');
+
         }
 
     });

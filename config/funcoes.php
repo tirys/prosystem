@@ -12,6 +12,8 @@ function DataBrasil($Data)
     $Data = $D[2].'/'.$D[1].'/'.$D[0];
     return $Data;
 }
+
+//Converte Data timestamp mysql para padrão BR sem as horas
 function DataBrasilSemHoras($Data)
 {
     $Shoras = explode(" ",$Data);
@@ -20,6 +22,7 @@ function DataBrasilSemHoras($Data)
     return $Data;
 }
 
+//retira acentos de uma string e a retorna
 function RetiraAcentos($texto)
 {
     $array1 = array(   "á", "à", "â", "ã", "ä", "é", "è", "ê", "ë", "í", "ì", "î", "ï", "ó", "ò", "ô", "õ", "ö", "ú", "ù", "û", "ü", "ç"
@@ -29,7 +32,7 @@ function RetiraAcentos($texto)
     return str_replace( $array1, $array2, $texto );
 }
 
-
+//retorna apenas a primeira palavra
 function PrimeiraPalavra($param)
 {
     $output = '';
@@ -45,6 +48,7 @@ function PrimeiraPalavra($param)
 
 }
 
+//retorna a quantidade de projetos realizados
 function ProjetosRealizados() {
 
     $count = 0;
@@ -78,6 +82,7 @@ function ProjetosRealizados() {
     return $count;
 }
 
+//retorna a quantidade de projetos realizados do cliente atual
 function ProjetosRealizadosCliente($empresa = null) {
 
     $count = 0;
@@ -110,7 +115,7 @@ function ProjetosRealizadosCliente($empresa = null) {
     return $count;
 }
 
-
+//retorna a quantidade de projetos pendentes
 function ProjetosPendentes() {
 
     $count = 0;
@@ -143,7 +148,7 @@ function ProjetosPendentes() {
     return $count;
 }
 
-
+//retorna a quantidade de projetos pendentes de um cliente específico
 function ProjetosPendentesCliente($empresa = null) {
 
     $count = 0;
@@ -176,6 +181,7 @@ function ProjetosPendentesCliente($empresa = null) {
     return $count;
 }
 
+//retorna os logs de acordo com o seu tipo
 function AtividadesRecentesGeral($logs_descricao = "", $logs_id_referencia = 0,$usuarios_nome = "", $logs_data = ""){
 
     $conexao = new classeConexao();

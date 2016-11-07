@@ -28,14 +28,11 @@
          $email = $this->criarEstrutura();
 
 
-         //receber id quem foi atribuido
-         //pegar os dados de quem foi atribuído
+
          $atribuido = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$quemAtribuido}");
-         //receber id quem atribuiu
-         //pegar os dados de quem atribuiu
+
          $atribuiu = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id = {$quemAtribuiu}");
-         //receber id tarefa que foi atualizada
-         //pegar os dados da tarefa que foi atualizada
+
          $tarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = {$tarefaId}");
 
          $email->addAddress("{$atribuido['tb_usuarios_email']}", "{$atribuido['tb_usuarios_nome']}");
@@ -333,9 +330,6 @@
          $mensagem .= '</table></div>';
          $mensagem .= '</div>';
          $mensagem .= '</div>';
-
-
-
 
          $email->msgHTML(nl2br(utf8_decode($mensagem)));
          $email->send();
