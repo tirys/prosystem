@@ -5,6 +5,7 @@ $idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : '';
 
 include('../../config/conexao.php');
 
+
 //Ativando as tarefas
 if($acao=='reativar') {
     $conexao = new classeConexao();
@@ -108,4 +109,16 @@ if($acao=='excluir') {
     $empresas = $conexao::exec("DELETE FROM tb_logs WHERE tb_logs_tipo = 'tarefas' AND  tb_logs_id_referencia = {$id}");
 
     echo json_encode(array("status" => true));
+}
+
+
+if($acao == 'emailAtribuido') {
+
+    $usuarioAtual =  isset($_GET['usuarioAtual']) ? $_GET['usuarioAtual'] : '';
+    $funcionarioNovo =  isset($_GET['funcionarioNovo']) ? $_GET['funcionarioNovo'] : '';
+
+    include("../../config/Mail.php");
+    $email = new Email();
+    $email->enviarEmailAtibuido($funcionarioNovo ,$usuarioAtual,$id);
+
 }

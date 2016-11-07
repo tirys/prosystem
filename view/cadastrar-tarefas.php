@@ -94,7 +94,7 @@ $usuario_id = $usuario['id'];
                         <div class="portlet-body">
                             <?php if (isset($dadosTarefa['id'])) {?>
                             <!-- START FORM-->
-                            <form action="model/cadastraTarefa.php?acao=2" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
+                            <form action="model/cadastraTarefa.php?acao=2" method="post" onsubmit="disparaEmail(<?=$dadosTarefa['tb_tarefas_funcionario']?>)" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
                         <?php } else { ?>
                                 <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
                                 <?php } ?>
@@ -628,6 +628,29 @@ $usuario_id = $usuario['id'];
             }
         });
     });
+
+    function disparaEmail(funcionario) {
+        var funcionarioNovo  = jq('#funcionarioID').val();
+
+        if(funcionario!=funcionarioNovo) {
+            $.ajax({
+                url: 'model/ws/ativacaoTarefa.php',
+                type: 'GET',
+                data: {
+                    format: 'json',
+                    acao: 'emailAtribuido',
+                    id: tarefa,
+                    usuarioAtual : usuarioAtual,
+                    funcionarioNovo: funcionarioNovo
+                },
+                error: function () {
+                },
+                dataType: 'json',
+                success: function (result) {
+                }
+            });
+        }
+    }
 
    function retornarCriador() {
 

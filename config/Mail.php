@@ -25,7 +25,7 @@
         $email->addAddress("{$atribuido['tb_usuarios_email']}", "{$atribuido['tb_usuarios_nome']}");
         $email->Subject = "[".utf8_decode(' PROSPECTA ')."] - {$tarefa['tb_tarefas_nome']}";
 
-        $mensagem = "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='www.agenciaprospecta.com.br'> nometarefacomlinnk </a>";
+        $mensagem = "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> nometarefacomlinnk </a>";
 
         $email->msgHTML(nl2br(utf8_decode($mensagem)));
         $email->send();
