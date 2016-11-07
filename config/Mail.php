@@ -24,8 +24,8 @@
         $email->Subject = "[".utf8_decode(' PROSPECTA ')."] - Tarefa: {$tarefa['tb_tarefas_nome']}";
 
         $mensagem = '';
-        $mensagem .= '<div class="col-md-12">';
-        $mensagem .= '<div class="container">';
+        $mensagem .= '<div style="width:100%;text-align:center;">';
+        $mensagem .= '<div style="width:80%;margin-left:10%;margin-right:10%">';
         $mensagem .= "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
         $mensagem .= '</div>';
         $mensagem .= '</div>';
