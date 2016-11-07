@@ -1,7 +1,5 @@
 <?php
-    include ('../libs/phpmailer/phpmailer/class.phpmailer.php');
-    include ('../libs/phpmailer/phpmailer/class.smtp.php');
-    include ('pacoteClasses.php');
+    require_once ('pacoteClasses.php');
 
 
  class Email {
@@ -23,9 +21,9 @@
             $tarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = {$tarefaId}");
 
         $email->addAddress("{$atribuido['tb_usuarios_email']}", "{$atribuido['tb_usuarios_nome']}");
-        $email->Subject = "[".utf8_decode(' PROSPECTA ')."] - {$tarefa['tb_tarefas_nome']}";
+        $email->Subject = "[".utf8_decode(' PROSPECTA ')."] - Tarefa: {$tarefa['tb_tarefas_nome']}";
 
-        $mensagem = "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> nometarefacomlinnk </a>";
+        $mensagem = "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
 
         $email->msgHTML(nl2br(utf8_decode($mensagem)));
         $email->send();
