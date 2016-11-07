@@ -202,7 +202,7 @@
          $email->send();
      }
 
-     public function enviarEmailAprovadoAnexo($quemCompletou, $tarefaId, $anexoId) {
+     public function enviarEmailAprovadoAnexo($quemCompletou, $tarefaId, $anexoId,$descricao) {
          $conexao = new classeConexao();
          $email = new PHPMailer();
          $email = $this->criarEstrutura();
@@ -233,6 +233,12 @@
          $mensagem .= '<hr></hr>';
 
          $mensagem .= "O usuário {$completou['tb_usuarios_nome']} aprovou o anexo: <a href='http://www.agenciaprospecta.com.br/sistema/view/images/uploads/anexos/{$anexo['tb_arquivos_nome']}'>{$anexo['tb_arquivos_nome']} </a> da tarefa: <a href='http://www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
+
+         $mensagem .= "<br><br><b>Comentário sobre a aprovação:</b><br>";
+         $mensagem .= "<div style='padding-left:2%;padding-right:2%;'>";
+         $mensagem .= $descricao;
+         $mensagem .= "</span>";
+         $mensagem .= "<br><br>";
 
          $mensagem .= '<div style="margin-left:10%;margin-right: 10%;margin-top:50px;padding: 19px;border: solid 1px #9a9a9a;line-height: 25px;"><table>';
 

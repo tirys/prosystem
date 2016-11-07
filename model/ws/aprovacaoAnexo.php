@@ -27,7 +27,7 @@ if ($acao == 'aprovar') {
 
     include("../../config/Mail.php");
     $email = new Email();
-    $email->enviarEmailAprovadoAnexo($usuarioAtual,$idTarefa['tb_arquivos_tarefas_id'],$id);
+    $email->enviarEmailAprovadoAnexo($usuarioAtual,$idTarefa['tb_arquivos_tarefas_id'],$id,$descricao);
 
     //inserir no log a aprovação da tarefa
 

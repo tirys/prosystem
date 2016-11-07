@@ -39,7 +39,7 @@
 [OK] mostrar a data e hora da melhor forma possível
 [OK] Colocar um botão salvar acima do formulário também
 [OK] Quando todos os arquivos forem aprovados, aprovar também a tarefa
-[OK] Na hora de deletar a tarefa, deletar também os anexos (do diretorio, do banco ja ta excluindo), deletar tb dos logs.
+[OK] Na hora de deletar a tarefa, deletar também os anexos (do diretório, do banco ja ta excluindo), deletar tb dos logs.
 [OK] Quando uma tarefa/arquivo for alocada para outra pessoa como responsável pela execução da mesma, enviar email para essa pessoa destino.
 [OK] Quando uma tarefa/arquivo for aprovada pelo cliente, enviar um email para quem enviou a tarefa para aprovação.
 [OK] Enviar email para quando a tarefa for concluída -> para o atribuído, para o usuário que concluiu e para quem abriu a tarefa
