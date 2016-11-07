@@ -21,7 +21,7 @@
             $tarefa = $conexao::fetchuniq("SELECT * FROM tb_tarefas WHERE id = {$tarefaId}");
 
         $email->addAddress("{$atribuido['tb_usuarios_email']}", "{$atribuido['tb_usuarios_nome']}");
-        $email->Subject = "[".utf8_decode(' SISTEMA PROSPECTA ')."] - Tarefa: {$tarefa['tb_tarefas_nome']}";
+        $email->Subject = "[".utf8_decode(' SISTEMA PROSPECTA ')."] - Tarefa: ".utf8_decode($tarefa['tb_tarefas_nome'])."";
 
         $mensagem = '<style type="text/css"> body {margin-bottom:0; margin:0} </style>';
         $mensagem .= '<div style="width:100%;text-align:center;height: 100%;background: #f1f1f1;padding-top: 15px;">';
@@ -30,7 +30,8 @@
         $mensagem .= '<img src="http://www.agenciaprospecta.com.br/images/logo-verm.png" style="height: 100%">';
 //        $mensagem .= '<span style="margin-left:20px;font-size:20px;">SISTEMA PROSPECTA</span>';
         $mensagem .= '</div>';
-        $mensagem .= "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='http://www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
+        $mensagem .= "<h3>Olá, {$atribuido['tb_usuarios_nome']}</h3>";
+        $mensagem .= "<br>O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='http://www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
         $mensagem .= '</div>';
         $mensagem .= '</div>';
 
