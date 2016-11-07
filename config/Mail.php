@@ -30,7 +30,7 @@
         $mensagem .= '<img src="http://www.agenciaprospecta.com.br/images/logo-verm.png" style="height: 100%">';
 //        $mensagem .= '<span style="margin-left:20px;font-size:20px;">SISTEMA PROSPECTA</span>';
         $mensagem .= '</div>';
-        $mensagem .= "<h3>Olá, {$atribuido['tb_usuarios_nome']}</h3>";
+        $mensagem .= "<h2>Olá, {$atribuido['tb_usuarios_nome']}</h2>";
         $mensagem .= "O usuário {$atribuiu['tb_usuarios_nome']} atribuiu você como responsável pela tarefa: <a href='http://www.agenciaprospecta.com.br/sistema/editar/tarefa/{$tarefaId}'> {$tarefa['tb_tarefas_nome']} </a>";
         $mensagem .= '</div>';
         $mensagem .= '</div>';
