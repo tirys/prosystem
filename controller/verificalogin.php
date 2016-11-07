@@ -29,7 +29,7 @@ class VerificaLogin
                 'i' => $idSessao,
                 't' => $token
             );
-            setcookie( 'auth', json_encode( $cookieToken ), $expire, '/', 'agenciaprospecta.com.br', isset( $_SERVER["HTTPS"] ), false );
+            setcookie( 'auth', json_encode( $cookieToken ), $expire, '/', 'localhost', isset( $_SERVER["HTTPS"] ), false );
 
             $useragent = $_SERVER['HTTP_USER_AGENT'];
 
