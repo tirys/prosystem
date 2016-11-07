@@ -15,6 +15,13 @@ if($acao=='reativar') {
     $data = date("Y-m-d H:i:s");
     $inserirLog = $conexao::exec("INSERT INTO tb_logs VALUES (null,{$idUsuario},'completou a tarefa','{$data}','tarefa',{$id})");
 
+    $usuarioAtual =  isset($_GET['usuarioAtual']) ? $_GET['usuarioAtual'] : '';
+    $funcionarioNovo =  isset($_GET['funcionarioNovo']) ? $_GET['funcionarioNovo'] : '';
+
+    include("../../config/Mail.php");
+    $email = new Email();
+    $email->enviarEmailCompleto($idUsuario,$id);
+
     echo json_encode(array("status" => true));
 }
 
