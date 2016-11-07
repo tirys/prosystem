@@ -2,6 +2,7 @@
 $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 $idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : '';
+$usuarioAtual = isset($_GET['usuarioAtual']) ? $_GET['usuarioAtual'] : '';
 $descricao = isset($_GET['descricao']) ? $_GET['descricao'] : '';
 $data = date("Y-m-d H:i:s");
 
@@ -23,6 +24,10 @@ if ($acao == 'aprovar') {
 
         $resultado = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_aprovacao = 3 WHERE id = {$idTarefa['tb_arquivos_tarefas_id']}");
     }
+
+    include("../../config/Mail.php");
+    $email = new Email();
+    $email->enviarEmailAprovadoAnexo($usuarioAtual,$idTarefa['tb_arquivos_tarefas_id'],$id);
 
     //inserir no log a aprovação da tarefa
 

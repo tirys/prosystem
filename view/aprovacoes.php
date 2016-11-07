@@ -134,6 +134,7 @@ else {
 <?=include("rodape.php")?>
 
 <script>
+    var usuarioAtual = '<?=$usuario_id?>';
     var tipoaprovacao = '';
 
     $(".aprovarPeca").on("click", function () {
@@ -182,6 +183,7 @@ else {
                 format: 'json',
                 acao: tipoaprovacao,
                 id: id[1],
+                usuarioAtual: usuarioAtual,
                 descricao:descricao
             },
             error: function () {
