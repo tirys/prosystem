@@ -199,12 +199,12 @@
          $email->send();
      }
 
-     public function enviarEmailNovaConta($nome, $email, $usuario, $senha) {
+     public function enviarEmailNovaConta($nome, $emailuser, $usuario, $senha) {
 
          $email = new PHPMailer();
          $email = $this->criarEstrutura();
 
-         $email->addAddress("{$email}", "{$nome}");
+         $email->addAddress("{$emailuser}", "{$nome}");
 
          $email->Subject = "[".utf8_decode(' SISTEMA PROSPECTA ')."] - Sua conta foi criada :)";
 
