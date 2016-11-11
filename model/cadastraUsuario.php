@@ -15,6 +15,12 @@ include('../config/conexao.php');
 include('../config/funcoes.php');
 
 if ($acao == 1) {
+
+    include("../config/Mail.php");
+    $email = new Email();
+    $email->enviarEmailNovaConta($nomeUsuario,$emailUsuario,$emailUsuario,$senha);
+
+
     $conexao = new classeConexao();
 
     $nomeUsuario = mysqli_real_escape_string($conexao->obj(),$nomeUsuario);
