@@ -16,9 +16,9 @@ include('../config/funcoes.php');
 
 if ($acao == 1) {
 
-    include("../config/Mail.php");
+    include("../config/MailExt.php");
     $email = new Email();
-    $email->enviarEmailNovaConta($nomeUsuario,$emailUsuario,$emailUsuario,$senha);
+    $email->enviarEmailNovaConta($nomeUsuario,$emailUsuario,$emailUsuario,$senhaUsuario);
 
 
     $conexao = new classeConexao();
