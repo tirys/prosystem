@@ -199,6 +199,50 @@
          $email->send();
      }
 
+     public function enviarEmailNovaConta($nome, $email, $usuario, $senha) {
+
+         $email = new PHPMailer();
+         $email = $this->criarEstrutura();
+
+         $email->addAddress("{$email}", "{$nome}");
+
+         $email->Subject = "[".utf8_decode(' SISTEMA PROSPECTA ')."] - Sua conta foi criada :)";
+
+         $mensagem = '<style type="text/css"> body {margin-bottom:0; margin:0} </style>';
+         $mensagem .= '<div style="width:100%;text-align:center;height: 100%;background: #f1f1f1;padding-top: 15px;">';
+         $mensagem .= '<div style="width:80%;margin-left:10%;margin-right:10%;text-align:left;padding: 20px;background: #ffffff;">';
+         $mensagem .= '<div style="height:50px;margin-bottom:27px;">';
+         $mensagem .= '<img src="http://www.agenciaprospecta.com.br/images/logo-verm.png" style="height: 100%">';
+         $mensagem .= '</div>';
+         $mensagem .= '<hr></hr>';
+         $mensagem .= "<h2>Olá, {$nome}</h2>";
+         $mensagem .= "Sua conta do Sistema Prospecta foi criada, você pode acessa-la a utilizando os dados:";
+
+         $mensagem .= '<div style="margin-left:10%;margin-right: 10%;margin-top:50px;padding: 19px;border: solid 1px #9a9a9a;line-height: 25px;"><table>';
+
+         $mensagem .= '<tr>';
+         $mensagem .= '<td><b>Endereço:</b></td><td style="padding-left:10px;"><a href="http://www.agenciaprospecta.com.br/sistema">www.agenciaprospecta.com.br/sistema</a></td>';
+         $mensagem .= '</tr>';
+
+         $mensagem .= '<tr>';
+         $mensagem .= '<td><b>Usuário:</b></td><td style="padding-left:10px;">'.$usuario.'</td>';
+         $mensagem .= '</tr>';
+
+         $mensagem .= '<tr>';
+         $mensagem .= '<td><b>Senha:</b></td><td style="padding-left:10px;">'.$senha.'</td>';
+         $mensagem .= '</tr>';
+
+         $mensagem .= '</table></div>';
+         $mensagem .= '</div>';
+         $mensagem .= '</div>';
+
+
+
+
+         $email->msgHTML(nl2br(utf8_decode($mensagem)));
+         $email->send();
+     }
+
      public function enviarEmailAprovadoAnexo($quemCompletou, $tarefaId, $anexoId,$descricao) {
          $conexao = new classeConexao();
          $email = new PHPMailer();
