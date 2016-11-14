@@ -60,16 +60,11 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
  }
 
 ?>
-    <!-- BEGIN HEADER & CONTENT DIVIDER -->
     <div class="clearfix"> </div>
     <div class="page-container">
      <?php include("menulateral.php"); ?>
-        <!-- BEGIN CONTENT -->
         <div class="page-content-wrapper">
-            <!-- BEGIN CONTENT BODY -->
             <div class="page-content">
-                <!-- END THEME PANEL -->
-                <!-- BEGIN PAGE BAR -->
                 <div class="page-bar">
                     <ul class="page-breadcrumb">
                         <li>
@@ -83,14 +78,9 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                         </div>
                     </div>
                 </div>
-                <!-- END PAGE BAR -->
-                <!-- BEGIN PAGE TITLE-->
                 <h1 class="page-title"> Início
                     <small>estatísticas, gráficos, eventos recentes e tarefas</small>
                 </h1>
-                <!-- END PAGE TITLE-->
-                <!-- END PAGE HEADER-->
-                <!-- BEGIN DASHBOARD STATS 1-->
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 blue">
@@ -144,7 +134,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <!-- END DASHBOARD STATS 1-->
+
 
                 <div class="row">
                     <?php if($usuario_tipo == 2){?>
@@ -200,7 +190,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                    <div class="tab-content">
                                        <div class="tab-pane active" id="tab_actions_pending">
                                            <div class="mt-actions">
-                                               <!-- START Aprovacoes -->
                                                <?php foreach ($aprovacoes as $aprovacao) {
                                                    $anexos = $conexao::fetch("SELECT * FROM tb_arquivos WHERE tb_arquivos_tarefas_id =".$aprovacao['id']);
 
@@ -254,7 +243,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                    <br>
                                                <?php } } } ?>
                                            </div>
-                                           <!-- END: Actions -->
                                        </div>
                                    </div>
                                </div>
@@ -300,7 +288,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                             }
                                             ?>
                                         </ul>
-                                        <!-- END START TASK LIST -->
                                     </div>
                                 </div>
                                 <div class="task-footer">
@@ -321,7 +308,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                         <div class="row ui-sortable" id="sortable_portlets" style="display: none;">
                     <?php } ?>
                     <div class="col-lg-6 col-xs-12 col-sm-12">
-                        <!-- BEGIN PORTLET-->
                         <div class="portlet light calendar bordered">
                             <div class="portlet-title ">
                                 <div class="caption">
@@ -333,9 +319,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                 <div id="calendar"> </div>
                             </div>
                         </div>
-                        <!-- END PORTLET-->
                     </div>
-                    <!-- Comentarios - USAR DEPOIS -->
                     <div class="col-lg-6 col-xs-12 col-sm-12 column sortable" style="display: none;">
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
@@ -473,12 +457,8 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_actions_pending">
                                         <div class="mt-actions">
-                                        <!-- START Aprovacoes -->
                                         <?php foreach ($aprovacoes as $aprovacao) { ?>
                                             <div class="mt-action">
-<!--                                                <div class="mt-action-img">-->
-<!--                                                    <img src="view/assets/pages/media/users/avatar10.jpg" /> -->
-<!--                                                </div>-->
                                                 <div class="mt-action-body">
                                                     <div class="mt-action-row">
                                                         <div class="mt-action-info ">
@@ -503,7 +483,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
                                                         <div class="mt-action-buttons ">
                                                             <div class="btn-group btn-group-circle">
-                                                                <!-- Desabilitar botão de acordo com o status da aprovação -->
                                                                 <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline green btn-sm aprovarTarefa">Aprovar</button>
                                                                 <button type="button" data-role="<?=$aprovacao['id']?>" class="btn btn-outline red btn-sm rejeitarTarefa">Rejeitar</button>
                                                             </div>
@@ -513,7 +492,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                             </div>
                                         <?php } ?>
                                         </div>
-                                        <!-- END: Actions -->
                                     </div>
                                 </div>
                             </div>
@@ -521,23 +499,13 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                     </div>
                 </div>
 
-
-                    <!-- START: MODAL -->
                     <div id="myModal" class="modal" onclick="document.getElementById('myModal').style.display='none'">
                         <img class="modal-content" id="img01">
                         <div id="caption"></div>
                     </div>
-                    <!-- END: MODAL -->
-
-
             </div>
-            <!-- END CONTENT BODY -->
         </div>
-        <!-- END CONTENT -->
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN CORE PLUGINS -->
-<!--    <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>-->
     <script src="view/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="view/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
     <script src="view/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>

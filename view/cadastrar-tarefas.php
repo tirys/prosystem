@@ -271,7 +271,7 @@ $usuario_id = $usuario['id'];
                                             <div class="col-md-7">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
+                                                                <i class="fa fa-star"></i>
                                                             </span>
                                                     <select class="form-control" name="tarefaStatus" id="tarefaStatus">
 
