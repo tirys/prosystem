@@ -93,7 +93,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                 <!-- BEGIN DASHBOARD STATS 1-->
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                        <a class="dashboard-stat dashboard-stat-v2 blue">
                             <div class="visual" style="margin-bottom:51px;">
                                 <i class="fa fa-check"></i>
                             </div>
@@ -106,7 +106,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                        <a class="dashboard-stat dashboard-stat-v2 red">
                             <div class="visual" style="margin-bottom:51px;">
                                 <i class="fa fa-coffee"></i>
                             </div>
@@ -118,7 +118,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                        <a class="dashboard-stat dashboard-stat-v2 green">
                             <div class="visual" style="margin-bottom:51px;">
                                 <i class="fa fa-check"></i>
                             </div>
@@ -131,7 +131,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                        <a class="dashboard-stat dashboard-stat-v2 purple">
                             <div class="visual" style="margin-bottom:51px;">
                                 <i class="fa fa-coffee"></i>
                             </div>
