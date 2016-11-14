@@ -118,9 +118,7 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                         <?= $empresa['tb_empresas_anotacao'] ?>
                                     </h5>
                             </div>
-
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="">

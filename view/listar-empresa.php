@@ -142,8 +142,6 @@ $empresas = $conexao::fetch("SELECT * FROM tb_empresas");
                         <!-- END EXAMPLE TABLE PORTLET-->
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>

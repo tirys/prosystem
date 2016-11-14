@@ -46,3 +46,4 @@
 [OK] Quando uma tarefa/arquivo for aprovada pelo cliente, enviar um email para quem enviou a tarefa para aprovação.
 [OK] Enviar email para quando a tarefa for concluída -> para o atribuído, para o usuário que concluiu e para quem abriu a tarefa
 [OK] Inserir na tabela de sessão o navegador que o usuário utilizou para fazer login - será útil em casos de problemas futuros do sistema (incompabilidade)
+[OK] Criar um template de envio de email ao cadastrar novos usuários
