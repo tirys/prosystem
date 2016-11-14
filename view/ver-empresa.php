@@ -17,8 +17,8 @@ $empresa = $conexao::fetchuniq("SELECT * FROM tb_empresas WHERE id = '{$id}'");
 ?>
 <link href="view/assets/pages/css/about.min.css" rel="stylesheet" type="text/css" />
 <link href="view/assets/pages/css/contact.min.css" rel="stylesheet" type="text/css" />
-
 <link href="view/assets/pages/css/contact.min.css" rel="stylesheet" type="text/css" />
+
     <div class="clearfix"> </div>
     <div class="page-container page-container-bg-solid">
         <?php include("menulateral.php"); ?>

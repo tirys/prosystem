@@ -122,13 +122,8 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                     </div>
 
                 </div>
-                <!-- END CARDS -->
-
-                <!-- START TAREFAS - CLIENTE -->
                 <div class="row">
                     <div class="">
-
-                        <!-- START TAREFAS -->
                         <div class="col-md-12">
                             <div class="portlet light bordered">
                                 <div class="portlet-title">
@@ -152,7 +147,6 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                         </tr>
                                         </thead>
                                         <tbody>
-
                                         <!-- START CONTEUDO TABELA -->
                                         <?php foreach ($tarefas as $tarefa) { ?>
                                             <tr class="odd gradeX">
@@ -163,12 +157,6 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                                 <td><?=DataBrasil($tarefa['tb_tarefas_data_termino'])?></td>
 
                                                 <td><?=$tarefa['tb_tarefas_horas']?> horas</td>
-
-                                                <!--                                        -2 => Muito Baixa -> verde-->
-                                                <!--                                        -1 => Baixa -> azul-->
-                                                <!--                                        0 => Normal -> cinza-->
-                                                <!--                                        1 => Alta -> amarelo-->
-                                                <!--                                        2 => Urgente -> vermelho-->
 
                                                 <?php if ($tarefa['tb_tarefas_prioridade']==0) {?>
                                                     <td><span class="label label-sm label-default"> Normal </span></td>
@@ -182,7 +170,6 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                                     <td><span class="label label-sm label-success"> Muito Baixa </span></td>
                                                 <?php } ?>
 
-                                                <!--                                        STATUS-->
                                                 <?php if ($tarefa['tb_tarefas_status']==0) {?>
                                                     <td><span class="label label-sm label-warning"> Aberto </span></td>
                                                 <?php } else if ($tarefa['tb_tarefas_status']==1) {?>
@@ -214,14 +201,9 @@ $porcentagem = ($tarefasFeitas['qtd'] * 100) / ($tarefasFeitas['qtd'] + $tarefas
                                     </table>
                                 </div>
                             </div>
-                            <!-- END EXAMPLE TABLE PORTLET-->
-
                         </div>
-                        <!-- END TAREFAS -->
-
                     </div>
                 </div>
-                <!-- END TAREFAS - CLIENTE -->
 
                 <!-- START PARTICIPANTES -->
                 <div class="row margin-bottom-40 stories-header" data-auto-height="true">

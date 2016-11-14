@@ -101,8 +101,6 @@ else {
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <!-- START CONTEUDO TABELA -->
                                 <?php foreach ($tarefas as $tarefa) { ?>
                                     <tr class="odd gradeX">
                                         <td> <?=$tarefa['id']?> </td>
@@ -176,13 +174,10 @@ else {
                                         </td>
                                     </tr>
                                 <?php } ?>
-                                <!-- END CONTEUDO TABELA -->
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
 

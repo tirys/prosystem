@@ -45,7 +45,6 @@ else {
 
                 <br><br><br>
 
-                <!-- END PAGE HEADER-->
                 <div class="profile">
                     <div class="tabbable-line tabbable-full-width">
                         <ul class="nav nav-tabs">
@@ -70,17 +69,9 @@ else {
                                             <li>
                                                 <a href="javascript:;"> Projetos </a>
                                             </li>
-<!--                                            <li>-->
-<!--                                                <a href="javascript:;"> Messages-->
-<!--                                                    <span> 3 </span>-->
-<!--                                                </a>-->
-<!--                                            </li>-->
                                             <li>
                                                 <a href="javascript:;"> Tarefas </a>
                                             </li>
-<!--                                            <li>-->
-<!--                                                <a href="javascript:;"> Settings </a>-->
-<!--                                            </li>-->
                                         </ul>
                                     </div>
                                     <div class="col-md-9">
@@ -98,22 +89,7 @@ else {
                                                 <p>
                                                     <i class="fa fa-envelope"></i> &nbsp <a href="mailto:<?=$usuarioDados['tb_usuarios_email']?>"> <?=$usuarioDados['tb_usuarios_email']?> </a>
                                                 </p>
-<!--                                                <ul class="list-inline">-->
-<!---->
-<!--                                                    <li>-->
-<!--                                                        <i class="fa fa-map-marker"></i> Spain </li>-->
-<!--                                                    <li>-->
-<!--                                                        <i class="fa fa-calendar"></i> 18 Jan 1982 </li>-->
-<!--                                                    <li>-->
-<!--                                                        <i class="fa fa-briefcase"></i> Design </li>-->
-<!--                                                    <li>-->
-<!--                                                        <i class="fa fa-star"></i> Top Seller </li>-->
-<!--                                                    <li>-->
-<!--                                                        <i class="fa fa-heart"></i> BASE Jumping </li>-->
-<!---->
-<!--                                                </ul>-->
                                             </div>
-                                            <!--end col-md-8-->
                                             <div class="col-md-4">
                                                 <div class="portlet sale-summary">
                                                     <div class="portlet-title">
@@ -145,9 +121,7 @@ else {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--end col-md-4-->
                                         </div>
-                                        <!--end row-->
                                         <div class="tabbable-line tabbable-custom-profile">
                                             <ul class="nav nav-tabs">
                                                 <li class="active">
@@ -213,7 +187,6 @@ else {
                                                         </table>
                                                     </div>
                                                 </div>
-                                                <!--tab-pane-->
                                                 <div class="tab-pane" id="tab_1_22">
                                                     <div class="tab-pane active" id="tab_1_1_1">
                                                         <div class="scroller" data-height="290px" data-always-visible="1" data-rail-visible1="1">
@@ -536,13 +509,11 @@ else {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--tab-pane-->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--tab_1_2-->
                             <div class="tab-pane" id="tab_1_3">
                                 <div class="row profile-account">
                                     <div class="col-md-3">
@@ -716,10 +687,8 @@ else {
                                             </div>
                                         </div>
                                     </div>
-                                    <!--end col-md-9-->
                                 </div>
                             </div>
-                            <!--end tab-pane-->
                             <div class="tab-pane" id="tab_1_6">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -1056,14 +1025,10 @@ else {
                                     </div>
                                 </div>
                             </div>
-                            <!--end tab-pane-->
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- END CONTENT BODY -->
-
-
             </div>
         </div>
     </div>

@@ -1,4 +1,3 @@
-<!-- BEGIN SIDEBAR -->
 <?php
     $id = $_GET['idMenu'];
 ?>
@@ -6,15 +5,11 @@
     <div class="page-sidebar navbar-collapse collapse">
         <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
 
-            <!--BEGIN BOTAO MENU-->
             <li class="sidebar-toggler-wrapper hide">
                 <div class="sidebar-toggler">
                     <span></span>
                 </div>
             </li>
-            <!--END BOTAO MENU-->
-
-            <!--BEGIN BUSCA-->
             <li class="sidebar-search-wrapper" style="display: none;">
                 <form class="sidebar-search  " action="http://keenthemes.com/preview/metronic/theme/admin_1/page_general_search_3.html" method="POST">
                     <a href="javascript:;" class="remove">
@@ -30,8 +25,6 @@
                     </div>
                 </form>
             </li>
-            <!--END BUSCA-->
-
             <?php
                 if($_GET['idMenu'] == 1){
                     echo('<li class="nav-item start active open"><a href="dashboard" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
@@ -195,12 +188,7 @@
                         </li>
                     </ul>
                 </li>
-                <!--END Configurações-->
             <?php }?>
         </ul>
-        <!-- END SIDEBAR MENU -->
-        <!-- END SIDEBAR MENU -->
     </div>
-    <!-- END SIDEBAR -->
 </div>
-<!-- END SIDEBAR -->

@@ -518,9 +518,6 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 <?=include("rodape.php")?>
 
 <script>
-
-
-
 //    var $ = jQuery.noConflict();
     $('.aprovarTarefa').on('click', function () {
         var idTarefa = $(this).attr('data-role');

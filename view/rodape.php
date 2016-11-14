@@ -70,8 +70,4 @@
 <script src="view/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
 </body>
-
-
-
-
 </html>

@@ -30,7 +30,6 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
 
             <div class="row">
                 <div class="col-md-12">
-                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <div class="portlet light bordered">
                         <div class="portlet-title">
                             <div class="caption font-dark">
@@ -83,8 +82,6 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <!-- START CONTEUDO TABELA -->
                                 <?php foreach ($usuarios as $usuario) { ?>
                                     <tr class="odd gradeX">
                                         <td> <?=$usuario['id']?> </td>
@@ -123,13 +120,10 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
                                         </td>
                                     </tr>
                                 <?php } ?>
-                                <!-- END CONTEUDO TABELA -->
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
 

@@ -85,17 +85,11 @@ if(count($cookie)>0) {
                     <span></span>
                 </div>
             </div>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
             <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                 <span></span>
             </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
-                    <!-- NOTIFICACOES -->
-                    <!--NÃO USA POR ENQUANTO-->
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar" style="display:none;">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
@@ -140,10 +134,6 @@ if(count($cookie)>0) {
                             </li>
                         </ul>
                     </li>
-                    <!-- END NOTIFICACAO ->
-
-                    <!-- MENSAGENS -->
-                    <!--NÃO USA POR ENQUANTO-->
                     <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar" style="display:none;">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
@@ -183,8 +173,6 @@ if(count($cookie)>0) {
                             </li>
                         </ul>
                     </li>
-                    <!-- END INBOX DROPDOWN -->
-                    <!-- BEGIN TAREFAS -->
                     <?php
                     $tarefas = $conexao::fetchuniq("SELECT count(*) as qtd FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1");
                     $tarefasLista = $conexao::fetch("SELECT * FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1 ORDER BY tb_tarefas_data_termino ASC");
@@ -205,9 +193,6 @@ if(count($cookie)>0) {
 
                                     <?php
                                     //Listagem das minhas tarefas pendentes no topo
-
-
-
                                     foreach ($tarefasLista as $tarefa) {
 
                                         $estilo = '';
@@ -235,8 +220,6 @@ if(count($cookie)>0) {
                             </li>
                         </ul>
                     </li>
-                    <!-- END TAREFAS -->
-                    <!-- BEGIN USUARIO -->
                     <li class="dropdown dropdown-user">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <img alt="" class="img-circle" src="view/images/<?php echo $usuario['tb_usuarios_foto'];?>" />
@@ -278,10 +261,7 @@ if(count($cookie)>0) {
                             <i class="icon-logout"></i>
                         </a>
                     </li>
-                    <!-- END USUARIO -->
                 </ul>
             </div>
-            <!-- END MENU -->
         </div>
     </div>
-    <!-- END HEADER -->
