@@ -15,13 +15,13 @@
             <!--END BOTAO MENU-->
 
             <!--BEGIN BUSCA-->
-            <li class="sidebar-search-wrapper">
+            <li class="sidebar-search-wrapper" style="display: none;">
                 <form class="sidebar-search  " action="http://keenthemes.com/preview/metronic/theme/admin_1/page_general_search_3.html" method="POST">
                     <a href="javascript:;" class="remove">
                         <i class="icon-close"></i>
                     </a>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control" placeholder="Buscar...">
                         <span class="input-group-btn">
                                             <a href="javascript:;" class="btn submit">
                                                 <i class="icon-magnifier"></i>

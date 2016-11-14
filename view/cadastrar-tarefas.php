@@ -266,6 +266,36 @@ $usuario_id = $usuario['id'];
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="control-label col-md-3">Status
+                                            </label>
+                                            <div class="col-md-7">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                    <select class="form-control" name="tarefaStatus" id="tarefaStatus">
+
+                                                        <?php if ($dadosTarefa['tb_tarefas_status']==0) {?>
+                                                            <option value="0" selected>Aberta</option>
+                                                            <option value="1">Concluída</option>
+                                                            <option value="3">Pausada</option>
+                                                        <?php } else if ($dadosTarefa['tb_tarefas_status']==1) {?>
+                                                            <option value="0">Aberta</option>
+                                                            <option value="1" selected>Concluída</option>
+                                                            <option value="3">Pausada</option>
+                                                        <?php } else if ($dadosTarefa['tb_tarefas_status']==3) {?>
+                                                            <option value="0">Aberta</option>
+                                                            <option value="1">Concluída</option>
+                                                            <option value="3" selected>Pausada</option>
+                                                        <?php } ?>
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="control-label col-md-3">Prioridade
                                             </label>
                                             <div class="col-md-7">

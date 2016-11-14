@@ -8,9 +8,6 @@ include("topo.php");
 //Consultando as tarefas
 $conexao = new classeConexao();
 
-//include("../config/Mail.php");
-//$email = new Email();
-//$email->enviarEmailAtibuido("Jessica","fulano",1);
 
 //Se é minhas tarefas
 
@@ -321,7 +318,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                     <?php if($usuario_tipo == 2){?>
                         <div class="row ui-sortable" id="sortable_portlets" style="display: none;">
                     <?php } else { ?>
-                        <div class="row ui-sortable" id="sortable_portlets">
+                        <div class="row ui-sortable" id="sortable_portlets" style="display: none;">
                     <?php } ?>
                     <div class="col-lg-6 col-xs-12 col-sm-12">
                         <!-- BEGIN PORTLET-->
@@ -554,6 +551,8 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
 <script>
 
+
+
 //    var $ = jQuery.noConflict();
     $('.aprovarTarefa').on('click', function () {
         var idTarefa = $(this).attr('data-role');
@@ -634,6 +633,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
 
 <script>
     var tipoaprovacao = '';
+    var usuarioAtual = '<?=$usuario_id?>';
 
     $(".aprovarPeca").on("click", function () {
         var observacaoN = $(this).attr("data-role");
@@ -681,6 +681,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                 format: 'json',
                 acao: tipoaprovacao,
                 id: id[1],
+                usuarioAtual: usuarioAtual,
                 descricao:descricao
             },
             error: function () {

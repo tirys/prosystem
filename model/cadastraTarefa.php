@@ -13,6 +13,7 @@ $idTarefa = isset($_POST['idTarefa']) ? $_POST['idTarefa'] : '';
 $qtdAnexo = isset($_POST['numero-anexos']) ? $_POST['numero-anexos'] : '';
 $tempoGasto = isset($_POST['tempoGasto']) ? $_POST['tempoGasto'] : '';
 $legendaTarefa = isset($_POST['legendaTarefa']) ? $_POST['legendaTarefa'] : '';
+$tarefaStatus = isset($_POST['tarefaStatus']) ? $_POST['tarefaStatus'] : '';
 
 if($oculto=='') {
     $oculto = 0;
@@ -33,7 +34,7 @@ $descricaoTarefa = mysqli_real_escape_string($conexao->obj(),$descricaoTarefa);
 if ($acao == 1) {
 
     $conexao = new classeConexao();
-    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},0,{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID},0,'{$legendaTarefa}')");
+    $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},{$tarefaStatus},{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID},0,'{$legendaTarefa}')");
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");
 
     $data = date("Y-m-d H:i:s");
@@ -93,7 +94,7 @@ if ($acao == 1) {
 else if ($acao == 2) {
 
     $conexao = new classeConexao();
-    $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_horas_gastas = {$tempoGasto}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID}, tb_tarefas_legenda = '{$legendaTarefa}' WHERE id = {$idTarefa}");
+    $update = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_nome = '{$nomedaTarefa}', tb_tarefas_descricao = '{$descricaoTarefa}', tb_tarefas_data_termino = '{$dataTarefa}', tb_tarefas_horas = {$tempoEstimado}, tb_tarefas_horas_gastas = {$tempoGasto}, tb_tarefas_oculto = {$oculto}, tb_tarefas_prioridade = {$prioridade}, tb_tarefas_projeto = {$projetoID}, tb_tarefas_funcionario = {$funcionarioID}, tb_tarefas_legenda = '{$legendaTarefa}', tb_tarefas_status = {$tarefaStatus} WHERE id = {$idTarefa}");
 
     $data = date("Y-m-d H:i:s");
     //Inserindo no log

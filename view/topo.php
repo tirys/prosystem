@@ -248,7 +248,7 @@ if(count($cookie)>0) {
                                 <a href="editar/usuario/<?=$usuario['id']?>">
                                     <i class="icon-user"></i> Meu Perfil</a>
                             </li>
-                            <li>
+                            <li style="display: none;">
                                 <a href="app_calendar.html">
                                     <i class="icon-calendar"></i> Meu Calendário </a>
                             </li>

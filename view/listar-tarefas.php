@@ -200,6 +200,7 @@ else {
 <script src="view/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 <script src="view/assets/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+<script src="view/assets/notify.js" type="text/javascript"></script>
 
 
 <script>
@@ -217,10 +218,12 @@ else {
                 id: idempresa
             },
             error: function () {
-                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+                $.notify('Ocorreu um erro', {position:"bottom right",className:"danger"});
             },
             dataType: 'json',
             success: function (result) {
+                $.notify('A tarefa foi pausada', {position:"bottom right",className:"success"});
+
                 if (result.status) {
                     location.reload();
                 }
@@ -241,10 +244,11 @@ else {
                 id: idempresa
             },
             error: function () {
-                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+                $.notify('Ocorreu um erro', {position:"bottom right",className:"danger"});
             },
             dataType: 'json',
             success: function (result) {
+                $.notify('A tarefa foi aberta', {position:"bottom right",className:"success"});
                 if (result.status) {
                     location.reload();
                 }
@@ -265,10 +269,11 @@ else {
                 id: idempresa
             },
             error: function () {
-                $('#info').html('<p>Um erro foi encontrado, por favor, tente novamente</p>');
+                $.notify('Ocorreu um erro', {position:"bottom right",className:"danger"});
             },
             dataType: 'json',
             success: function (result) {
+                $.notify('A tarefa foi concluída', {position:"bottom right",className:"success"});
                 if (result.status) {
                     location.reload();
                 }

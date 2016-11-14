@@ -132,7 +132,7 @@ else {
         </div>
     </div>
 <?=include("rodape.php")?>
-
+<script src="view/assets/notify.js" type="text/javascript"></script>
 <script>
     var usuarioAtual = '<?=$usuario_id?>';
     var tipoaprovacao = '';
@@ -194,6 +194,7 @@ else {
                 itemAtual.parent().parent().parent().parent().fadeOut( "slow", function() {
 
                 });
+                $.notify('Aprovação atualizada com sucesso!', {position:"bottom right",className:"success"});
             }
         });
     });
