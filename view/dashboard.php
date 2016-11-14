@@ -179,7 +179,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                 </div>
                                 <div class="scroller-footer">
                                     <div class="btn-arrow-link pull-right">
-                                        <a href="javascript:;">Ver todas</a>
+                                        <a href="atividades">Ver todas</a>
                                         <i class="icon-arrow-right"></i>
                                     </div>
                                 </div>

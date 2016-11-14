@@ -52,6 +52,7 @@
 				RewriteRule ^tarefa/([_0-9a-z-]+)?$						            view/ver-tarefa.php?idMenu=42&idTarefa=$1
 				RewriteRule ^usuario/([_0-9a-z-]+)?$						        view/ver-usuario.php?idMenu=52&idUsuario=$1
 				RewriteRule ^usuario$                                               view/ver-usuario.php?idMenu=52
+				RewriteRule ^atividades$                                            view/atividades.php?idMenu=1
 
 
 
