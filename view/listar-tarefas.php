@@ -91,7 +91,8 @@ else {
                                 <tr>
                                     <th> ID </th>
                                     <th> Nome </th>
-                                    <th> Cliente </th>
+<!--                                    <th> Cliente </th>-->
+                                    <th> Atribuído </th>
                                     <th> Projeto </th>
                                     <th> Data Término </th>
                                     <th> Horas Est. </th>
@@ -116,7 +117,12 @@ else {
                                             <td><a href="editar/tarefa/<?=$tarefa['id']?>" title="Editar"><?=$tarefa['tb_tarefas_nome']?></a></td>
                                         <?php } ?>
 
-                                        <td><a href="empresa/<?=$tarefa['id_projetos_empresas_id']?>"><?=$tarefa['tb_empresas_nome']?></a></td>
+                                        <?php
+                                            $atribuido = $conexao::fetchuniq("SELECT * FROM tb_usuarios WHERE id={$tarefa['tb_tarefas_funcionario']}");
+                                        ?>
+
+                                        <td><?=$atribuido['tb_usuarios_nome']?></td>
+<!--                                        <td><a href="empresa/--><?//=$tarefa['id_projetos_empresas_id']?><!--">--><?//=$tarefa['tb_empresas_nome']?><!--</a></td>-->
 
                                         <td><a href="projeto/<?=$tarefa['projetos_id']?>"><?=$tarefa['tb_projetos_nome']?></a></td>
 
