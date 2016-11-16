@@ -249,7 +249,11 @@ $usuario_id = $usuario['id'];
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-clock-o"></i>
                                                             </span>
-                                                    <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_tarefas_horas']?>" required>
+                                                    <?php if (isset($dadosTarefa['id'])) {?>
+                                                        <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="<?=$dadosTarefa['tb_tarefas_horas']?>" required>
+                                                    <?php } else { ?>
+                                                        <input type="number" class="form-control" min="0" name="tempoEstimado" placeholder="Tempo Estimado" value="0" required>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
 
@@ -260,7 +264,11 @@ $usuario_id = $usuario['id'];
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-clock-o"></i>
                                                             </span>
-                                                    <input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Tempo Gasto" value="<?=$dadosTarefa['tb_tarefas_horas_gastas']?>" required>
+                                                    <?php if (isset($dadosTarefa['id'])) {?>
+                                                        <input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Tempo Gasto" value="<?=$dadosTarefa['tb_tarefas_horas_gastas']?>" required>
+                                                    <?php } else { ?>
+                                                        <input type="number" class="form-control" min="0" name="tempoGasto" placeholder="Tempo Gasto" value="0" required>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
