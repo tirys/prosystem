@@ -93,7 +93,7 @@ $dadosProjetos = $conexao::fetchuniq("SELECT * FROM tb_projetos WHERE id = '".$i
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Data Término
+                                        <label class="control-label col-md-3">Prazo
                                         </label>
                                         <div class="col-md-4">
                                             <div class="input-group">
