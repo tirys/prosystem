@@ -112,6 +112,25 @@
     }
 }
 
+.link-topo {
+    color: #ffffff;
+    margin-right: 10px;
+}
+
+.link-topo:hover {
+    color: #ffffff;
+}
+
+.link-topo:visited {
+    color: #ffffff;
+}
+
+.link-topo:active {
+    color: #ffffff;
+}
+.modal-backdrop.in{
+    display: none;
+}
 /*** PERFIL ***/
 
 .pic-bordered {

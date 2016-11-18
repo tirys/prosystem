@@ -15,6 +15,11 @@ $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts W
 $usuario_id = $usuario['id'];
 
 ?>
+<link href="view/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css" />
+<link href="view/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
+<link href="view/assets/global/plugins/bootstrap-summernote/summernote.css" rel="stylesheet" type="text/css" />
+
+
 <div class="clearfix"></div>
 <div class="page-container">
     <?php include("menulateral.php"); ?>
@@ -140,6 +145,7 @@ $usuario_id = $usuario['id'];
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-tasks"></i>
                                                             </span>
+
                                                     <input type="text" name="nomedaTarefa" placeholder="Nome da Tarefa" data-required="1" class="form-control" value="<?=$dadosTarefa['tb_tarefas_nome']?>" required/></div>
                                             </div>
                                         </div>
@@ -394,7 +400,7 @@ $usuario_id = $usuario['id'];
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-pencil"></i>
                                                             </span>
-                                                    <textarea name="descricaoTarefa" placeholder="Descrição sobre a Tarefa" data-required="1" class="form-control autosizeme textarea-pro" style="height: 200px !important;"><?=$dadosTarefa['tb_tarefas_descricao']?></textarea>
+                                                    <textarea name="descricaoTarefa" id="descricaoTarefa" placeholder="Descrição sobre a Tarefa" data-required="1" class="form-control autosizeme textarea-pro" style="height: 200px !important;"><?=$dadosTarefa['tb_tarefas_descricao']?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -594,6 +600,7 @@ $usuario_id = $usuario['id'];
 <!-- BEGIN CORE PLUGINS -->
 <script src="view/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
+
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="view/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="view/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
@@ -618,6 +625,7 @@ $usuario_id = $usuario['id'];
 <script src="view/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
 <script src="view/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="view/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+
 <!-- END THEME LAYOUT SCRIPTS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <link href="view/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
@@ -1050,6 +1058,8 @@ $usuario_id = $usuario['id'];
     }
 </script>
 <?= include("rodape.php") ?>
+<script src="view/assets/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 
-
-
+<script>
+    $("#descricaoTarefa").summernote({height:300});
+</script>
