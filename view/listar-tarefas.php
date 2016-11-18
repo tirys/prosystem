@@ -171,7 +171,7 @@ else {
                                             <?php } ?>
 
                                             <?php if ($tarefa['tb_tarefas_status']==1 || $tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0) {?>
-                                                <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-info pausar" title="Pausar"> <i class="fa fa-pause"></i>
+                                               <!-- <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-info pausar" title="Pausar"> <i class="fa fa-pause"></i> -->
                                             <?php } else { ?>
                                                 <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-arrow-up" style="width:12px;"></i>
                                             <?php } ?>
