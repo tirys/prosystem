@@ -89,7 +89,7 @@
 
 
             <?php
-            if($_GET['idMenu'] == 41 || $_GET['idMenu'] == 42 || $_GET['idMenu'] == 43){
+            if($_GET['idMenu'] == 41 || $_GET['idMenu'] == 42 || $_GET['idMenu'] == 43 || $_GET['idMenu'] == 44 || $_GET['idMenu'] == 45){
                 echo('<li class="nav-item start active open"><a href="tarefas" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
                 echo('<li class="nav-item"><a href="tarefas" class="nav-link nav-toggle"></span><span class="arrow"></span>');
@@ -109,12 +109,22 @@
 
                     <?php echo ($_GET['idMenu'] == 42 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                     <a href="listar/tarefas" class="nav-link nav-toggle">
-                        <span class="title">Ver Tarefas</span>
+                        <span class="title">Tarefas Abertas</span>
+                    </a>
+
+                    <?php echo ($_GET['idMenu'] == 44 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="listar/fechadas" class="nav-link nav-toggle">
+                        <span class="title">Tarefas Fechadas</span>
                     </a>
 
                     <?php echo ($_GET['idMenu'] == 43 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                     <a href="listar/minhas-tarefas" class="nav-link nav-toggle">
-                        <span class="title">Minhas Tarefas</span>
+                        <span class="title">Minhas Tarefas Abertas</span>
+                    </a>
+
+                    <?php echo ($_GET['idMenu'] == 45 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                    <a href="listar/minhas-fechadas" class="nav-link nav-toggle">
+                        <span class="title">Minhas Tarefas Fechadas</span>
                     </a>
                     </li>
                 </ul>
