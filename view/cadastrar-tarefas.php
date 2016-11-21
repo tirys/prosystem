@@ -152,7 +152,7 @@ $usuario_id = $usuario['id'];
                                         <div class="form-group" id="empresaU">
                                             <label class="control-label col-md-3">Cliente
                                             </label>
-                                            <div class="col-md-7">
+                                            <div class="col-md-3">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-briefcase"></i>
@@ -175,43 +175,43 @@ $usuario_id = $usuario['id'];
                                                 </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group" id="empresaU">
-                                            <label class="control-label col-md-3">Projeto
+
+                                            <label class="control-label col-md-1">Projeto
                                             </label>
-                                            <div class="col-md-7">
+                                            <div class="col-md-3">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-folder"></i>
                                                             </span>
-                                                <select class="form-control" name="projetoID" id="projetoID">
-                                                    <?php
-                                                    $conexao = new classeConexao();
-                                                    if($dadosTarefa['id_projetos_empresas_id']) {
-                                                        $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos WHERE id_projetos_empresas_id = {$dadosTarefa['id_projetos_empresas_id']}");
+                                                    <select class="form-control" name="projetoID" id="projetoID">
+                                                        <?php
+                                                        $conexao = new classeConexao();
+                                                        if($dadosTarefa['id_projetos_empresas_id']) {
+                                                            $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos WHERE id_projetos_empresas_id = {$dadosTarefa['id_projetos_empresas_id']}");
 
-                                                    }
-                                                    else {
-                                                        $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos WHERE id_projetos_empresas_id = {$primeiraEmpresa[0]['id']}");
-                                                    }
-
-                                                    foreach ($projetos as $key => $projeto){
-
-                                                        if($idProjeto == $projeto['id'] || $dadosTarefa['tb_tarefas_projeto'] == $projeto['id']){
-                                                            echo '<option value="'.$projeto['id'].'" selected>'.$projeto['tb_projetos_nome'].'</option>';
-                                                        }else{
-                                                            echo '<option value="'.$projeto['id'].'">'.$projeto['tb_projetos_nome'].'</option>';
                                                         }
-                                                    }
-                                                    ?>
-                                                </select>
+                                                        else {
+                                                            $projetos = $conexao::fetch("SELECT id, tb_projetos_nome FROM tb_projetos WHERE id_projetos_empresas_id = {$primeiraEmpresa[0]['id']}");
+                                                        }
+
+                                                        foreach ($projetos as $key => $projeto){
+
+                                                            if($idProjeto == $projeto['id'] || $dadosTarefa['tb_tarefas_projeto'] == $projeto['id']){
+                                                                echo '<option value="'.$projeto['id'].'" selected>'.$projeto['tb_projetos_nome'].'</option>';
+                                                            }else{
+                                                                echo '<option value="'.$projeto['id'].'">'.$projeto['tb_projetos_nome'].'</option>';
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Atribuir a
                                             </label>
-                                            <div class="col-md-7">
+                                            <div class="col-md-3">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-user"></i>
@@ -234,11 +234,10 @@ $usuario_id = $usuario['id'];
                                                 </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">Prazo
+
+                                            <label class="control-label col-md-1">Prazo
                                             </label>
-                                            <div class="col-md-7">
+                                            <div class="col-md-3">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
@@ -246,7 +245,7 @@ $usuario_id = $usuario['id'];
                                                     <input type="date" class="form-control" name="dataTarefa" placeholder="dd/mm/yyyy" value="<?=$dadosTarefa['tb_tarefas_data_termino']?>">
                                                 </div>
                                             </div>
-                                          </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Tempo Estimado
                                             </label>
@@ -282,7 +281,7 @@ $usuario_id = $usuario['id'];
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Status
                                             </label>
-                                            <div class="col-md-7">
+                                            <div class="col-md-3">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-star"></i>
@@ -307,6 +306,25 @@ $usuario_id = $usuario['id'];
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <?php if($usuario_tipo != 2){?>
+
+                                                    <label class="control-label col-md-1" style="padding-left:0px;">Oculto ao Cliente?
+                                                    </label>
+                                                    <div class="col-md-3">
+                                                        <div class="mt-checkbox-inline">
+                                                            <label class="mt-checkbox">
+                                                                <?php  if($dadosTarefa['tb_tarefas_oculto'] == 1) { ?>
+                                                                    <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1" checked="checked"> Sim
+                                                                <?php } else { ?>
+                                                                    <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
+                                                                <?php } ?>
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                            <?php }?>
                                         </div>
 
                                         <div class="form-group">
@@ -373,24 +391,6 @@ $usuario_id = $usuario['id'];
                                             </div>
                                         </div>
 
-                                        <?php if($usuario_tipo != 2){?>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3">Oculto ao Cliente?
-                                                </label>
-                                                <div class="col-md-7">
-                                                    <div class="mt-checkbox-inline">
-                                                        <label class="mt-checkbox">
-                                                            <?php  if($dadosTarefa['tb_tarefas_oculto'] == 1) { ?>
-                                                             <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1" checked="checked"> Sim
-                                                            <?php } else { ?>
-                                                                <input type="checkbox" name="oculto" id="inlineCheckbox21" value="1"> Sim
-                                                            <?php } ?>
-                                                            <span></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
 
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Descrição
