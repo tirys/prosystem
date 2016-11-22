@@ -138,11 +138,13 @@
                         foreach ($usuarios as $usuario) {
                             $num = '45'.$usuario['id'];
                             $num2 = '445'.$usuario['id'];
+
+                            $qtdTarefasAbertas = $conexao::fetchuniq("SELECT count(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status != 1 AND tb_tarefas_funcionario = {$usuario['id']}");
                     ?>
                             <?php if($usuario['tb_usuarios_menu_abertas']=='sim') {?>
                                 <?php echo ($_GET['idMenu'] == $num ? '<li class="nav-item active">' : '<li class="nav-item">');?>
                                 <a href="listar-tarefas/usuario/<?=$usuario['id']?>" class="nav-link nav-toggle">
-                                    <span class="title"><?=$usuario['tb_usuarios_nome']?> - Abertas</span>
+                                    <span class="title"><?=$usuario['tb_usuarios_nome']?> - Abertas <span class="badge badge-default" style="background:#36c6d3"><?=$qtdTarefasAbertas['qtd']?></span></span>
                                 </a>
                             <?php } ?>
 
