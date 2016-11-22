@@ -260,7 +260,7 @@ if($idUser != ""){
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">
-                                                <?php if($usuario_tipo == 0){?>
+                                                <?php if($usuario_tipo == 0 || $usuario_tipo == 3 ){?>
                                                     <button type="submit" class="btn green">Enviar</button>
                                                 <?php }else{ ?>
                                                     <button type="submit" class="btn green" disabled>Enviar</button>
