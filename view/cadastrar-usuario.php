@@ -16,7 +16,7 @@ if($idUser != ""){
     $cargaHoraria="";
     $funcao="";
     $tipoUser="adm";
-    $user = $conexao::fetchuniq("SELECT tb_usuarios_email, tb_usuarios_nome, tb_usuario_login, tb_usuario_senha, tb_usuarios_foto FROM tb_usuarios WHERE id = '".$idUser."'");
+    $user = $conexao::fetchuniq("SELECT tb_usuarios_email, tb_usuarios_nome, tb_usuario_login, tb_usuario_senha, tb_usuarios_foto, tb_usuarios_menu_abertas, tb_usuarios_menu_fechadas FROM tb_usuarios WHERE id = '".$idUser."'");
 
     $buscaTipo = $conexao::fetchuniq("SELECT tb_funcionarios_carga_horaria, tb_funcionarios_funcao FROM tb_funcionarios WHERE tb_funcioanios_usuario_id = '".$idUser."'");
     if($buscaTipo != ""){ $tipoUser = "fun"; $cargaHoraria = $buscaTipo['tb_funcionarios_carga_horaria'];$funcao = $buscaTipo['tb_funcionarios_funcao'];}
@@ -229,6 +229,34 @@ if($idUser != ""){
                                             </div>
 
                                     </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Exibição no Menu:
+                                                </label>
+                                                <div class="col-md-4">
+                                                    <?php if($edicao == 1) { ?>
+                                                        <?php if($user['tb_usuarios_menu_abertas']=="sim") {?>
+                                                        <input type = "checkbox" value = "sim" name = "menuAbertas" checked/> Tarefas Abertas
+                                                         <?php } else { ?>
+                                                        <input type = "checkbox" value = "sim" name = "menuAbertas" /> Tarefas Abertas
+                                                        <?php } ?>
+                                                        &nbsp;
+                                                         <?php if($user['tb_usuarios_menu_fechadas']=="sim") {?>
+                                                             <input type = "checkbox" value = "sim" name = "menuFechadas" checked/> Tarefas Fechadas
+                                                        <?php } else { ?>
+                                                            <input type = "checkbox" value = "sim" name = "menuAbertas" /> Tarefas Fechadas
+                                                        <?php } ?>
+                                                    <?php
+                                                        } else {
+                                                    ?>
+                                                        <input type = "checkbox" value = "sim" name = "menuAbertas" /> Tarefas Abertas
+                                                                                                                       &nbsp;
+                                                        <input type = "checkbox" value = "sim" name = "menuFechadas" /> Tarefas Fechadas
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+
+
                                     <div class="form-actions">
                                         <div class="row">
                                             <div class="col-md-offset-3 col-md-9">

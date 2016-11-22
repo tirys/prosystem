@@ -89,7 +89,7 @@
 
 
             <?php
-            if($_GET['idMenu'] == 41 || $_GET['idMenu'] == 42 || $_GET['idMenu'] == 43 || $_GET['idMenu'] == 44 || $_GET['idMenu'] == 45){
+            if($_GET['idMenu'] == 41 || $_GET['idMenu'] == 42 || $_GET['idMenu'] == 43 || $_GET['idMenu'] == 44 || $_GET['idMenu'] == 45 || $_GET['usuario'] != ''){
                 echo('<li class="nav-item start active open"><a href="tarefas" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
             }else{
                 echo('<li class="nav-item"><a href="tarefas" class="nav-link nav-toggle"></span><span class="arrow"></span>');
@@ -126,6 +126,37 @@
                     <a href="listar/minhas-fechadas" class="nav-link nav-toggle">
                         <span class="title">Minhas Tarefas Fechadas</span>
                     </a>
+
+                    <?php if($usuario_tipo != 2){?>
+                    <hr style="border:#454d58 solid 0.2px;width:85%;margin-left:10px;"></hr>
+
+                    <?php
+                        $conexao = new classeConexao();
+
+                        $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios WHERE tb_usuarios_tipo IN(0,1) ORDER BY tb_usuarios_nome");
+
+                        foreach ($usuarios as $usuario) {
+                            $num = '45'.$usuario['id'];
+                            $num2 = '445'.$usuario['id'];
+                    ?>
+                            <?php if($usuario['tb_usuarios_menu_abertas']=='sim') {?>
+                                <?php echo ($_GET['idMenu'] == $num ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                                <a href="listar-tarefas/usuario/<?=$usuario['id']?>" class="nav-link nav-toggle">
+                                    <span class="title"><?=$usuario['tb_usuarios_nome']?> - Abertas</span>
+                                </a>
+                            <?php } ?>
+
+                            <?php if($usuario['tb_usuarios_menu_fechadas']=='sim') {?>
+                                <?php echo ($_GET['idMenu'] == $num2 ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                                <a href="listar-fechadas/usuario/<?=$usuario['id']?>" class="nav-link nav-toggle">
+                                    <span class="title"><?=$usuario['tb_usuarios_nome']?> - Fechadas</span>
+                                </a>
+                            <?php } ?>
+                    <?php
+                        }
+                    ?>
+
+                    <?php }?>
                     </li>
                 </ul>
             </li>

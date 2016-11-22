@@ -2,25 +2,31 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
 $minhasTarefas = isset($_GET['usuario']) ? $_GET['usuario'] : '';
+$tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
 include("topo.php");
 
 //Consultando as tarefas
 $conexao = new classeConexao();
 
-//Se é minhas tarefas
-if($minhasTarefas=='1') {
-    $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
-    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
+if($tipo!='particular') {
+    //Se é minhas tarefas
+    if($minhasTarefas=='1') {
+        $usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
+        $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$usuario['id']} AND tt.tb_tarefas_status != 1");
+    }
+    else {
+
+        if($usuario_tipo == 2){
+            $cliente = $conexao::fetchuniq("SELECT te.id FROM tb_empresas te, tb_clientes tc WHERE te.id = tc.tb_clientes_empresas_id and tc.tb_clientes_usuario_id = ".$usuario['id']);
+            $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tt.tb_tarefas_oculto != 1 AND tt.tb_tarefas_status != 1 AND tp.id = tt.tb_tarefas_projeto and te.id = ". $cliente['id']);
+        }else{
+            $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_status != 1");
+        }
+    }
 }
 else {
-
-    if($usuario_tipo == 2){
-        $cliente = $conexao::fetchuniq("SELECT te.id FROM tb_empresas te, tb_clientes tc WHERE te.id = tc.tb_clientes_empresas_id and tc.tb_clientes_usuario_id = ".$usuario['id']);
-        $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tt.tb_tarefas_oculto != 1 AND tt.tb_tarefas_status != 1 AND tp.id = tt.tb_tarefas_projeto and te.id = ". $cliente['id']);
-    }else{
-        $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_status != 1");
-    }
+    $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome, tp.tb_projetos_nome, tp.id as projetos_id FROM tb_tarefas tt, tb_empresas te, tb_projetos tp WHERE tp.id_projetos_empresas_id = te.id AND tp.id = tt.tb_tarefas_projeto AND tt.tb_tarefas_funcionario = {$minhasTarefas} AND tt.tb_tarefas_status != 1");
 }
 ?>
 <div class="clearfix"> </div>

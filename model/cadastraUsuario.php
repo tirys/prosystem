@@ -11,6 +11,10 @@ $fotoAtual = isset($_POST['fotoExistente']) ? $_POST['fotoExistente'] : '';
 $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
 $idUser = isset($_POST['idUser']) ? $_POST['idUser'] : '';
 
+//opções de menu
+$menuAbertas = isset($_POST['menuAbertas']) ? $_POST['menuAbertas'] : 'nao';
+$menuFechadas = isset($_POST['menuFechadas']) ? $_POST['menuFechadas'] : 'nao';
+
 include('../config/conexao.php');
 include('../config/funcoes.php');
 
@@ -42,9 +46,9 @@ if ($acao == 1) {
             $destinoImagem = $destinoImagem. $novoNomeImagem;
             move_uploaded_file ( $imagem_tmp, $destinoImagem );
         }
-        $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','uploads\\\usuarios/{$novoNomeImagem}','1')");
+        $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status,tb_usuarios_menu_abertas,tb_usuarios_menu_fechadas) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','uploads\\\usuarios/{$novoNomeImagem}','1', '{$menuAbertas}','{$menuFechadas}')");
     }else{
-        $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','default/user.jpg','1')");
+        $insert = $conexao::exec("INSERT INTO tb_usuarios (id,tb_usuarios_nome,tb_usuarios_email,tb_usuario_login,tb_usuario_senha,tb_usuarios_foto,tb_usuarios_status,tb_usuarios_menu_abertas,tb_usuarios_menu_fechadas) values (null,'{$nomeUsuario}','{$emailUsuario}','{$loginUsuario}','{$senhaUsuario}','default/user.jpg','1', '{$menuAbertas}', '{$menuFechadas}')");
     }
 
 
@@ -90,10 +94,10 @@ if ($acao == 2) {
             $destinoImagem = $destinoImagem. $novoNomeImagem;
             move_uploaded_file ( $imagem_tmp, $destinoImagem );
         }
-        $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}',tb_usuarios_foto = 'uploads\\\usuarios/{$novoNomeImagem}' WHERE id = '".$idUser."'");
+        $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}',tb_usuarios_foto = 'uploads\\\usuarios/{$novoNomeImagem}', tb_usuarios_menu_abertas = '{$menuAbertas}', tb_usuarios_menu_fechadas = '{$menuFechadas}' WHERE id = '".$idUser."'");
         unlink('../view/images/'.$fotoAtual);
     }else{
-        $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}' WHERE id = '".$idUser."'");
+        $update = $conexao::exec("UPDATE tb_usuarios SET tb_usuarios_nome = '{$nomeUsuario}',tb_usuarios_email = '{$emailUsuario}',tb_usuario_senha = '{$senhaUsuario}', tb_usuarios_menu_abertas = '{$menuAbertas}', tb_usuarios_menu_fechadas = '{$menuFechadas}' WHERE id = '".$idUser."'");
     }
 
     if ($update) {
