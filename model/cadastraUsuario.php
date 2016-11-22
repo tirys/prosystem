@@ -83,7 +83,7 @@ if ($acao == 2) {
         date_default_timezone_set("Brazil/East");
         $imagem_tmp = $_FILES[ 'fotoUser' ][ 'tmp_name' ];
         $nomeImagem = $_FILES[ 'fotoUser' ][ 'name' ];
-        $destinoImagem = '..\view\images\uploads\usuarios/';
+        $destinoImagem = '../view/images/uploads/usuarios/';
         $extensaoImagem = pathinfo ( $nomeImagem, PATHINFO_EXTENSION );
         $extensaoImagem = strtolower ( $extensaoImagem );
         $nomeSemAcento = str_replace(" ","",$nomeUsuario);
