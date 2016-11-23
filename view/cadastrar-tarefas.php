@@ -10,9 +10,9 @@ include("topo.php");
 
 $conexao = new classeConexao();
 $dadosTarefa = $conexao::fetchuniq("SELECT tt.*,tp.id_projetos_empresas_id FROM tb_tarefas tt, tb_projetos tp WHERE tt.tb_tarefas_projeto = tp.id  AND tt.id = '".$idTarefa."'");
-$usuario = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
+$usuarioAtual = $conexao::fetchuniq("SELECT tu.id FROM tb_usuarios tu, tb_sessao ts WHERE ts.tb_sessao_usuario_id = tu.id AND ts.tb_sessao_token ='".$cookie['t']."'");
 
-$usuario_id = $usuario['id'];
+$usuario_id = $usuarioAtual['id'];
 
 ?>
 <link href="view/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css" />
@@ -130,7 +130,7 @@ $usuario_id = $usuario['id'];
                                 <?php } else { ?>
                                 <form action="model/cadastraTarefa.php?acao=1" method="post" id="form_sample_1" class="form-horizontal" enctype="multipart/form-data">
                                     <?php } ?>
-                                    <input type="hidden" name="criador" value="<?=$usuario['id']?>"/>
+                                    <input type="hidden" name="criador" value="<?=$usuarioAtual['id']?>"/>
                                     <div class="form-body">
                                         <div class="alert alert-danger display-hide">
                                             <button class="close" data-close="alert"></button>
