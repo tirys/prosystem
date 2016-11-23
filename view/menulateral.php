@@ -178,6 +178,21 @@
             </li>
 
 
+            <?php
+            //menu de aprovações
+            if($_GET['idMenu'] == 8){
+                echo('<li class="nav-item start active open"><a href="gantt" class="nav-link nav-toggle"><span class="selected"></span><span class="arrow open"></span>');
+            }else{
+                echo('<li class="nav-item"><a href="gantt" class="nav-link nav-toggle"></span><span class="arrow"></span>');
+            }
+            ?>
+            <i class="fa fa-bar-chart"></i>
+            <span class="title">Gantt Geral</span>
+            <span class="arrow"></span>
+            </a>
+            </li>
+
+
             <?php if($usuario_tipo != 2){?>
                 <!--START Configurações-->
                 <li class="heading">

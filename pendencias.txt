@@ -4,11 +4,9 @@
     |-> manual seria uma data que o cara estipula de término, automático é a data prevista (somando a data final das tarefas abertas + data que foi finalizada as tarefas fechadas)
 
 -> CONTER UM HISTÓRICO DE REUNIÃO COM O CLIENTE, PARA SABER QUAL FOI A ÚLTIMA VEZ QUE ENTRAMOS EM CONTATO COM ELA
-    |-> não sei como fazer isso ainda :s
+    |-> não sei como fazer isso ainda
 
 -> Quando uma tarefa for para aprovação, enviar um email para o 'cliente' contendo as informações da mesma (incluindo anexos), e um botão de aprovação que leva para o site (aprovacoes.php)
-
--> Enviar para aprovação somente os anexos que ainda não estão como aprovados ?
 
 <----------------------------------- CONCLUÍDOS -------------------------------->
 
@@ -46,4 +44,14 @@
 [OK] Quando uma tarefa/arquivo for aprovada pelo cliente, enviar um email para quem enviou a tarefa para aprovação.
 [OK] Enviar email para quando a tarefa for concluída -> para o atribuído, para o usuário que concluiu e para quem abriu a tarefa
 [OK] Inserir na tabela de sessão o navegador que o usuário utilizou para fazer login - será útil em casos de problemas futuros do sistema (incompabilidade)
+[OK] Enviar para aprovação somente os anexos que ainda não estão como aprovados ?
 [OK] Criar um template de envio de email ao cadastrar novos usuários
+[ok] Em Ver Tarefas, trazer 0 e Adicionar Filtro (usuário, status, data) --- OU NO MENU JÁ ADICIONAR OPÇÕES COM FILTROS APLICADOS... EX: TODAS AS TAREFAS ABERTAS, TODAS AS TAREFAS FECHADAS, MINHAS TAREFAS ABERTAS, MINHAS TAREFAS FECHADAS,JOÃO - TAREFAS ABERTAS-  JOÃO - TAREFAS FECHADAS (acho que essa opção do menu é melhor)
+[ok] No Menu Tarefas Adicionar Vista de Tarefas abertas para cada usuário, inclusive para usuário logado
+[ok] Em nova tarefa, verificar possibilidade de deixar Descrição com altura maior em com wyswyg bem simples (negrito.. cores.. etc)
+[ok] Em projetos, trocar data término por prazo.
+[ok] Em nova tarefa, deixar tempo gasto sem obrigatoriedade
+[ok] Em Nova Tarefa, remover obrigatoriedade da "Data de Término" e mudar o nome para "Prazo"
+[ok] Na listagem de tarefas, remover botão pausar (por enquanto não é utilizado)
+[ok] No menu superior, adicionar botão fácil de "Adicionar"... ao clicar abrir opções, Tarefa, Projetos
+[ok] Em nova tarefa, deixar tudo em 2 colunas.. o label dos campos, pode remover do lado e colocar em cima do campo.
