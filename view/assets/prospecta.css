@@ -113,6 +113,27 @@
 }
 
 /*** GERAL ***/
+.row-flex,
+.flex-center {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    -webkit-flex-flow: initial;
+    -moz-flex-flow: initial;
+    -ms-flex-flow: initial;
+    flex-flow: initial;
+}
+
 @media print
 {
     body {-webkit-print-color-adjust: exact;}

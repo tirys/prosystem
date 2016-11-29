@@ -1,11 +1,40 @@
 <?php
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
-?>
 
-
-<?php
 include("topo.php");
+
+//Selecionando todas as tarefas
+$conexao = new classeConexao();
+
+$tarefas = $conexao::fetch('SELECT id,tb_tarefas_nome,tb_tarefas_data_termino,tb_tarefas_data_inicio,tb_tarefas_horas FROM tb_tarefas WHERE tb_tarefas_status != 1');
+
+$tarefaString = '';
+
+foreach ($tarefas as $key => $tarefa) {
+    $duracao =  $tarefa['tb_tarefas_horas'];
+
+    $duracao = round($duracao/8);
+
+    if($tarefa['tb_tarefas_data_inicio']!='') {
+        $datanova = explode('-', $tarefa['tb_tarefas_data_inicio']);
+        $datanova = $datanova[2] . '-' . $datanova[1] . '-' . $datanova[0];
+    }
+    else {
+        $datanova = date("d-m-Y");
+    }
+
+    if($tarefas[$key+1]['tb_tarefas_nome']!='') {
+        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'", "duration":'.$duracao.', "order":'.$key.',"progress":0, "parent":0},';
+    }
+    else {
+        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'", "duration":'.$duracao.', "order":'.$key.',"progress":0, "parent":0}';
+    }
+}
+
+$tarefaString = '{"data":['.$tarefaString.']}';
+
+
 ?>
     <div class="clearfix"> </div>
     <div class="page-container">
@@ -25,9 +54,17 @@ include("topo.php");
                         </div>
                     </div>
                 </div>
-                <h1 class="page-title"> Gantt Geral
-                    <small>gantt contendo todas as tarefas abertas</small>
-                </h1>
+                <div class="row flex-center">
+                    <div class="col-md-11">
+                        <h1 class="page-title"> Gantt Geral
+                            <small>gantt contendo todas as tarefas abertas</small>
+                        </h1>
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-success salvar-gantt">
+                            <i class="fa fa-check"></i> Salvar</a>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-9 col-sm-8 gantt-opcoes" style="margin-left:2px;">
@@ -37,8 +74,8 @@ include("topo.php");
                         <input type="radio" id="scale4" name="scale" value="4" /><label for="scale4">Ano </label>
                     </div>
                     <div class="pull-right col-md-2 col-sm-1" style="text-align:right;">
-                        <a class="btn btn-xs btn-success" onclick="exportGantt(&quot;pdf&quot;)"><i class="fa fa-file-pdf-o"></i> Exportar PDF</a>
-                        <a class="btn btn-xs btn-success" onclick="exportGantt(&quot;png&quot;)"><i class="fa fa-image"></i> Exportar PNG</a>
+                        <a class="btn btn-xs btn-default" onclick="exportGantt(&quot;pdf&quot;)"><i class="fa fa-file-pdf-o"></i> Exportar PDF</a>
+                        <a class="btn btn-xs btn-default" onclick="exportGantt(&quot;png&quot;)"><i class="fa fa-image"></i> Exportar PNG</a>
                     </div>
                 </div>
 
@@ -62,6 +99,10 @@ include("topo.php");
     var dd = today.getDate();
     var mm = today.getMonth()+1;
     var yyyy = today.getFullYear();
+    var text = '<?=$tarefaString?>';
+
+    //array com as tarefas atualizadas
+    var tarefasAtt = [];
 
 
     var holidays = [//inserção dos feriados
@@ -127,26 +168,8 @@ include("topo.php");
     };
 
 
-    var tasks =  {
-        data:[
-            {id:1, text:"Project #2", start_date:""+dd+"-"+mm+"-"+yyyy+"", duration:18,order:10,
-                progress:0, open: true},
-            {id:2, text:"Task #1", 	  start_date:""+dd+"-"+mm+"-"+yyyy+"", duration:8, order:10,
-                progress:0, parent:1},
-            {id:3, text:"Task #2",    start_date:""+dd+"-"+mm+"-"+yyyy+"", duration:8, order:20,
-                progress:0, parent:1}
-        ],
-        links:[
-            { id:1, source:1, target:2, type:"1"},
-            { id:2, source:2, target:3, type:"0"},
-            { id:3, source:3, target:4, type:"0"},
-            { id:4, source:2, target:5, type:"2"},
-        ]
-    };
+    var tasks = JSON.parse(text);
 
-//    gantt.attachEvent("onAfterTaskDrag", function(id, mode){
-//        alert("Você clicou 2 vezes na tarefa="+id);
-//    });
     gantt.attachEvent("onBeforeTaskChanged", function(id, mode, old_event){
         var task = gantt.getTask(id);
         if(mode == gantt.config.drag_mode.progress){
@@ -159,6 +182,7 @@ include("topo.php");
     });
 
     gantt.attachEvent("onAfterTaskUpdate", function(id,item){
+        tarefasAtt.push(item);
         console.log(item);
     });
 
@@ -263,4 +287,28 @@ include("topo.php");
                 header:'<link rel="stylesheet" href="http://docs.dhtmlx.com/gantt/samples/common/customstyles.css" type="text/css">'
             });
     }
+    
+    
+    $('.salvar-gantt').on('click', function () {
+
+        var tarefasAtualizar = JSON.stringify(tarefasAtt);
+
+        $.ajax({
+            url: 'model/ws/atualizaGantt.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'atualizarDados',
+                tarefas: tarefasAtualizar
+            },
+            error: function () {
+                alert('Ocorreu um erro');
+            },
+            dataType: 'json',
+            success: function (result) {
+                alert('Tarefas salvas');
+            }
+        });
+
+    })
 </script>
