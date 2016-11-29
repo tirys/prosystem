@@ -1,18 +1,12 @@
 <?php
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
-
-require("libs/dhtmlxgantt/connector/grid_connector.php"); //connector do gantt
-
 ?>
 
 
 <?php
 include("topo.php");
 ?>
-
-
-
     <div class="clearfix"> </div>
     <div class="page-container">
         <?php include("menulateral.php"); ?>
@@ -35,6 +29,19 @@ include("topo.php");
                     <small>gantt contendo todas as tarefas abertas</small>
                 </h1>
 
+                <div class="row">
+                    <div class="col-md-9 col-sm-8 gantt-opcoes" style="margin-left:2px;">
+                        <input type="radio" id="scale1" name="scale" value="1" checked /><label for="scale1">Dias </label>
+                        <input type="radio" id="scale2" name="scale" value="2" /><label for="scale2">Semanas </label>
+                        <input type="radio" id="scale3" name="scale" value="3" /><label for="scale3">Meses </label>
+                        <input type="radio" id="scale4" name="scale" value="4" /><label for="scale4">Ano </label>
+                    </div>
+                    <div class="pull-right col-md-2 col-sm-1" style="text-align:right;">
+                        <a class="btn btn-xs btn-success" onclick="exportGantt(&quot;pdf&quot;)"><i class="fa fa-file-pdf-o"></i> Exportar PDF</a>
+                        <a class="btn btn-xs btn-success" onclick="exportGantt(&quot;png&quot;)"><i class="fa fa-image"></i> Exportar PNG</a>
+                    </div>
+                </div>
+
                 <div id="gantt_here" style='width:100%; height:100%;'></div>
             </div>
         </div>
@@ -45,6 +52,7 @@ include("topo.php");
 <!--<script src="view/libs/dhtmlxgantt/common/dhtmlxSuite/dhtmlx.js" type="text/javascript" charset="utf-8"></script>-->
 <!--<script src="view/libs/dhtmlxgantt/sources/dhtmlxgantt.jss" type="text/javascript" charset="utf-8"></script>-->
 <script type="text/javascript" src="view/libs/dhtmlxgantt/common/testdata.js"></script>
+<script src="http://export.dhtmlx.com/gantt/api.js" type="text/javascript" charset="utf-8"></script>
 
 <link rel="stylesheet" href="view/libs/dhtmlxgantt/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
@@ -173,19 +181,86 @@ include("topo.php");
     });
 
 
-        //se clicar na tarefa
-//    gantt.attachEvent("onTaskDblClick", function(id, e) {
-//        alert("Você clicou 2 vezes na tarefa="+id);
-//    });
-
-//    gantt.attachEvent("onTaskClick", function(id, e) {
-//        alert("Você clicou na tarefa="+id);
-//    });
-
-
     gantt.init("gantt_here");
 
 
     gantt.parse(tasks);
 
+
+    function setScaleConfig(value){
+        switch (value) {
+            case "1":
+                gantt.config.scale_unit = "day";
+                gantt.config.step = 1;
+                gantt.config.date_scale = "%d %M";
+                gantt.config.subscales = [];
+                gantt.config.scale_height = 27;
+                gantt.templates.date_scale = null;
+                break;
+            case "2":
+                var weekScaleTemplate = function(date){
+                    var dateToStr = gantt.date.date_to_str("%d %M");
+                    var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+                    return dateToStr(date) + " - " + dateToStr(endDate);
+                };
+
+                gantt.config.scale_unit = "week";
+                gantt.config.step = 1;
+                gantt.templates.date_scale = weekScaleTemplate;
+                gantt.config.subscales = [
+                    {unit:"day", step:1, date:"%D" }
+                ];
+                gantt.config.scale_height = 50;
+                break;
+            case "3":
+                gantt.config.scale_unit = "month";
+                gantt.config.date_scale = "%F, %Y";
+                gantt.config.subscales = [
+                    {unit:"day", step:1, date:"%j, %D" }
+                ];
+                gantt.config.scale_height = 50;
+                gantt.templates.date_scale = null;
+                break;
+            case "4":
+                gantt.config.scale_unit = "year";
+                gantt.config.step = 1;
+                gantt.config.date_scale = "%Y";
+                gantt.config.min_column_width = 50;
+
+                gantt.config.scale_height = 90;
+                gantt.templates.date_scale = null;
+
+
+                gantt.config.subscales = [
+                    {unit:"month", step:1, date:"%M" }
+                ];
+                break;
+        }
+    }
+
+    setScaleConfig('4');
+
+    var func = function(e) {
+        e = e || window.event;
+        var el = e.target || e.srcElement;
+        var value = el.value;
+        setScaleConfig(value);
+        gantt.render();
+    };
+
+    var els = document.getElementsByName("scale");
+    for (var i = 0; i < els.length; i++) {
+        els[i].onclick = func;
+    }
+
+    function exportGantt(mode){
+        if (mode == "png")
+            gantt.exportToPNG({
+                header:'<link rel="stylesheet" href="http://docs.dhtmlx.com/gantt/samples/common/customstyles.css" type="text/css">'
+            });
+        else if (mode == "pdf")
+            gantt.exportToPDF({
+                header:'<link rel="stylesheet" href="http://docs.dhtmlx.com/gantt/samples/common/customstyles.css" type="text/css">'
+            });
+    }
 </script>

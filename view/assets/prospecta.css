@@ -87,6 +87,31 @@
 
 }
 
+.week_end{
+    background: #f4f7f4;
+}
+
+.gantt-opcoes input[type=radio] {
+    display:none;
+    margin:10px;
+}
+
+
+.gantt-opcoes input[type=radio] + label {
+    display:inline-block;
+    margin:-2px;
+    padding: 4px 12px;
+    background-color: #e7e7e7;
+    border-color: #ddd;
+    cursor:pointer;
+}
+
+.gantt-opcoes input[type=radio]:checked + label {
+    background-image: none;
+    background-color:#3db9d3;
+    color:#ffffff;
+}
+
 /*** GERAL ***/
 @media print
 {
