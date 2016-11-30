@@ -246,7 +246,7 @@ function AtividadesRecentesGeral($logs_descricao = "", $logs_id_referencia = 0,$
         $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
         $item = $tarefa['tb_tarefas_nome'];
         $img = 'fa-star';
-        $label = 'label-warning';
+        $label = 'label-info';
         $url = 'editar/tarefa/';
     }
 
