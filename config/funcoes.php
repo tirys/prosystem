@@ -242,6 +242,13 @@ function AtividadesRecentesGeral($logs_descricao = "", $logs_id_referencia = 0,$
         $label = 'label-warning';
         $url = 'editar/tarefa/';
     }
+    else if ($logs_descricao=='criou a tarefa') {
+        $tarefa = $conexao::fetchuniq("SELECT tb_tarefas_nome FROM tb_tarefas WHERE id = ".$logs_id_referencia);
+        $item = $tarefa['tb_tarefas_nome'];
+        $img = 'fa-star';
+        $label = 'label-warning';
+        $url = 'editar/tarefa/';
+    }
 
     //$exibeHTML = '<li><div class="col1" style="width:98%;"><div class="cont"><div class="cont-col1"><div class="label label-sm '.$label.'"><i class="fa '.$imagem.'"></i></div></div><div class="cont-col2">';
     //$exibeHTML .= '<div class="desc">O usuário <a href="">'.$usuarios_nome.'</a> '.$logs_descricao.' <a href="'.$url.$logs_id_referencia.'">'.$item.'</a></div></div></div></div><div class="col2">'.'<div class="date">'.DataBrasilSemHoras($logs_data).'</div></div></li>';
