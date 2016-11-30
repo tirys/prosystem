@@ -187,7 +187,7 @@
             }
             ?>
             <i class="fa fa-bar-chart"></i>
-            <span class="title">Gantt Geral</span>
+            <span class="title">Gantt</span>
             <span class="arrow"></span>
             </a>
                 <ul class="sub-menu">
