@@ -7,7 +7,29 @@ include("topo.php");
 //Selecionando todas as tarefas
 $conexao = new classeConexao();
 
-$tarefas = $conexao::fetch('SELECT id,tb_tarefas_nome,tb_tarefas_data_termino,tb_tarefas_data_inicio,tb_tarefas_horas FROM tb_tarefas WHERE tb_tarefas_status != 1');
+$tarefas = $conexao::fetch('SELECT id,tb_tarefas_nome,tb_tarefas_data_termino,tb_tarefas_data_inicio,tb_tarefas_horas, tb_tarefas_ordem FROM tb_tarefas WHERE tb_tarefas_status != 1 ORDER BY tb_tarefas_ordem');
+
+$dataInicial = $conexao::fetchuniq('SELECT min(tb_tarefas_data_inicio) as data from tb_tarefas WHERE tb_tarefas_status != 1');
+$dataFinal = $conexao::fetchuniq('SELECT max(tb_tarefas_data_termino) as data from tb_tarefas WHERE tb_tarefas_status != 1');
+
+$timestampBanco = strtotime($dataInicial['data']);
+
+$dataAtual = date();
+$timestampAtual = strtotime($dataAtual);
+
+if($timestampAtual<$timestampBanco) {
+    $dataInicial = date("d-m-Y");
+}
+
+$timestampBanco2 = strtotime($dataFinal['data']);
+
+if($timestampAtual<$timestampBanco2) {
+    $dataFinal = date("d-m-Y");
+}
+
+$diferenca = $timestampBanco2 - $timestampBanco;
+
+$diasSomados = (int)floor( $diferenca / (60 * 60 * 24));
 
 $tarefaString = '';
 
@@ -25,14 +47,14 @@ foreach ($tarefas as $key => $tarefa) {
     }
 
     if($tarefas[$key+1]['tb_tarefas_nome']!='') {
-        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'", "duration":'.$duracao.', "order":'.$key.',"progress":0, "parent":0},';
+        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'","type": "task", "duration":'.$duracao.', "order":'.$tarefa['tb_tarefas_ordem'].',"progress":0, "parent":1},';
     }
     else {
-        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'", "duration":'.$duracao.', "order":'.$key.',"progress":0, "parent":0}';
+        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'","type": "task", "duration":'.$duracao.', "order":'.$tarefa['tb_tarefas_ordem'].',"progress":0, "parent":1}';
     }
 }
 
-$tarefaString = '{"data":['.$tarefaString.']}';
+$tarefaString = '{"data":[{"id":1, "text":"Tarefas","start_date":"'.$dataInicial.'", "duration":'.$diasSomados.', "order":0,"progress":0, "open":true, "parent":0},'.$tarefaString.']}';
 
 
 ?>
@@ -106,7 +128,7 @@ $tarefaString = '{"data":['.$tarefaString.']}';
 
 
     var holidays = [//inserção dos feriados
-        new Date(2016, 10, 30),
+        new Date(2016, 12, 08),
         new Date(2014, 0, 20),
         new Date(2014, 1, 17),
         new Date(2014, 3, 16),
@@ -129,8 +151,8 @@ $tarefaString = '{"data":['.$tarefaString.']}';
 
     gantt.config.work_time = true;
 
-    gantt.config.start_date = new Date(2016, 1, 1);
-    gantt.config.end_date = new Date(2017, 11, 30);
+    gantt.config.start_date = new Date(2016, 09, 1);
+    gantt.config.end_date = new Date(2017, 09, 30);
 
     gantt.config.order_branch = true; //trocar de ordem
     gantt.config.order_branch_free = true; //trocar de ordem
@@ -184,6 +206,14 @@ $tarefaString = '{"data":['.$tarefaString.']}';
     gantt.attachEvent("onAfterTaskUpdate", function(id,item){
         tarefasAtt.push(item);
         console.log(item);
+    });
+
+    gantt.attachEvent("onBeforeRowDragEnd", function(id, parent, tindex){
+        var task = gantt.getTask(id);
+        if(task.parent != parent)
+            return false;
+        tarefasAtt.push(task); //colocando no array de modificações
+        return true;
     });
 
     //após atualizar a tarefa
@@ -295,18 +325,18 @@ $tarefaString = '{"data":['.$tarefaString.']}';
 
         $.ajax({
             url: 'model/ws/atualizaGantt.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 format: 'json',
                 acao: 'atualizarDados',
                 tarefas: tarefasAtualizar
             },
             error: function () {
-                alert('Ocorreu um erro');
+
             },
             dataType: 'json',
-            success: function (result) {
-                alert('Tarefas salvas');
+            success: function () {
+                alert('ok');
             }
         });
 
