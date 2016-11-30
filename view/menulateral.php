@@ -190,6 +190,32 @@
             <span class="title">Gantt Geral</span>
             <span class="arrow"></span>
             </a>
+                <ul class="sub-menu">
+                    <?php echo ($_GET['idMenu'] == 8 && !$_GET['idganttusuario']  ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                        <a href="gantt" class="nav-link nav-toggle">Todas as Tarefas</a>
+                    </li>
+                    <?php
+                    $conexao = new classeConexao();
+
+                    $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios WHERE tb_usuarios_tipo IN(0,1) ORDER BY tb_usuarios_nome");
+
+                    foreach ($usuarios as $usuario) {
+                        $num = $usuario['id'];
+
+
+                        $qtdTarefasAbertas = $conexao::fetchuniq("SELECT count(id) as qtd FROM tb_tarefas WHERE tb_tarefas_status != 1 AND tb_tarefas_funcionario = {$usuario['id']}");
+                        ?>
+                        <?php if($usuario['tb_usuarios_menu_abertas']=='sim') {?>
+                            <?php echo ($_GET['idganttusuario'] == $num ? '<li class="nav-item active">' : '<li class="nav-item">');?>
+                            <a href="gantt/usuario/<?=$usuario['id']?>" class="nav-link nav-toggle">
+                                <span class="title"><?=$usuario['tb_usuarios_nome']?> - Abertas <span class="badge badge-default" style="background:#36c6d3"><?=$qtdTarefasAbertas['qtd']?></span></span>
+                            </a>
+                        <?php } ?>
+
+                        <?php
+                    }
+                    ?>
+                </ul>
             </li>
 
 

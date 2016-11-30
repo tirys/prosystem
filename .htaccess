@@ -58,6 +58,7 @@
 				RewriteRule ^usuario$                                               view/ver-usuario.php?idMenu=52
 				RewriteRule ^atividades$                                            view/atividades.php?idMenu=1
 				RewriteRule ^gantt$                                                 view/visualizar-gantt.php?idMenu=8
+				RewriteRule ^gantt/usuario/([_0-9a-z-]+)?$	                        view/visualizar-gantt.php?idMenu=8&idganttusuario=$1
 
 
 

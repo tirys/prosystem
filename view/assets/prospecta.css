@@ -112,6 +112,16 @@
     color:#ffffff;
 }
 
+.gantt_add {
+    display: none;
+}
+.gantt_grid_head_cell.gantt_grid_head_add.gantt_last_cell {
+    display: none;
+}
+
+.gantt_tree_icon.gantt_blank {
+    display: none;
+}
 /*** GERAL ***/
 .row-flex,
 .flex-center {

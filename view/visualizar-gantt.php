@@ -1,16 +1,25 @@
 <?php
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie);
+$idganntusuario = isset($_GET['idganttusuario']) ? $_GET['idganttusuario'] : '';
 
 include("topo.php");
 
 //Selecionando todas as tarefas
 $conexao = new classeConexao();
 
-$tarefas = $conexao::fetch('SELECT id,tb_tarefas_nome,tb_tarefas_data_termino,tb_tarefas_data_inicio,tb_tarefas_horas, tb_tarefas_ordem FROM tb_tarefas WHERE tb_tarefas_status != 1 ORDER BY tb_tarefas_ordem');
+if($idganntusuario=='') {
+    $tarefas = $conexao::fetch('SELECT id,tb_tarefas_nome,tb_tarefas_data_termino,tb_tarefas_data_inicio,tb_tarefas_horas, tb_tarefas_ordem FROM tb_tarefas WHERE tb_tarefas_status != 1 ORDER BY tb_tarefas_ordem');
 
-$dataInicial = $conexao::fetchuniq('SELECT min(tb_tarefas_data_inicio) as data from tb_tarefas WHERE tb_tarefas_status != 1');
-$dataFinal = $conexao::fetchuniq('SELECT max(tb_tarefas_data_termino) as data from tb_tarefas WHERE tb_tarefas_status != 1');
+    $dataInicial = $conexao::fetchuniq('SELECT min(tb_tarefas_data_inicio) as data from tb_tarefas WHERE tb_tarefas_status != 1');
+    $dataFinal = $conexao::fetchuniq('SELECT max(tb_tarefas_data_termino) as data from tb_tarefas WHERE tb_tarefas_status != 1');
+}
+else {
+    $tarefas = $conexao::fetch('SELECT id,tb_tarefas_nome,tb_tarefas_data_termino,tb_tarefas_data_inicio,tb_tarefas_horas, tb_tarefas_ordem FROM tb_tarefas WHERE tb_tarefas_status != 1 and tb_tarefas_funcionario = '.$idganntusuario.' ORDER BY tb_tarefas_ordem');
+
+    $dataInicial = $conexao::fetchuniq('SELECT min(tb_tarefas_data_inicio) as data from tb_tarefas WHERE tb_tarefas_status != 1 and tb_tarefas_funcionario = '.$idganntusuario.'');
+    $dataFinal = $conexao::fetchuniq('SELECT max(tb_tarefas_data_termino) as data from tb_tarefas WHERE tb_tarefas_status != 1 and tb_tarefas_funcionario = '.$idganntusuario.'');
+}
 
 $timestampBanco = strtotime($dataInicial['data']);
 
@@ -46,11 +55,15 @@ foreach ($tarefas as $key => $tarefa) {
         $datanova = date("d-m-Y");
     }
 
+    if($duracao==0){
+        $duracao=1;
+    }
+
     if($tarefas[$key+1]['tb_tarefas_nome']!='') {
-        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'","type": "task", "duration":'.$duracao.', "order":'.$tarefa['tb_tarefas_ordem'].',"progress":0, "parent":1},';
+        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'","duration":'.$duracao.', "order":'.$tarefa['tb_tarefas_ordem'].',"progress":0, "parent":1},';
     }
     else {
-        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'","type": "task", "duration":'.$duracao.', "order":'.$tarefa['tb_tarefas_ordem'].',"progress":0, "parent":1}';
+        $tarefaString .=  '{"id":'.$tarefa['id'].', "text":"'.$tarefa['tb_tarefas_nome'].'","start_date":"'.$datanova.'","duration":'.$duracao.', "order":'.$tarefa['tb_tarefas_ordem'].',"progress":0, "parent":1}';
     }
 }
 
@@ -114,7 +127,7 @@ $tarefaString = '{"data":[{"id":1, "text":"Tarefas","start_date":"'.$dataInicial
 <script src="http://export.dhtmlx.com/gantt/api.js" type="text/javascript" charset="utf-8"></script>
 
 <link rel="stylesheet" href="view/libs/dhtmlxgantt/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
-
+<script src="view/assets/notify.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     var today = new Date();
@@ -332,11 +345,11 @@ $tarefaString = '{"data":[{"id":1, "text":"Tarefas","start_date":"'.$dataInicial
                 tarefas: tarefasAtualizar
             },
             error: function () {
-
+                $.notify('Tarefas atualizadas com sucesso!', {position:"bottom right",className:"success"});
             },
             dataType: 'json',
             success: function () {
-                alert('ok');
+                $.notify('Tarefas atualizadas com sucesso!', {position:"bottom right",className:"success"});
             }
         });
 
