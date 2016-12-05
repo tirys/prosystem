@@ -6,6 +6,13 @@ $idUsuario = isset($_GET['idUsuario']) ? $_GET['idUsuario'] : '';
 include('../../config/conexao.php');
 
 
+if($acao=='urgente'){
+    $conexao = new classeConexao();
+    $empresas = $conexao::exec("UPDATE tb_tarefas SET tb_tarefas_prioridade = 2 WHERE id = {$id}");
+
+    echo json_encode(array("status" => true));
+}
+
 //Ativando as tarefas
 if($acao=='reativar') {
     $conexao = new classeConexao();

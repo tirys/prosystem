@@ -143,15 +143,15 @@ else {
 <!--                                        2 => Urgente -> vermelho-->
 
                                         <?php if ($tarefa['tb_tarefas_prioridade']==0) {?>
-                                            <td><span class="label label-sm label-default"> Normal </span></td>
+                                            <td id="prioridade<?=$tarefa['id']?>"><span class="label label-sm label-default"> Normal </span></td>
                                         <?php } else if ($tarefa['tb_tarefas_prioridade']==1) {?>
-                                            <td><span class="label label-sm label-warning"> Alta </span></td>
+                                            <td id="prioridade<?=$tarefa['id']?>"><span class="label label-sm label-warning"> Alta </span></td>
                                         <?php } else if ($tarefa['tb_tarefas_prioridade']==2) {?>
-                                            <td><span class="label label-sm label-danger"> Urgente </span></td>
+                                            <td id="prioridade<?=$tarefa['id']?>"><span class="label label-sm label-danger"> Urgente </span></td>
                                         <?php } else if ($tarefa['tb_tarefas_prioridade']==-1) {?>
-                                            <td><span class="label label-sm label-info"> Baixa </span></td>
+                                            <td id="prioridade<?=$tarefa['id']?>"><span class="label label-sm label-info"> Baixa </span></td>
                                         <?php } else if ($tarefa['tb_tarefas_prioridade']==-2) {?>
-                                            <td><span class="label label-sm label-success"> Muito Baixa </span></td>
+                                            <td id="prioridade<?=$tarefa['id']?>"><span class="label label-sm label-success"> Muito Baixa </span></td>
                                         <?php } ?>
 
 <!--                                        STATUS-->
@@ -175,6 +175,8 @@ else {
                                                 <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger desativar" title="Abrir"> <i class="fa fa-arrow-up" style="width:12px;"></i>
                                                 </a>
                                             <?php } ?>
+
+                                            <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-danger virarurgente" title="Tornar essa tarefa Urgente"> <i class="fa fa-warning" style="width:12px;"></i>
 
                                             <?php if ($tarefa['tb_tarefas_status']==1 || $tarefa['tb_tarefas_status']==2 || $tarefa['tb_tarefas_status']==0) {?>
                                                <!-- <a id="<?=$tarefa['id']?>" data-role="<?=$tarefa['id']?>" class="btn btn-xs btn-info pausar" title="Pausar"> <i class="fa fa-pause"></i> -->
@@ -211,6 +213,32 @@ else {
 
 
 <script>
+
+    $('.virarurgente').on('click', function(){
+        var idempresa = $(this).attr('data-role'); //pegando o id da empresa
+
+        $.ajax({
+            url: 'model/ws/ativacaoTarefa.php',
+            type: 'GET',
+            data: {
+                format: 'json',
+                acao: 'urgente',
+                idUsuario: '<?=$usuario['id']?>',
+                id: idempresa
+            },
+            error: function () {
+                $.notify('Ocorreu um erro', {position:"bottom right",className:"danger"});
+            },
+            dataType: 'json',
+            success: function (result) {
+                $.notify('Status atualizado para Urgente', {position:"bottom right",className:"success"});
+                $('#prioridade'+idempresa+'').html('<span class="label label-sm label-danger"> Urgente </span>');
+//                if (result.status) {
+//                    location.reload();
+//                }
+            }
+        });
+    });
 
     $('.pausar').on('click', function () {
         var idempresa = $(this).attr('data-role'); //pegando o id da empresa
