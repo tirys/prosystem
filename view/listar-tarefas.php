@@ -233,9 +233,6 @@ else {
             success: function (result) {
                 $.notify('Status atualizado para Urgente', {position:"bottom right",className:"success"});
                 $('#prioridade'+idempresa+'').html('<span class="label label-sm label-danger"> Urgente </span>');
-//                if (result.status) {
-//                    location.reload();
-//                }
             }
         });
     });

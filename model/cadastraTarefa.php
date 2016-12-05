@@ -33,6 +33,18 @@ $descricaoTarefa = mysqli_real_escape_string($conexao->obj(),$descricaoTarefa);
 
 if ($acao == 1) {
 
+
+    //Criação do Cookie de criação de tarefas
+    $expire = ( time() + ( 30 * 24 * 3600 ) ); // O cookie não deve ser eterno.
+    $cookieToken = array(
+        'func' => $funcionarioID,
+        'projeto' => $projetoID
+    );
+
+    //setcookie( 'dados', json_encode( $cookieToken ), $expire, '/', 'localhost', isset( $_SERVER["HTTPS"] ), false );
+    setcookie( 'dados', json_encode( $cookieToken ), $expire, '/', 'agenciaprospecta.com.br', isset( $_SERVER["HTTPS"] ), false );
+
+
     $conexao = new classeConexao();
     $insert = $conexao::exec("INSERT INTO tb_tarefas values (null,'{$nomedaTarefa}','{$descricaoTarefa}','{$dataTarefa}',null,NOW(),{$tempoEstimado},{$tempoGasto},{$tarefaStatus},{$oculto},{$criador},{$prioridade},{$projetoID},{$funcionarioID},0,'{$legendaTarefa}',0)");
     $ultimoID = $conexao::fetchuniq("SELECT max(id) as ultimo FROM tb_tarefas");

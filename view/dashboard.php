@@ -82,7 +82,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                     <small>estatísticas, gráficos, eventos recentes e tarefas</small>
                 </h1>
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 blue">
                             <div class="visual" style="margin-bottom:51px;">
                                 <i class="fa fa-check"></i>
@@ -95,7 +95,7 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <a class="dashboard-stat dashboard-stat-v2 red">
                             <div class="visual" style="margin-bottom:51px;">
                                 <i class="fa fa-coffee"></i>
@@ -107,31 +107,31 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a class="dashboard-stat dashboard-stat-v2 green">
-                            <div class="visual" style="margin-bottom:51px;">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="details">
-                                <div class="number">
-                                    <span data-counter="counterup" data-value="<?=$projetosCompletos?>">0</span>
-                                </div>
-                                <div class="desc"> Projetos Completos </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a class="dashboard-stat dashboard-stat-v2 purple">
-                            <div class="visual" style="margin-bottom:51px;">
-                                <i class="fa fa-coffee"></i>
-                            </div>
-                            <div class="details">
-                                <div class="number">
-                                    <span data-counter="counterup" data-value="<?=$projetosPendentes?>"></span></div>
-                                <div class="desc"> Projetos em aberto </div>
-                            </div>
-                        </a>
-                    </div>
+<!--                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+<!--                        <a class="dashboard-stat dashboard-stat-v2 green">-->
+<!--                            <div class="visual" style="margin-bottom:51px;">-->
+<!--                                <i class="fa fa-check"></i>-->
+<!--                            </div>-->
+<!--                            <div class="details">-->
+<!--                                <div class="number">-->
+<!--                                    <span data-counter="counterup" data-value="--><?//=$projetosCompletos?><!--">0</span>-->
+<!--                                </div>-->
+<!--                                <div class="desc"> Projetos Completos </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+<!--                        <a class="dashboard-stat dashboard-stat-v2 purple">-->
+<!--                            <div class="visual" style="margin-bottom:51px;">-->
+<!--                                <i class="fa fa-coffee"></i>-->
+<!--                            </div>-->
+<!--                            <div class="details">-->
+<!--                                <div class="number">-->
+<!--                                    <span data-counter="counterup" data-value="--><?//=$projetosPendentes?><!--"></span></div>-->
+<!--                                <div class="desc"> Projetos em aberto </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
                 </div>
                 <div class="clearfix"></div>
 

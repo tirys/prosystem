@@ -2,6 +2,9 @@
 $cookie = $_COOKIE['auth'];
 $cookie = json_decode($cookie,true);
 
+$cookieTarefa = $_COOKIE['dados'];
+$cookieTarefa = json_decode($cookieTarefa, true);
+
 
 $idTarefa = isset($_GET['idTarefa']) ? $_GET['idTarefa'] : '';
 $idProjeto = isset($_GET['idProjeto']) ? $_GET['idProjeto'] : '';
@@ -198,7 +201,10 @@ $usuario_id = $usuarioAtual['id'];
 
                                                             if($idProjeto == $projeto['id'] || $dadosTarefa['tb_tarefas_projeto'] == $projeto['id']){
                                                                 echo '<option value="'.$projeto['id'].'" selected>'.$projeto['tb_projetos_nome'].'</option>';
-                                                            }else{
+                                                            } else if ($cookieTarefa['projeto'] == $projeto['id'] && !isset($dadosTarefa['id'])){
+                                                                echo '<option value="'.$projeto['id'].'" selected>'.$projeto['tb_projetos_nome'].'</option>';
+                                                            }
+                                                            else{
                                                                 echo '<option value="'.$projeto['id'].'">'.$projeto['tb_projetos_nome'].'</option>';
                                                             }
                                                         }
@@ -226,7 +232,10 @@ $usuario_id = $usuarioAtual['id'];
 
                                                         if($dadosTarefa['tb_tarefas_funcionario'] == $usuario['id']){
                                                             echo '<option value="'.$usuario['id'].'" selected>'.$usuario['tb_usuarios_nome'].'</option>';
-                                                        }else{
+                                                        } else if ($cookieTarefa['func'] == $usuario['id'] && !isset($dadosTarefa['id'])){
+                                                            echo '<option value="'.$usuario['id'].'" selected>'.$usuario['tb_usuarios_nome'].'</option>';
+                                                        }
+                                                        else{
                                                             echo '<option value="'.$usuario['id'].'">'.$usuario['tb_usuarios_nome'].'</option>';
                                                         }
                                                     }
