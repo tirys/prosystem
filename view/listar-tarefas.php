@@ -112,6 +112,7 @@ else {
                                     <tr class="odd gradeX">
                                         <td> <?=$tarefa['id']?> </td>
 
+
                                         <?php if($tarefa['tb_tarefas_aprovacao']==1) { ?>
 <!--                                            <td><a href="tarefa/--><?//=$tarefa['id']?><!--">--><?//=$tarefa['tb_tarefas_nome']?><!--</a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>-->
                                             <td><a href="editar/tarefa/<?=$tarefa['id']?>" title="Editar"><span rel='tooltip' data-original-title='<?=$tarefa['tb_tarefas_descricao']?>' data-placement="right"><?=$tarefa['tb_tarefas_nome']?></span></a> <i class="fa fa-clock-o widget-title-color-blue" title="Tarefa ENVIADA para aprovação"></i></td>
