@@ -178,6 +178,7 @@
             </li>
 
 
+            <?php if($usuario_tipo != 2){?>
             <?php
             //menu de aprovações
             if($_GET['idMenu'] == 8){
@@ -187,7 +188,6 @@
             }
             ?>
 
-            <?php if($usuario_tipo != 2){?>
             <i class="fa fa-bar-chart"></i>
             <span class="title">Gantt</span>
             <span class="arrow"></span>
