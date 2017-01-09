@@ -38,11 +38,11 @@
 
 @media only screen and (max-width: 1500px){
     .divtexto-aprovacao{
-       width: 20%;
+       width: 20% !important;
     }
 
     .divimagem-aprovacao{
-        width: 60%;
+        width: 60% !important;
     }
 }
 
