@@ -6,7 +6,7 @@ include("topo.php");
 
 //Consultando os usuarios
 $conexao = new classeConexao();
-$usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
+
 ?>
 <div class="clearfix"> </div>
 <div class="page-container">
@@ -82,7 +82,11 @@ $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($usuarios as $usuario) { ?>
+                                <?php
+
+                                $usuarios = $conexao::fetch("SELECT * FROM tb_usuarios");
+
+                                foreach ($usuarios as $usuario) { ?>
                                     <tr class="odd gradeX">
                                         <td> <?=$usuario['id']?> </td>
 
