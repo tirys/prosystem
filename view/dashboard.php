@@ -197,12 +197,12 @@ $tarefas = $conexao::fetch("SELECT tt.*, te.tb_empresas_nome FROM tb_tarefas tt,
                                                        if($anexo['tb_arquivos_tipo']!="pdf" && $anexo['tb_arquivos_aprovado'] != 1 && $anexo['tb_arquivos_aprovado'] != 2) {
                                                    ?>
                                                    <div class="row">
-                                                       <div class="col-md-2">
+                                                       <div class="col-md-2 divimagem-aprovacao">
                                                            <div class="imagem-aprovacao">
                                                                <img class="myImg imgAprovacao" id="myImg" src="view/images/uploads/anexos/<?=$anexo['tb_arquivos_nome']?>" title="<?=$aprovacao['tb_tarefas_nome']?>" alt="<?=$aprovacao['tb_tarefas_nome']?>" width="200px" height="200px"/>
                                                            </div>
                                                        </div>
-                                                       <div class="col-md-8">
+                                                       <div class="col-md-8 divtexto-aprovacao">
                                                            <div class="texto-aprovacao">
                                                                <span style="color:#6f6e6e;"><b>Data:</b> <?=DataBrasil($aprovacao['tb_tarefas_data_termino'])?><br></span>
                                                                <span style="color:#6f6e6e;"><b>Projeto:</b> <a target="_blank" href="projeto/<?=$aprovacao['projetoID']?>"><?=$aprovacao['tb_projetos_nome']?></a><br></span>
