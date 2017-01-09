@@ -186,6 +186,8 @@
                 echo('<li class="nav-item"><a href="gantt" class="nav-link nav-toggle"></span><span class="arrow"></span>');
             }
             ?>
+
+            <?php if($usuario_tipo != 2){?>
             <i class="fa fa-bar-chart"></i>
             <span class="title">Gantt</span>
             <span class="arrow"></span>
@@ -216,6 +218,7 @@
                     }
                     ?>
                 </ul>
+            <?php } ?>
             </li>
 
 

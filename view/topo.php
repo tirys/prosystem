@@ -177,6 +177,7 @@ if(count($cookie)>0) {
                     $tarefas = $conexao::fetchuniq("SELECT count(*) as qtd FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1");
                     $tarefasLista = $conexao::fetch("SELECT * FROM tb_tarefas WHERE tb_tarefas_funcionario = {$usuario['id']} AND tb_tarefas_status != 1 ORDER BY tb_tarefas_data_termino ASC");
                     ?>
+                    <?php if($usuario_tipo != 2){?>
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle link-topo" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-plus"></i>Adicionar
@@ -192,6 +193,7 @@ if(count($cookie)>0) {
                             </li>
                         </ul>
                     </li>
+                    <?php } ?>
                     <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-calendar"></i>
@@ -242,10 +244,12 @@ if(count($cookie)>0) {
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
+                            <?php if($usuario_tipo != 2){?>
                             <li>
                                 <a href="editar/usuario/<?=$usuario['id']?>">
                                     <i class="icon-user"></i> Meu Perfil</a>
                             </li>
+                            <?php } ?>
                             <li style="display: none;">
                                 <a href="app_calendar.html">
                                     <i class="icon-calendar"></i> Meu Calendário </a>
