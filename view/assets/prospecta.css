@@ -35,21 +35,13 @@
     padding-top:6px;
 }
 
-.divtexto-aprovacao{
-    width: 20% !important;
-}
-
-.divimagem-aprovacao{
-    width: 60% !important;
-}
-
 @media screen and (max-width: 1500px){
     .divtexto-aprovacao{
-       width: 20% !important;
+       width: 52% !important;
     }
 
     .divimagem-aprovacao{
-        width: 60% !important;
+        width: 28% !important;
     }
 }
 
