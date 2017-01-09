@@ -218,9 +218,9 @@
                     }
                     ?>
                 </ul>
-            <?php } ?>
-            </li>
 
+            </li>
+            <?php } ?>
 
             <?php if($usuario_tipo != 2){?>
                 <!--START Configurações-->
