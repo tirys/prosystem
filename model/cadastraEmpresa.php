@@ -28,7 +28,7 @@ if ($acao == 1) {
     $site = mysqli_real_escape_string($conexao->obj(),$site);
     $anotacao = mysqli_real_escape_string($conexao->obj(),$anotacao);
 
-    $insert = $conexao::exec("INSERT INTO tb_empresas (id,tb_empresas_nome,tb_empresas_endereco,tb_empresas_email,tb_empresas_site,tb_empresas_status,tb_empresas_anotacao,tb_empresas_latitude,tb_empresas_latitude) values (null,'{$nomeEmpresa}','{$enderecoEmpresa}','{$email}','{$site}',1,'{$anotacao}','{$latitude}','{$longitude}')");
+    $insert = $conexao::exec("INSERT INTO tb_empresas (id,tb_empresas_nome,tb_empresas_endereco,tb_empresas_email,tb_empresas_site,tb_empresas_status,tb_empresas_anotacao,tb_empresas_latitude,tb_empresas_longitude) values (null,'{$nomeEmpresa}','{$enderecoEmpresa}','{$email}','{$site}',1,'{$anotacao}','{$latitude}','{$longitude}')");
 
 
     if ($insert) {
