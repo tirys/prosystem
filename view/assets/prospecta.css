@@ -35,7 +35,7 @@
     padding-top:6px;
 }
 
-@media screen and (max-width: 1500px){
+@media (min-width: 992px) {
     .divtexto-aprovacao{
        width: 20% !important;
     }
