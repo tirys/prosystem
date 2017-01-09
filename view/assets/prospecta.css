@@ -34,6 +34,18 @@
 .status-aprovacao {
     padding-top:6px;
 }
+
+
+@media only screen and (max-width: 1500px){
+    .divtexto-aprovacao{
+       width: 20%;
+    }
+
+    .divimagem-aprovacao{
+        width: 60%;
+    }
+}
+
 /*** TAREFAS ****/
 .acao-tarefa {
     margin-bottom: 2px;
